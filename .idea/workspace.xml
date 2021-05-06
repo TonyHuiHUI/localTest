@@ -40,7 +40,7 @@
       <file leaf-file-name="NacosPassword.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/NacosPassword.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="436">
+            <state relative-caret-position="125">
               <caret line="241" column="8" selection-start-line="241" selection-start-column="8" selection-end-line="241" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -539,7 +539,7 @@
       <workItem from="1618972164802" duration="1152000" />
       <workItem from="1619160059558" duration="603000" />
       <workItem from="1619408562921" duration="5650000" />
-      <workItem from="1619573147549" duration="16838000" />
+      <workItem from="1619573147549" duration="17506000" />
     </task>
     <servers />
   </component>
@@ -561,11 +561,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="775759000" />
+    <option name="totallyTimeSpent" value="776427000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Event Log" order="15" sideWeight="0.50053304" side_tool="true" weight="0.32849163" />
@@ -588,7 +587,7 @@
       <window_info anchor="bottom" id="Version Control" order="14" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.25810057" />
       <window_info anchor="bottom" id="Spring" order="12" weight="0.32849163" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.52290505" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.52290505" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19829424" />
       <window_info anchor="right" id="Maven-2 Build" order="12" weight="0.14872068" />
       <window_info anchor="right" id="Theme Preview" order="10" />
@@ -623,7 +622,7 @@
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
       <expression>
-        <expression-string />
+        <expression-string>maxSum/n * 1.0</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
@@ -1035,7 +1034,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/NacosPassword.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
+        <state relative-caret-position="125">
           <caret line="241" column="8" selection-start-line="241" selection-start-column="8" selection-end-line="241" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
