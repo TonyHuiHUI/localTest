@@ -1,0 +1,1123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="95842516-2340-4ce2-9ed3-216c8b075d4b" name="Default" comment="" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="ConcurrentHashMapTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ConcurrentHashMapTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="13" selection-start-line="13" selection-end-line="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ThreadTest2.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ThreadTest2.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1080">
+              <caret line="44" column="47" selection-start-line="44" selection-start-column="47" selection-end-line="44" selection-end-column="47" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NacosPassword.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/NacosPassword.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="436">
+              <caret line="241" column="8" selection-start-line="241" selection-start-column="8" selection-end-line="241" selection-end-column="8" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FizzBuzz.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/FizzBuzz.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1458">
+              <caret line="57" column="38" selection-start-line="57" selection-start-column="38" selection-end-line="57" selection-end-column="38" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HashTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/test/HashTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BasicFuture.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/BasicFuture.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="486">
+              <caret line="19" column="42" selection-start-line="19" selection-start-column="42" selection-end-line="19" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BTS.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/tree/BTS.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ThreadPoolExecutor.java" pinned="false" current-in-tab="false">
+        <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/concurrent/ThreadPoolExecutor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30672">
+              <caret line="1196" column="11" selection-start-line="1196" selection-start-column="11" selection-end-line="1196" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaFXApplication" />
+        <option value="Singleton" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+    <option name="SCHEME" value="Project" />
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>switch</find>
+      <find>Jedis</find>
+      <find>hashc</find>
+      <find>JDBC</find>
+      <find>first</find>
+      <find>{{0,1},[6,8],[0,2],[5,6],[0,4],[0,3],[6,7],[1,3],[4,7],[1,4],[2,5],[2,6],[3,4],[4,5],[5,7],[6,9}};</find>
+      <find>&quot;</find>
+      <find />
+      <find>combinationSum</find>
+      <find>solveSudoku</find>
+      <find>apiInfo</find>
+      <find>#{${</find>
+      <find>hash</find>
+      <find>end</find>
+      <find>PriorityQueue</find>
+      <find>MD5</find>
+      <find>]</find>
+      <find>Queue</find>
+      <find>addA</find>
+      <find>putAll</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>'</replace>
+      <replace>{</replace>
+      <replace>}</replace>
+    </replaceStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/ThreadTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Test001.java" />
+        <option value="$PROJECT_DIR$/src/main/java/TestCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/TestB.java" />
+        <option value="$PROJECT_DIR$/src/main/java/TestArray.java" />
+        <option value="$PROJECT_DIR$/src/main/java/netty/client/EchoClientHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/netty/client/EchoClient.java" />
+        <option value="$PROJECT_DIR$/src/main/java/netty/server/EchoServiceHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cpuMem.java" />
+        <option value="$PROJECT_DIR$/src/main/java/postConstruct/BeanB.java" />
+        <option value="$PROJECT_DIR$/src/main/java/postConstruct/BeanA.java" />
+        <option value="$PROJECT_DIR$/src/main/java/nio/ServerDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kafkaRebalanced/KafkaConfigBuilder.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kafkaRebalanced/KafkaLongDeserializer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kafkaRebalanced/TestConsumer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/FirstStream.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/nio/PlainNioServer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/nio/PlainOioServer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/nio/NettyNioServer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/nio/NettyOioServer.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/config.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/com/test/HashTest.java" />
+        <option value="$PROJECT_DIR$/src/main/scala/MapTest.scala" />
+        <option value="$PROJECT_DIR$/src/main/java/test.java" />
+        <option value="$PROJECT_DIR$/src/main/java/SynAddRunalbe.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DynamicDispatch.java" />
+        <option value="$PROJECT_DIR$/src/main/java/StaticDispatch.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dispatch.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DynamicProxyText.java" />
+        <option value="$PROJECT_DIR$/src/main/java/GenericTypes.java" />
+        <option value="$PROJECT_DIR$/src/main/java/MethodHandleTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/MonteCalo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/nameCheck/BADLY_NAMED_CODE.java" />
+        <option value="$PROJECT_DIR$/src/main/java/nameCheck/NameCheckProcessor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/nameCheck/NameChecker.java" />
+        <option value="$PROJECT_DIR$/src/main/java/jvm/VolatileTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/jvm/VectorTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/jvm/FalseSharing.java" />
+        <option value="$PROJECT_DIR$/src/main/java/jvm/FalseSharingTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/UnionSet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ForkJoinTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/TestForkJoin.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Stack.java" />
+        <option value="$PROJECT_DIR$/src/main/java/StackTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/PossibleReordering.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Singletons.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ThreadTest2.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ConcurrentHashMapTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/FizzBuzz.java" />
+        <option value="$PROJECT_DIR$/src/main/java/NacosPassword.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="D:/Java/tool/apache-maven-3.5.3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="localTest" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="localTest" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="localTest" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1912" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <flattenPackages ProjectPane="false" />
+      <showMembers ProjectPane="false" />
+      <hideEmptyPackages ProjectPane="false" />
+      <autoscrollToSource ProjectPane="false" />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="localTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="localTest" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="localTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="localTest" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="localTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="localTest" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="localTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="localTest" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="localTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="localTest" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="localTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="localTest" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tree" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="localTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="localTest" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="localTest" type="b2602c69:ProjectViewProjectNode" />
+              <item name="localTest" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="scala" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="go.gopath.indexing.explicitly.defined" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../web-api" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/src/main/java/netty/client/EchoClient.java" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\workspace\localTest\src\main\resources\META-INF" />
+      <recent name="D:\workspace\localTest\src\main\resources\META-INF\spring" />
+      <recent name="D:\workspace\localTest\src\main\resources\METE-INF" />
+      <recent name="D:\workspace\localTest\src\main\resources\METE-INF\spring" />
+      <recent name="D:\workspace\localTest\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\workspace\localTest\src\main\resources" />
+      <recent name="D:\workspace\localTest\src\main\resources\META-INF\spring" />
+      <recent name="D:\workspace\localTest\src\main\resources\META-INF" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.NacosPassword">
+    <configuration name="EchoClient" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="netty.client.EchoClient" />
+      <module name="localTest" />
+      <option name="PROGRAM_PARAMETERS" value="127.0.0.1 9090" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="netty.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
+    <configuration name="FizzBuzz" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="FizzBuzz" />
+      <module name="localTest" />
+    </configuration>
+    <configuration name="NacosPassword" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="NacosPassword" />
+      <module name="localTest" />
+    </configuration>
+    <configuration name="PossibleReordering" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="PossibleReordering" />
+      <module name="localTest" />
+    </configuration>
+    <configuration name="Singletons" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Singletons" />
+      <module name="localTest" />
+    </configuration>
+    <configuration name="StackTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="StackTest" />
+      <module name="localTest" />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <list>
+      <item itemvalue="Application.EchoClient" />
+      <item itemvalue="Application.NacosPassword" />
+      <item itemvalue="Application.StackTest" />
+      <item itemvalue="Application.PossibleReordering" />
+      <item itemvalue="Application.Singletons" />
+      <item itemvalue="Application.FizzBuzz" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.NacosPassword" />
+        <item itemvalue="Application.FizzBuzz" />
+        <item itemvalue="Application.Singletons" />
+        <item itemvalue="Application.PossibleReordering" />
+        <item itemvalue="Application.StackTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="95842516-2340-4ce2-9ed3-216c8b075d4b" name="Default" comment="" />
+      <created>1557731233761</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1557731233761</updated>
+      <workItem from="1557731235564" duration="3868000" />
+      <workItem from="1557740561457" duration="16825000" />
+      <workItem from="1558487986226" duration="599000" />
+      <workItem from="1558522274957" duration="597000" />
+      <workItem from="1558602291619" duration="32236000" />
+      <workItem from="1559008201529" duration="33213000" />
+      <workItem from="1559783431072" duration="599000" />
+      <workItem from="1560128683652" duration="9021000" />
+      <workItem from="1560757903054" duration="660000" />
+      <workItem from="1561338700718" duration="12723000" />
+      <workItem from="1561949166170" duration="13126000" />
+      <workItem from="1562553332788" duration="599000" />
+      <workItem from="1562636676116" duration="11641000" />
+      <workItem from="1563152608241" duration="13534000" />
+      <workItem from="1563761471051" duration="920000" />
+      <workItem from="1563848781810" duration="1232000" />
+      <workItem from="1564106067229" duration="597000" />
+      <workItem from="1564362448865" duration="665000" />
+      <workItem from="1564557950281" duration="2357000" />
+      <workItem from="1565160307394" duration="3608000" />
+      <workItem from="1565918290607" duration="128000" />
+      <workItem from="1566181922447" duration="28982000" />
+      <workItem from="1566544354134" duration="7810000" />
+      <workItem from="1566784743624" duration="17796000" />
+      <workItem from="1567386289260" duration="1324000" />
+      <workItem from="1567472416382" duration="285000" />
+      <workItem from="1567492173761" duration="345000" />
+      <workItem from="1567504544304" duration="2834000" />
+      <workItem from="1567996008096" duration="628000" />
+      <workItem from="1568859449349" duration="6062000" />
+      <workItem from="1568950674946" duration="597000" />
+      <workItem from="1569206952583" duration="599000" />
+      <workItem from="1569208475063" duration="635000" />
+      <workItem from="1569231479497" duration="439000" />
+      <workItem from="1569287477434" duration="116000" />
+      <workItem from="1571992358644" duration="4137000" />
+      <workItem from="1572226531468" duration="1967000" />
+      <workItem from="1572829793164" duration="640000" />
+      <workItem from="1574038942890" duration="9305000" />
+      <workItem from="1575442975264" duration="3404000" />
+      <workItem from="1575877585681" duration="1064000" />
+      <workItem from="1575879745410" duration="611000" />
+      <workItem from="1575945724191" duration="689000" />
+      <workItem from="1575947678738" duration="595000" />
+      <workItem from="1575969929978" duration="3865000" />
+      <workItem from="1576030061088" duration="7702000" />
+      <workItem from="1576631658228" duration="2112000" />
+      <workItem from="1577434633218" duration="10375000" />
+      <workItem from="1578298205558" duration="15122000" />
+      <workItem from="1578878312219" duration="3036000" />
+      <workItem from="1588818126290" duration="1752000" />
+      <workItem from="1588836970446" duration="2517000" />
+      <workItem from="1589020553309" duration="675000" />
+      <workItem from="1590137592553" duration="827000" />
+      <workItem from="1590138432931" duration="6768000" />
+      <workItem from="1590369483160" duration="25000" />
+      <workItem from="1590370319794" duration="11536000" />
+      <workItem from="1590564132551" duration="45552000" />
+      <workItem from="1591774189548" duration="4702000" />
+      <workItem from="1591927144966" duration="8290000" />
+      <workItem from="1592186658140" duration="16200000" />
+      <workItem from="1592966350559" duration="7122000" />
+      <workItem from="1593397868122" duration="13396000" />
+      <workItem from="1593998593092" duration="13425000" />
+      <workItem from="1594618361617" duration="35000" />
+      <workItem from="1594618551107" duration="13305000" />
+      <workItem from="1595207760821" duration="8162000" />
+      <workItem from="1595990060501" duration="1207000" />
+      <workItem from="1596096367228" duration="4081000" />
+      <workItem from="1597026983714" duration="9160000" />
+      <workItem from="1598235723892" duration="36440000" />
+      <workItem from="1599445315426" duration="9941000" />
+      <workItem from="1599472120400" duration="27000" />
+      <workItem from="1599526773122" duration="19292000" />
+      <workItem from="1600327127834" duration="8799000" />
+      <workItem from="1600656140783" duration="1547000" />
+      <workItem from="1600823374484" duration="1203000" />
+      <workItem from="1601082899154" duration="1074000" />
+      <workItem from="1601257180652" duration="599000" />
+      <workItem from="1602205657672" duration="687000" />
+      <workItem from="1602572598754" duration="608000" />
+      <workItem from="1602640932043" duration="1274000" />
+      <workItem from="1603074108872" duration="2057000" />
+      <workItem from="1603248838772" duration="1235000" />
+      <workItem from="1603266635834" duration="3173000" />
+      <workItem from="1603938136035" duration="2051000" />
+      <workItem from="1604889810576" duration="4135000" />
+      <workItem from="1606094483255" duration="1204000" />
+      <workItem from="1606111085394" duration="2463000" />
+      <workItem from="1607048009816" duration="2095000" />
+      <workItem from="1607998116391" duration="4784000" />
+      <workItem from="1608081971084" duration="2596000" />
+      <workItem from="1608602845201" duration="5817000" />
+      <workItem from="1608773138096" duration="26018000" />
+      <workItem from="1610505648286" duration="23192000" />
+      <workItem from="1610705171821" duration="28464000" />
+      <workItem from="1611897730930" duration="1941000" />
+      <workItem from="1612400996725" duration="596000" />
+      <workItem from="1613783230546" duration="2098000" />
+      <workItem from="1613798069552" duration="917000" />
+      <workItem from="1613960071508" duration="1010000" />
+      <workItem from="1614057979814" duration="9791000" />
+      <workItem from="1614735850722" duration="43639000" />
+      <workItem from="1616030247674" duration="599000" />
+      <workItem from="1616132595837" duration="598000" />
+      <workItem from="1616555061557" duration="17388000" />
+      <workItem from="1617325646835" duration="4350000" />
+      <workItem from="1617844453358" duration="12743000" />
+      <workItem from="1618308897336" duration="4510000" />
+      <workItem from="1618972164802" duration="1152000" />
+      <workItem from="1619160059558" duration="603000" />
+      <workItem from="1619408562921" duration="5650000" />
+      <workItem from="1619573147549" duration="16838000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="BraveKnightTest_knightShouldEmbarkQuest - 2019.08.22 at 17h 08m 54s.xml">
+      <configuration name="BraveKnightTest.knightShouldEmbarkQuest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CDPlayerTest_cdShouldBeNull - 2019.08.29 at 15h 02m 58s.xml">
+      <configuration name="CDPlayerTest.cdShouldBeNull" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CDPlayerTest_cdShouldBeNull - 2019.08.29 at 15h 06m 24s.xml">
+      <configuration name="CDPlayerTest.cdShouldBeNull" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestForkJoin - 2021.03.29 at 18h 07m 39s.xml">
+      <configuration name="TestForkJoin" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestForkJoin - 2021.04.01 at 09h 53m 39s.xml">
+      <configuration name="TestForkJoin" configurationId="JUnit" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="775759000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="15" sideWeight="0.50053304" side_tool="true" weight="0.32849163" />
+      <window_info anchor="bottom" id="AEM Console" order="17" side_tool="true" />
+      <window_info anchor="right" id="Maven Projects" order="6" weight="0.15351813" />
+      <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info id="Designer" order="2" />
+      <window_info anchor="right" id="Database" order="7" weight="0.2468017" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.24469274" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32922733" />
+      <window_info anchor="bottom" id="Messages" order="16" weight="0.32960895" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info id="Image Layers" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="AEM" order="13" weight="0.20735608" />
+      <window_info anchor="bottom" id="Version Control" order="14" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.25810057" />
+      <window_info anchor="bottom" id="Spring" order="12" weight="0.32849163" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.52290505" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19829424" />
+      <window_info anchor="right" id="Maven-2 Build" order="12" weight="0.14872068" />
+      <window_info anchor="right" id="Theme Preview" order="10" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="sbt-shell-toolwindow" order="9" weight="0.3180291" />
+      <window_info anchor="right" id="Gradle" order="9" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="sbt" order="11" weight="0.23560767" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Bean Validation" order="14" />
+      <window_info anchor="bottom" id="Database Console" order="13" sideWeight="0.49946696" weight="0.32922733" />
+      <window_info anchor="bottom" id="Java Enterprise" order="8" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" id="CDI" order="4" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.33914053" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Message" order="0" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="239" />
+    </breakpoint-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string />
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>maxSum/n</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>strings[i]</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>char2str.get(pattern.charAt(i))</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>pattern.length()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>rooms.get(index)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>visit[x]</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>str.indexOf(s,1);</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>str</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/UnionSet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1431">
+          <caret line="55" column="1" selection-start-line="55" selection-start-column="1" selection-end-line="55" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/jvm/VolatileTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/nameCheck/NameChecker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="25" column="45" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/nameCheck/BADLY_NAMED_CODE.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="19" column="15" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/nameCheck/NameCheckProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/jvm/FalseSharingTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="972">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/jvm/VectorTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="972">
+          <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/UnionSet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1431">
+          <caret line="55" column="1" selection-start-line="55" selection-start-column="1" selection-end-line="55" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/jvm/VolatileTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/nameCheck/NameChecker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="25" column="45" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/nameCheck/BADLY_NAMED_CODE.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="19" column="15" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/nameCheck/NameCheckProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/Comparator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2303">
+          <caret line="108" column="17" selection-start-line="108" selection-start-column="17" selection-end-line="108" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/TreeMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1469">
+          <caret line="164" column="23" selection-start-line="164" selection-start-column="23" selection-end-line="164" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/lang/Integer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="1516" column="45" lean-forward="true" selection-start-line="1516" selection-start-column="45" selection-end-line="1516" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/KafkaLogSize.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-756">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/concurrent/RecursiveTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="67" column="60" lean-forward="true" selection-start-line="67" selection-start-column="60" selection-end-line="67" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ForkJoinTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="891">
+          <caret line="33" column="1" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/stream/TerminalOp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="93" column="43" lean-forward="true" selection-start-line="93" selection-start-column="43" selection-end-line="93" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/TestForkJoin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="837">
+          <caret line="35" column="61" selection-start-line="35" selection-start-column="61" selection-end-line="35" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/stream/AbstractPipeline.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-16246">
+          <caret line="71" column="76" lean-forward="true" selection-start-line="71" selection-start-column="76" selection-end-line="71" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/stream/LongStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="77" column="17" selection-start-line="77" selection-start-column="17" selection-end-line="77" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/stream/LongPipeline.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9666">
+          <caret line="437" column="38" selection-start-line="437" selection-start-column="38" selection-end-line="437" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/stream/ReduceOps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7857">
+          <caret line="380" column="58" selection-start-line="380" selection-start-column="58" selection-end-line="380" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/Queue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1512">
+          <caret line="143" column="17" selection-start-line="143" selection-start-column="17" selection-end-line="143" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/LinkedList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="613">
+          <caret line="799" column="13" selection-start-line="799" selection-start-column="13" selection-end-line="799" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/MapTest.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="837">
+          <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/StackTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="22" column="15" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/PossibleReordering.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="621">
+          <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/Arrays.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="1437" column="26" selection-start-line="1437" selection-start-column="26" selection-end-line="1437" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/TimSort.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1169">
+          <caret line="230" column="46" lean-forward="true" selection-start-line="230" selection-start-column="46" selection-end-line="230" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.12.2-sources.jar!/scala/collection/mutable/HashMap.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="39" column="6" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/HashMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="259" column="7" lean-forward="true" selection-start-line="259" selection-start-column="7" selection-end-line="259" selection-end-column="7" />
+          <folding>
+            <element signature="e#19103#19104#0" expanded="true" />
+            <element signature="e#19161#19162#0" expanded="true" />
+            <element signature="e#19327#19328#0" expanded="true" />
+            <element signature="e#19410#19411#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/SingleTon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Singletons.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="6" column="25" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6075">
+          <caret line="253" column="54" selection-start-line="253" selection-start-column="54" selection-end-line="253" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/concurrent/ConcurrentHashMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25083">
+          <caret line="1009" column="12" selection-start-line="1009" selection-start-column="12" selection-end-line="1009" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/concurrent/ForkJoinPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8623">
+          <caret line="169" column="13" selection-start-line="169" selection-start-column="13" selection-end-line="169" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ThreadTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ConcurrentHashMapTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/concurrent/ThreadPoolExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30672">
+          <caret line="1196" column="11" selection-start-line="1196" selection-start-column="11" selection-end-line="1196" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ThreadTest2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1080">
+          <caret line="44" column="47" selection-start-line="44" selection-start-column="47" selection-end-line="44" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/util/concurrent/CyclicBarrier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="292" column="11" selection-start-line="292" selection-start-column="11" selection-end-line="292" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/FizzBuzz.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1458">
+          <caret line="57" column="38" selection-start-line="57" selection-start-column="38" selection-end-line="57" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tree/BTS.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/tree/HashTest.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/test/HashTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BasicFuture.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="19" column="42" selection-start-line="19" selection-start-column="42" selection-end-line="19" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/lang/StrictMath.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="214" column="32" selection-start-line="214" selection-start-column="32" selection-end-line="214" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Java/tool/jdk1.8.0_171/src.zip!/java/lang/Math.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="478">
+          <caret line="271" column="29" selection-start-line="271" selection-start-column="29" selection-end-line="271" selection-end-column="29" />
+          <folding>
+            <element signature="e#10333#10334#0" expanded="true" />
+            <element signature="e#10414#10415#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/NacosPassword.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="241" column="8" selection-start-line="241" selection-start-column="8" selection-end-line="241" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Spring</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>scala-sdk-2.12.2</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Spring|localTest</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: io.netty:netty:3.10.5.Final</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.dapeng-soa:dapeng-spring:2.1.2-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/dapeng-soa/dapeng-spring/2.1.2-SNAPSHOT/dapeng-spring-2.1.2-20191223.061612-6.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/dapeng-soa/dapeng-spring/2.1.2-SNAPSHOT/dapeng-spring-2.1.2-20191223.061612-6-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/dapeng-soa/dapeng-spring/2.1.2-SNAPSHOT/dapeng-spring-2.1.2-20191223.061612-6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
