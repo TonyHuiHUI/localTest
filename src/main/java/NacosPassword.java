@@ -228,8 +228,10 @@ public class NacosPassword {
 //        System.out.println(removeDuplicates(a));
 //        System.out.println(numDecodings("220"));
 //        System.out.println((int)Math.exp(2));
-        int[] a = {0,1,2,3,4,8,9,11};
-        System.out.println(canCross(a));
+        int[] a = {1,2,3,4,5,6,7,8,9,10};
+//        System.out.println(canCross(a));
+//        System.out.println(minimumTimeRequired(a,2));
+        System.out.println(shipWithinDays(a,5));
     }
 
 
@@ -244,6 +246,79 @@ public class NacosPassword {
         }
     }
 
+
+    public static int shipWithinDays(int[] weights, int D) {
+        int left = Arrays.stream(weights).max().getAsInt();
+        int right = Arrays.stream(weights).sum();
+        while (left < right){
+            int mid = (left + right)>>2;
+            int need = 1;
+            int cur = 0;
+            for(int weight : weights){
+                if(cur + weight > mid){
+                    need++;
+                    cur = 0;
+                }
+                cur += weight;
+            }
+            if(need <= D){
+                right = mid;
+            }else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+
+
+    public static int minimumTimeRequired(int[] jobs, int k) {
+        int low = 0, high = jobs.length - 1;
+        while (low < high) {
+            int temp = jobs[low];
+            jobs[low] = jobs[high];
+            jobs[high] = temp;
+            low++;
+            high--;
+        }
+        int l = jobs[0], r = Arrays.stream(jobs).sum();
+        while (l < r) {
+            int mid = (l + r) >> 1;
+            if (check(jobs, k, mid)) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return l;
+    }
+
+    public static boolean check(int[] jobs, int k, int limit) {
+        int[] workloads = new int[k];
+        return backtrack(jobs, workloads, 0, limit);
+    }
+
+    public static boolean backtrack(int[] jobs, int[] workloads, int i, int limit) {
+        if (i >= jobs.length) {
+            return true;
+        }
+        int cur = jobs[i];
+        for (int j = 0; j < workloads.length; ++j) {
+            if (workloads[j] + cur <= limit) {
+                workloads[j] += cur;
+                if (backtrack(jobs, workloads, i + 1, limit)) {
+                    return true;
+                }
+                workloads[j] -= cur;
+            }
+            // 如果当前工人未被分配工作，那么下一个工人也必然未被分配工作
+            // 或者当前工作恰能使该工人的工作量达到了上限
+            // 这两种情况下我们无需尝试继续分配工作
+            if (workloads[j] == 0 || workloads[j] + cur == limit) {
+                break;
+            }
+        }
+        return false;
+    }
 
     public static int singleNumber(int[] nums) {
         Arrays.sort(nums);
