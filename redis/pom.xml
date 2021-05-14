@@ -44,6 +44,11 @@
             <artifactId>redisson</artifactId>
             <version>3.4.3</version>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.2.3</version>
+        </dependency>
     </dependencies>
 
     <build>
