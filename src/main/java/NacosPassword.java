@@ -235,6 +235,35 @@ public class NacosPassword {
         }
     }
 
+    //不相交的线
+    //现在，可以绘制一些连接两个数字 nums1[i] 和 nums2[j] 的直线，这些直线需要同时满足满足：
+    //
+    //     nums1[i] == nums2[j]
+    //    且绘制的直线不与任何其他连线（非水平线）相交。
+    //
+    //请注意，连线即使在端点也不能相交：每个数字只能属于一条连线。
+    //
+    //以这种方法绘制线条，并返回可以绘制的最大连线数
+    // 问题转换成求最长公共子序列
+    public static int maxUncrossedLines(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+        int[][] dp = new int[m + 1][n + 1];
+        for (int i = 1; i <= m; i++) {
+            int num1 = nums1[i - 1];
+            for (int j = 1; j <= n; j++) {
+                int num2 = nums2[j - 1];
+                if(num1 == num2){
+                    dp[i][j] = dp[i-1][j-1] + 1;
+                }else {
+                    dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+                }
+            }
+        }
+        return dp[m][n];
+    }
+
+
     public static List<String> topKFrequent(String[] words, int k) {
         //hash + 排序
 //        Map<String, Integer> count = new HashMap<>(16);
@@ -700,12 +729,12 @@ public class NacosPassword {
         return result;
     }
 
-    private static String generatorSign() {
-        System.out.println(System.currentTimeMillis());
-        StringBuilder stringBuilder = new StringBuilder();
-        String str = stringBuilder.append("today-mini-order-demo").append("{\"id\":\"111\"}").append("1591854961788").append("123456").toString();
-        return md5(str).toLowerCase();
-    }
+//    private static String generatorSign() {
+//        System.out.println(System.currentTimeMillis());
+//        StringBuilder stringBuilder = new StringBuilder();
+//        String str = stringBuilder.append("today-mini-order-demo").append("{\"id\":\"111\"}").append("1591854961788").append("123456").toString();
+//        return md5(str).toLowerCase();
+//    }
 
     public static int[] dailyTemperatures(int[] T) {
         //{73, 74, 75, 71, 69, 72, 76, 73}
