@@ -1,15 +1,5 @@
 
-import com.sun.tools.classfile.ConstantPool;
-import org.jboss.netty.handler.execution.FairOrderedDownstreamThreadPoolExecutor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import sun.java2d.opengl.WGLSurfaceData;
-
-import java.math.BigDecimal;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static com.alibaba.druid.util.Utils.getStartTime;
-import static com.alibaba.druid.util.Utils.md5;
 
 /**
  * @author hui
@@ -228,12 +218,11 @@ public class NacosPassword {
 //        System.out.println(removeDuplicates(a));
 //        System.out.println(numDecodings("220"));
 //        System.out.println((int)Math.exp(2));
-        int[] a = {1,2,3,4,5,6,7,8,9,10};
+        int[] a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 //        System.out.println(canCross(a));
 //        System.out.println(minimumTimeRequired(a,2));
-        System.out.println(shipWithinDays(a,5));
+        System.out.println(shipWithinDays(a, 5));
     }
-
 
 
     public static class TreeNode {
@@ -246,24 +235,52 @@ public class NacosPassword {
         }
     }
 
+    public static List<String> topKFrequent(String[] words, int k) {
+        //hash + 排序
+//        Map<String, Integer> count = new HashMap<>(16);
+//        for (String word : words) {
+//            count.put(word, count.getOrDefault(word, 0) + 1);
+//        }
+//        List<String> keys = new ArrayList<>(16);
+//        keys.addAll(count.keySet());
+//        keys.sort((o1, o2) -> count.get(o1).equals(count.get(o2)) ? o1.compareTo(o2) : count.get(o2) - count.get(o1));
+//        return keys.subList(0, k);
+        //hash + 小顶堆
+        Map<String, Integer> count = new HashMap<>(16);
+        for (String word : words) {
+            count.put(word, count.getOrDefault(word, 0) + 1);
+        }
+        PriorityQueue<Map.Entry<String, Integer>> priorityQueue = new PriorityQueue<>((o1, o2) -> o1.getValue().equals(o2.getValue()) ? o1.getKey().compareTo(o2.getKey()) : o1.getValue() - o2.getValue());
+        for (Map.Entry<String, Integer> entry : count.entrySet()) {
+            priorityQueue.offer(entry);
+            if (priorityQueue.size() > k) {
+                priorityQueue.poll();
+            }
+        }
+        List<String> res = new ArrayList<>(16);
+        while (!priorityQueue.isEmpty()) {
+            res.add(priorityQueue.poll().getKey());
+        }
+        return res;
+    }
 
     public static int shipWithinDays(int[] weights, int D) {
         int left = Arrays.stream(weights).max().getAsInt();
         int right = Arrays.stream(weights).sum();
-        while (left < right){
-            int mid = (left + right)>>2;
+        while (left < right) {
+            int mid = (left + right) >> 2;
             int need = 1;
             int cur = 0;
-            for(int weight : weights){
-                if(cur + weight > mid){
+            for (int weight : weights) {
+                if (cur + weight > mid) {
                     need++;
                     cur = 0;
                 }
                 cur += weight;
             }
-            if(need <= D){
+            if (need <= D) {
                 right = mid;
-            }else {
+            } else {
                 left = mid + 1;
             }
         }
@@ -324,15 +341,15 @@ public class NacosPassword {
         Arrays.sort(nums);
         int result = nums[0];
         int count = 1;
-        for (int i = 1; i < nums.length;i++){
-            if(nums[i] != result){
-                if(count == 1){
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != result) {
+                if (count == 1) {
                     return result;
-                }else {
+                } else {
                     result = nums[i];
                     count = 1;
                 }
-            }else {
+            } else {
                 count++;
             }
         }
@@ -1941,6 +1958,7 @@ public class NacosPassword {
         }
         return stack.toString();
     }
+
     public static int removeDuplicates(int[] nums) {
 //        int length = nums.length;
 //        if(length<=2){
@@ -1958,12 +1976,13 @@ public class NacosPassword {
 //        return left;
         HashMap<String, String> hashMap = new HashMap<>();
         int i = 0;
-        for (int n : nums)
-            if (i < 2 || n > nums[i-2])
+        for (int n : nums) {
+            if (i < 2 || n > nums[i - 2]) {
                 nums[i++] = n;
+            }
+        }
         return i;
     }
-
 
 
     public static int calculate1(String s) {
@@ -2073,25 +2092,25 @@ public class NacosPassword {
 
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
         List<List<Integer>> result = new LinkedList<>();
-        if(root == null){
+        if (root == null) {
             return result;
         }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             List<Integer> level = new ArrayList<>();
             int size = queue.size();
-            for(int i = 0;i<size;i++){
+            for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
                 level.add(node.val);
-                if(node.left != null){
+                if (node.left != null) {
                     queue.offer(node.left);
                 }
-                if(node.right != null){
+                if (node.right != null) {
                     queue.offer(node.right);
                 }
             }
-            result.add(0,level);
+            result.add(0, level);
         }
         return result;
     }
@@ -2187,19 +2206,19 @@ public class NacosPassword {
     public String largestNumber(int[] nums) {
         int n = nums.length;
         String numsToWord[] = new String[n];
-        for(int i=0;i<n;i++){
+        for (int i = 0; i < n; i++) {
             numsToWord[i] = String.valueOf(nums[i]);
         }
 
-        Arrays.sort(numsToWord,(a,b)->{
-            return (b+a).compareTo(a+b);
+        Arrays.sort(numsToWord, (a, b) -> {
+            return (b + a).compareTo(a + b);
         });
 
-        if(numsToWord[0].equals("0")){
+        if (numsToWord[0].equals("0")) {
             return "0";
         }
         StringBuilder sb = new StringBuilder();
-        for(int i=0;i<n;i++){
+        for (int i = 0; i < n; i++) {
             sb.append(numsToWord[i]);
         }
         return sb.toString();
@@ -2207,25 +2226,25 @@ public class NacosPassword {
 
     public static boolean canThreePartsEqualSum(int[] arr) {
         int sum = 0;
-        for(int i : arr){
+        for (int i : arr) {
             sum += i;
         }
-        if(sum%3 != 0){
+        if (sum % 3 != 0) {
             return false;
         }
         int n = arr.length;
         int left = 0;
-        int right = n-1;
+        int right = n - 1;
         int firstSum = arr[left];
         int thirdSum = arr[right];
-        while(left + 1 < right) {
-            if (firstSum == sum/3 && thirdSum == sum/3){
+        while (left + 1 < right) {
+            if (firstSum == sum / 3 && thirdSum == sum / 3) {
                 return true;
             }
-            if(firstSum != sum/3){
+            if (firstSum != sum / 3) {
                 firstSum += arr[++left];
             }
-            if (thirdSum != sum/3){
+            if (thirdSum != sum / 3) {
                 thirdSum += arr[--right];
             }
         }
@@ -2247,66 +2266,63 @@ public class NacosPassword {
 //        return n >>> 16 | n << 16;
 
         int rev = 0;
-        for(int i = 0; i < 32 && n != 0; i++){
-            rev |= (n&1)<<(31 - i);
-            n >>>=1;
+        for (int i = 0; i < 32 && n != 0; i++) {
+            rev |= (n & 1) << (31 - i);
+            n >>>= 1;
         }
         return rev;
     }
 
 
+}
 
+//字典树
+class Trie {
+    public Trie[] next;
+    public boolean isEnd;
 
-
+    public Trie() {
+        next = new Trie[26];
+        isEnd = false;
     }
 
-    //字典树
-    class Trie {
-        public Trie[] next;
-        public boolean isEnd;
+    public void insert(String s) {
+        Trie curPos = this;
 
-        public Trie() {
-            next = new Trie[26];
-            isEnd = false;
-        }
-
-        public void insert(String s) {
-            Trie curPos = this;
-
-            for (int i = s.length() - 1; i >= 0; --i) {
-                int t = s.charAt(i) - 'a';
-                if (curPos.next[t] == null) {
-                    curPos.next[t] = new Trie();
-                }
-                curPos = curPos.next[t];
+        for (int i = s.length() - 1; i >= 0; --i) {
+            int t = s.charAt(i) - 'a';
+            if (curPos.next[t] == null) {
+                curPos.next[t] = new Trie();
             }
-            curPos.isEnd = true;
+            curPos = curPos.next[t];
+        }
+        curPos.isEnd = true;
+    }
+}
+
+
+//并查集
+class UnionFind {
+    int[] parent;
+
+    public UnionFind(int n) {
+        parent = new int[n];
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
         }
     }
 
-
-    //并查集
-    class UnionFind {
-        int[] parent;
-
-        public UnionFind(int n) {
-            parent = new int[n];
-            for (int i = 0; i < n; i++) {
-                parent[i] = i;
-            }
-        }
-
-        public void union(int index1, int index2) {
-            parent[find(index2)] = find(index1);
-        }
-
-        public int find(int index) {
-            if (parent[index] != index) {
-                parent[index] = find(parent[index]);
-            }
-            return parent[index];
-        }
+    public void union(int index1, int index2) {
+        parent[find(index2)] = find(index1);
     }
+
+    public int find(int index) {
+        if (parent[index] != index) {
+            parent[index] = find(parent[index]);
+        }
+        return parent[index];
+    }
+}
 
 
 
