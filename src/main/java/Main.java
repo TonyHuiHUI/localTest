@@ -15,7 +15,7 @@ public class Main {
         }
     }
     public static void main(String[] args) throws Exception{
-        CompletableFuture<Integer> future = CompletableFuture.supplyAsync(Main::getMoreData);
+//        CompletableFuture<Integer> future = CompletableFuture.supplyAsync(Main::getMoreData);
 /*
         future.exceptionally(ex -> {
             System.out.println("exception :" + ex);
@@ -24,13 +24,30 @@ public class Main {
             System.out.println("exceptionally thenrun");
         });
 */
+//
+//        Future<Integer> f = future.whenComplete((v, e) -> {
+//            System.out.println("value :" + v);
+//            System.out.println("exception :"+ e);
+//
+//        });
+//        System.out.println("resule ：" + f.get());
+//        System.in.read();
 
-        Future<Integer> f = future.whenComplete((v, e) -> {
-            System.out.println("value :" + v);
-            System.out.println("exception :"+ e);
+        Thread thread = new Thread(()->{
 
+            try {
+                Thread.sleep(10000);
+                System.out.println("1111111111111111");
+            } catch (InterruptedException e) {
+                System.out.println(Thread.currentThread().getState());
+                System.out.println("2222222222222");
+
+                e.printStackTrace();
+            }
         });
-        System.out.println("resule ：" + f.get());
-        System.in.read();
+        thread.start();
+        thread.interrupt();
+
+
     }
 }
