@@ -1,3 +1,5 @@
+import sun.awt.windows.ThemeReader;
+
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
@@ -32,22 +34,32 @@ public class Main {
 //        });
 //        System.out.println("resule ：" + f.get());
 //        System.in.read();
-
+//
         Thread thread = new Thread(()->{
 
             try {
+                System.out.println("000000000000");
                 Thread.sleep(10000);
                 System.out.println("1111111111111111");
             } catch (InterruptedException e) {
-                System.out.println(Thread.currentThread().getState());
-                System.out.println("2222222222222");
+                System.out.println(Thread.currentThread().isInterrupted());
+                //System.out.println(Thread.interrupted());
 
-                e.printStackTrace();
+                System.out.println(Thread.currentThread().getState());//interrupt---->Runnable
+                System.out.println("2222222222222");
+                Thread.currentThread().interrupt();
+                System.out.println(Thread.currentThread().isInterrupted());
+               // Thread.currentThread().run();//Runnable--->running
+                //e.printStackTrace();
             }
         });
         thread.start();
         thread.interrupt();
 
-
+//        System.out.println(Thread.currentThread().getName());
+//        Thread.currentThread().interrupt();
+////        System.out.println(Thread.interrupted());
+//        System.out.println(Thread.currentThread().isInterrupted());
+//        System.out.println(Thread.currentThread().isInterrupted());
     }
 }

@@ -218,10 +218,13 @@ public class NacosPassword {
 //        System.out.println(removeDuplicates(a));
 //        System.out.println(numDecodings("220"));
 //        System.out.println((int)Math.exp(2));
-        int[] a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+//        int[] a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 //        System.out.println(canCross(a));
 //        System.out.println(minimumTimeRequired(a,2));
-        System.out.println(shipWithinDays(a, 5));
+//        System.out.println(shipWithinDays(a, 5));
+
+        int[] a = {3, 4, 5, 2, 1, 7, 3, 4, 7};
+        System.out.println(minChanges(a, 3));
     }
 
 
@@ -233,6 +236,47 @@ public class NacosPassword {
         TreeNode(int x) {
             val = x;
         }
+    }
+
+    //使所有区间的异或结果为零
+//    给你一个整数数组 nums​​​ 和一个整数 k​​​​​ 。区间 [left, right]（left <= right）的 异或结果 是对下标位于 left 和 right（包括 left 和 right ）之间所有元素进行 XOR 运算的结果：nums[left] XOR nums[left+1] XOR ... XOR nums[right] 。
+//
+//    返回数组中 要更改的最小元素数 ，以使所有长度为 k 的区间异或结果等于零。
+//
+//    1 <= k <= nums.length <= 2000
+//            ​​​​​​0 <= nums[i] < 2^10
+    public static int minChanges(int[] nums, int k) {
+        int n = nums.length;
+        int max = 1024;//
+        int[][] dp = new int[k][max];//dp[i][j]表示前i列，异或结果为j的最小修改次数
+        int[] preMin = new int[k];   //preMin[i]表示第i列的最小修改数
+        for (int i = 0; i < k; i++) {
+            Arrays.fill(dp[i], Integer.MAX_VALUE);
+            preMin[i] = Integer.MAX_VALUE;
+        }
+        for (int i = 0; i < k; i++) {
+            Map<Integer, Integer> integerMap = new HashMap<>(16);//每列各个数对应的出现次数
+            int count = 0;//每列的整数个数
+            for (int j = i; j < n; j += k) {
+                integerMap.put(nums[j], integerMap.getOrDefault(nums[j], 0) + 1);
+                count++;
+            }
+            if (i == 0) {//第一列的情况下，只考虑当前列，没有前一列的影响
+                for (int xor = 0; xor < max; xor++) {
+                    dp[0][xor] = Math.min(dp[0][xor], count - integerMap.getOrDefault(xor, 0));
+                    preMin[0] = Math.min(preMin[0], dp[0][xor]);
+                }
+            } else {
+                for (int xor = 0; xor < max; xor++) {
+                    dp[i][xor] = preMin[i - 1] + count;//整列替换
+                    for (int cur : integerMap.keySet()) {//部分值替换
+                        dp[i][xor] = Math.min(dp[i][xor], dp[i - 1][xor ^ cur] + count - integerMap.get(cur));
+                    }
+                    preMin[i] = Math.min(preMin[i],dp[i][xor]);
+                }
+            }
+        }
+        return dp[k - 1][0];
     }
 
     //不相交的线
@@ -253,10 +297,10 @@ public class NacosPassword {
             int num1 = nums1[i - 1];
             for (int j = 1; j <= n; j++) {
                 int num2 = nums2[j - 1];
-                if(num1 == num2){
-                    dp[i][j] = dp[i-1][j-1] + 1;
-                }else {
-                    dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+                if (num1 == num2) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
                 }
             }
         }
