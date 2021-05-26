@@ -223,8 +223,9 @@ public class NacosPassword {
 //        System.out.println(minimumTimeRequired(a,2));
 //        System.out.println(shipWithinDays(a, 5));
 
-        int[] a = {3, 4, 5, 2, 1, 7, 3, 4, 7};
-        System.out.println(minChanges(a, 3));
+//        int[] a = {3, 4, 5, 2, 1, 7, 3, 4, 7};
+//        System.out.println(minChanges(a, 3));
+        System.out.println(reverseParentheses("(ed(et(oc))el)"));
     }
 
 
@@ -236,6 +237,31 @@ public class NacosPassword {
         TreeNode(int x) {
             val = x;
         }
+    }
+
+//    反转每对括号间的子串
+//    给出一个字符串 s（仅含有小写英文字母和括号）。
+//
+//    请你按照从括号内到外的顺序，逐层反转每对匹配括号中的字符串，并返回最终的结果。
+//
+//    注意，您的结果中 不应 包含任何括号
+
+    public static String reverseParentheses(String s) {
+        Stack<String> stack = new Stack<>();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if(ch == '('){
+                stack.push(sb.toString());
+                sb.setLength(0);
+            }else if(ch == ')'){
+                sb.reverse();
+                sb.insert(0,stack.pop());
+            }else {
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
     }
 
     //使所有区间的异或结果为零
@@ -272,7 +298,7 @@ public class NacosPassword {
                     for (int cur : integerMap.keySet()) {//部分值替换
                         dp[i][xor] = Math.min(dp[i][xor], dp[i - 1][xor ^ cur] + count - integerMap.get(cur));
                     }
-                    preMin[i] = Math.min(preMin[i],dp[i][xor]);
+                    preMin[i] = Math.min(preMin[i], dp[i][xor]);
                 }
             }
         }
