@@ -238,17 +238,49 @@ public class NacosPassword {
             val = x;
         }
     }
+//    汉明距离总和
 
-//    汉明距离
+//    两个整数的 汉明距离 指的是这两个数字的二进制数对应位不同的数量。
+//
+//    计算一个数组中，任意两个数之间汉明距离的总和
+//    数组中元素的范围为从 0到 10^9。
+//    数组的长度不超过 10^4。
+
+    public int totalHammingDistance(int[] nums) {
+        //暴力
+//        int sum = 0;
+//        int n = nums.length;
+//        for(int i = 0; i < n; i++){
+//            for(int j = i+1; j < n; j++){
+//                sum += Integer.bitCount(nums[i]^nums[j]);
+//            }
+//        }
+//        return sum;
+        int sum = 0;
+        int n = nums.length;
+        //10^9 < 2^30
+        for (int i = 0; i < 30; i++) {
+            int oneCount = 0;
+            for (int val : nums) {
+                // 计算第i位1的个数
+                oneCount += (val >> i) & 1;
+            }
+            sum += oneCount * (n - oneCount);//数组第i位的汉明距离，count(1)*（n - count(0)）:0的个数表示异或之后1的个数
+        }
+        return sum;
+    }
+
+
+    //    汉明距离
 //    两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。
 //
 //    给出两个整数 x 和 y，计算它们之间的汉明距离。
     public static int hammingDistance(int x, int y) {
-        int xor = x^y;
+        int xor = x ^ y;
         int dis = 0;
-        while(xor > 0){
+        while (xor > 0) {
             dis++;
-            xor = xor&(xor-1);
+            xor = xor & (xor - 1);
         }
         return dis;
     }
@@ -265,13 +297,13 @@ public class NacosPassword {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
             char ch = s.charAt(i);
-            if(ch == '('){
+            if (ch == '(') {
                 stack.push(sb.toString());
                 sb.setLength(0);
-            }else if(ch == ')'){
+            } else if (ch == ')') {
                 sb.reverse();
-                sb.insert(0,stack.pop());
-            }else {
+                sb.insert(0, stack.pop());
+            } else {
                 sb.append(ch);
             }
         }
