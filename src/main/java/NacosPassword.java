@@ -242,6 +242,95 @@ public class NacosPassword {
         }
     }
 
+    public class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
+
+//    两数相加
+//给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。
+//
+//    请你将两个数相加，并以相同形式返回一个表示和的链表。
+//
+//    你可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        //新建链表
+        ListNode head = null;
+        ListNode tail = null;
+        int carry = 0;
+        while (l1 != null || l2 != null) {
+            int val1 = l1 == null ? 0 : l1.val;
+            int val2 = l2 == null ? 0 : l2.val;
+            int sum = val1 + val2 + carry;
+            if (head == null) {
+                head = tail = new ListNode(sum % 10);
+            } else {
+                tail.next = new ListNode(sum % 10);
+                tail = tail.next;
+            }
+            carry = sum / 10;
+            if (l1 != null) {
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                l2 = l2.next;
+            }
+
+        }
+        if (carry != 0) {
+            tail.next = new ListNode(carry);
+        }
+        return head;
+        //在原链表上操作
+        // int carry = 0;
+        // ListNode head  =  l1;
+        // ListNode tail = l1;
+        // while(l1 != null && l2 != null){
+        //     tail = l1;
+        //     int sum = l1.val + l2.val + carry;
+        //     carry = sum / 10;
+        //     l1.val = sum % 10;
+        //     l1 = l1.next;
+        //     l2 = l2.next;
+        // }
+        // if(l1 != null){
+        //     while(l1 != null){
+        //     tail = l1;
+        //     int sum = l1.val + carry;
+        //     carry = sum / 10;
+        //     l1.val = sum % 10;
+        //     l1 = l1.next;
+        //     }
+        // }
+        // if(l2 != null){
+        //     tail.next = l2;
+        //     while(l2 != null){
+        //         tail = l2;
+        //         int sum = l2.val + carry;
+        //         carry = sum / 10;
+        //         l2.val = sum % 10;
+        //         l2 = l2.next;
+        //     }
+        // }
+        // if(carry != 0){
+        //     tail.next = new ListNode(carry,null);
+        // }
+        // return head;
+    }
+
     //连续的子数组和
 //    给你一个整数数组 nums 和一个整数 k ，编写一个函数来判断该数组是否含有同时满足下述条件的连续子数组：
 //
@@ -253,25 +342,26 @@ public class NacosPassword {
 //    如果存在一个整数 n ，令整数 x 符合 x = n * k ，则称 x 是 k 的一个倍数。
     public static boolean checkSubarraySum(int[] nums, int k) {
         int n = nums.length;
-        if(n < 2){
+        if (n < 2) {
             return false;
         }
         int sum = 0;
         HashMap<Integer, Integer> map = new HashMap<>();
-        map.put(0,-1);
-        for (int i = 0; i < n; i++){
+        map.put(0, -1);
+        for (int i = 0; i < n; i++) {
             sum += nums[i];
-            int mod = sum % k ;
-            if(map.containsKey(mod)){
-                if(i - map.get(mod)>=2){
+            int mod = sum % k;
+            if (map.containsKey(mod)) {
+                if (i - map.get(mod) >= 2) {
                     return true;
                 }
-            }else {
-                map.put(mod,i);
+            } else {
+                map.put(mod, i);
             }
         }
         return false;
     }
+
     //你能在你最喜欢的那天吃到你最喜欢的糖果吗？
 //    给你一个下标从 0 开始的正整数数组 candiesCount ，其中 candiesCount[i] 表示你拥有的第 i 类糖果的数目。同时给你一个二维数组 queries ，其中 queries[i] = [favoriteTypei, favoriteDayi, dailyCapi] 。
 //
@@ -299,7 +389,7 @@ public class NacosPassword {
             int dailyCap = queries[i][2];
 
             long minCount = favoriteDay + 1;
-            long maxCount = (long)(favoriteDay + 1) * dailyCap;
+            long maxCount = (long) (favoriteDay + 1) * dailyCap;
             long minTyPeCount = favoriteType == 0 ? 1 : sum[favoriteType - 1] + 1;
             long maxTypeCount = sum[favoriteType];
             res[i] = !(minCount > maxTypeCount || maxCount < minTyPeCount);
