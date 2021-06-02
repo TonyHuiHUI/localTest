@@ -226,9 +226,9 @@ public class NacosPassword {
 //        int[] a = {3, 4, 5, 2, 1, 7, 3, 4, 7};
 //        System.out.println(minChanges(a, 3));
 //        System.out.println(reverseParentheses("(ed(et(oc))el)"));
-        int[] a = {5, 2, 6, 4, 1};
-        int[][] b = {{3, 1, 2}, {4, 10, 3}, {3, 10, 100}, {4, 100, 30}, {1, 3, 1}};
-        System.out.println(canEat(a, b));
+//        int[] a = {5, 2, 6, 4, 1};
+//        int[][] b = {{3, 1, 2}, {4, 10, 3}, {3, 10, 100}, {4, 100, 30}, {1, 3, 1}};
+//        System.out.println(canEat(a, b));
     }
 
 
@@ -242,6 +242,36 @@ public class NacosPassword {
         }
     }
 
+    //连续的子数组和
+//    给你一个整数数组 nums 和一个整数 k ，编写一个函数来判断该数组是否含有同时满足下述条件的连续子数组：
+//
+//    子数组大小 至少为 2 ，且
+//    子数组元素总和为 k 的倍数。
+//
+//    如果存在，返回 true ；否则，返回 false 。
+//
+//    如果存在一个整数 n ，令整数 x 符合 x = n * k ，则称 x 是 k 的一个倍数。
+    public static boolean checkSubarraySum(int[] nums, int k) {
+        int n = nums.length;
+        if(n < 2){
+            return false;
+        }
+        int sum = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0,-1);
+        for (int i = 0; i < n; i++){
+            sum += nums[i];
+            int mod = sum % k ;
+            if(map.containsKey(mod)){
+                if(i - map.get(mod)>=2){
+                    return true;
+                }
+            }else {
+                map.put(mod,i);
+            }
+        }
+        return false;
+    }
     //你能在你最喜欢的那天吃到你最喜欢的糖果吗？
 //    给你一个下标从 0 开始的正整数数组 candiesCount ，其中 candiesCount[i] 表示你拥有的第 i 类糖果的数目。同时给你一个二维数组 queries ，其中 queries[i] = [favoriteTypei, favoriteDayi, dailyCapi] 。
 //
