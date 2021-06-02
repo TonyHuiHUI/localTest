@@ -1,3 +1,5 @@
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Semaphore;
 
 //1117. H2O 生成
@@ -19,27 +21,33 @@ import java.util.concurrent.Semaphore;
 //书写满足这些限制条件的氢、氧线程同步代码。
 public class H2O {
     Semaphore hs = new Semaphore(2);
-    Semaphore os = new Semaphore(0);
+    Semaphore os = new Semaphore(1);
 
-    int hcount = 0;
+    CyclicBarrier cyclicBarrier = new CyclicBarrier(3, () -> {
+        hs.release(2);
+        os.release(1);
+    });
+
     public H2O() {
 
     }
+
     public void hydrogen(Runnable releaseHydrogen) throws InterruptedException {
         hs.acquire();
         // releaseHydrogen.run() outputs "H". Do not change or remove this line.
         releaseHydrogen.run();
-        hcount++;
-        if(hcount == 2){
-            os.release();
+        try {
+            cyclicBarrier.await();
+        } catch (BrokenBarrierException e) {
+            e.printStackTrace();
         }
     }
 
-    public void oxygen(Runnable releaseOxygen) throws InterruptedException {
+    public void oxygen(Runnable releaseOxygen) throws InterruptedException, BrokenBarrierException {
         os.acquire();
         // releaseOxygen.run() outputs "O". Do not change or remove this line.
         releaseOxygen.run();
-        hs.release(2);
+        cyclicBarrier.await();
     }
 
 }
