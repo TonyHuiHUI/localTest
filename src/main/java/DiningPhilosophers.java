@@ -36,5 +36,6 @@ public class DiningPhilosophers {
         putRightFork.run();
         reentrantLocks[rightFork].unlock();
         reentrantLocks[leftFork].unlock();
+        semaphore.release();
     }
 }
