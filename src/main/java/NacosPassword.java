@@ -229,6 +229,8 @@ public class NacosPassword {
 //        int[] a = {5, 2, 6, 4, 1};
 //        int[][] b = {{3, 1, 2}, {4, 10, 3}, {3, 10, 100}, {4, 100, 30}, {1, 3, 1}};
 //        System.out.println(canEat(a, b));
+        int[] a= {0,1,0,0,0,0,1,1,1};
+        System.out.println(findMaxLength(a));
     }
 
 
@@ -257,6 +259,52 @@ public class NacosPassword {
             this.val = val;
             this.next = next;
         }
+    }
+
+    // 连续数组
+    //给定一个二进制数组 nums , 找到含有相同数量的 0 和 1 的最长连续子数组，并返回该子数组的长度。
+    public static int findMaxLength(int[] nums) {
+//        int res = 0;
+//        int n = nums.length;
+//        for(int i = 0; i < n;i++){
+//            if(nums[i] == 0){
+//                nums[i] = -1;
+//            }
+//        }
+//        int sum = 0;
+//        HashMap<Integer,Integer> hashMap = new HashMap<>(16);
+//        for(int i = 0 ; i < n; i++){
+//            sum += nums[i];
+//            if(sum == 0 ){
+//                res = i + 1;
+//            }
+//            if(hashMap.containsKey(sum)){
+//                res = Math.max(i - hashMap.get(sum), res);
+//            }else {
+//                hashMap.put(sum, i);
+//            }
+//        }
+//        return res;
+        int maxLength = 0;
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        int counter = 0;
+        map.put(counter, -1);
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            int num = nums[i];
+            if (num == 1) {
+                counter++;
+            } else {
+                counter--;
+            }
+            if (map.containsKey(counter)) {
+                int prevIndex = map.get(counter);
+                maxLength = Math.max(maxLength, i - prevIndex);
+            } else {
+                map.put(counter, i);
+            }
+        }
+        return maxLength;
     }
 
 //    两数相加
