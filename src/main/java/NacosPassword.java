@@ -229,7 +229,7 @@ public class NacosPassword {
 //        int[] a = {5, 2, 6, 4, 1};
 //        int[][] b = {{3, 1, 2}, {4, 10, 3}, {3, 10, 100}, {4, 100, 30}, {1, 3, 1}};
 //        System.out.println(canEat(a, b));
-        int[] a= {0,1,0,0,0,0,1,1,1};
+        int[] a = {0, 1, 0, 0, 0, 0, 1, 1, 1};
         System.out.println(findMaxLength(a));
     }
 
@@ -259,6 +259,38 @@ public class NacosPassword {
             this.val = val;
             this.next = next;
         }
+    }
+
+    //相交链表
+//    给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。如果两个链表没有交点，返回 null 。
+    public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode pa = headA;
+        ListNode pb = headB;
+        if (pa != pb) {
+            pa = pa == null ? headB : pa.next;
+            pb = pb == null ? headA : pb.next;
+        }
+        return pa;
+//        Set<ListNode> set = new HashSet<>(16);
+//        while (headA != null || headB != null){
+//            if(headA != null) {
+//                if (set.contains(headA)) {
+//                    return headA;
+//                } else {
+//                    set.add(headA);
+//                    headA = headA.next;
+//                }
+//            }
+//            if(headB != null) {
+//                if (set.contains(headB)) {
+//                    return headB;
+//                } else {
+//                    set.add(headB);
+//                    headB = headB.next;
+//                }
+//            }
+//        }
+//        return null;
     }
 
     // 连续数组
