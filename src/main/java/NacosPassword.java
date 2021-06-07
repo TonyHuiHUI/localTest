@@ -229,8 +229,9 @@ public class NacosPassword {
 //        int[] a = {5, 2, 6, 4, 1};
 //        int[][] b = {{3, 1, 2}, {4, 10, 3}, {3, 10, 100}, {4, 100, 30}, {1, 3, 1}};
 //        System.out.println(canEat(a, b));
-        int[] a = {0, 1, 0, 0, 0, 0, 1, 1, 1};
-        System.out.println(findMaxLength(a));
+        int[] a = {1, 1, 1, 1, 1};
+//        System.out.println(findMaxLength(a));
+        System.out.println(findTargetSumWays(a, 3));
     }
 
 
@@ -259,6 +260,67 @@ public class NacosPassword {
             this.val = val;
             this.next = next;
         }
+    }
+
+    //494. 目标和
+//    给你一个整数数组 nums 和一个整数 target 。
+//
+//    向数组中的每个整数前添加 '+' 或 '-' ，然后串联起所有整数，可以构造一个 表达式 ：
+//
+//    例如，nums = [2, 1] ，可以在 2 之前添加 '+' ，在 1 之前添加 '-' ，然后串联起来得到表达式 "+2-1" 。
+//
+//    返回可以通过上述方法构造的、运算结果等于 target 的不同 表达式 的数目。
+
+    public static int findTargetSumWays(int[] nums, int target) {
+        //原问题等同于： 找到nums一个正子集和一个负子集，使得总和等于target
+        //转化为一个求子集的和问题： 找到nums的一个子集 P，使得sum(P) = (sum(nums)-target) /2;即0-1背包问题
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        int diff = sum - target;
+        if (diff < 0 || diff % 2 != 0) {
+            return 0;
+        }
+        int neg = diff / 2;
+        int n = nums.length;
+//        int[][] dp = new int[n + 1][neg + 1];
+//        dp[0][0] = 1;
+//        for (int i = 1; i <= n; i++) {
+//            int num = nums[i - 1];
+//            for (int j = 0; j <= neg; j++) {
+//                dp[i][j] = dp[i - 1][j];
+//                if (j >= num) {
+//                    dp[i][j] += dp[i - 1][j - num];
+//                }
+//            }
+//        }
+//        return dp[n][neg];
+
+        //优化
+        int[] dp = new int[neg + 1];
+        dp[0] = 1;
+        for (int num : nums) {
+            for (int j = neg; j >= num; j--) {
+                dp[j] += dp[j - num];
+            }
+        }
+        return dp[neg];
+
+//        return backtrack(nums, target, 0, 0, 0);
+    }
+
+    //回溯
+    public static int backtrack(int[] nums, int target, int index, int sum, int count) {
+        if (index == nums.length) {
+            if (sum == target) {
+                count++;
+            }
+        } else {
+            count = backtrack(nums, target, index + 1, sum + nums[index], count);
+            count = backtrack(nums, target, index + 1, sum - nums[index], count);
+        }
+        return count;
     }
 
     //相交链表
