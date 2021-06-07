@@ -229,9 +229,11 @@ public class NacosPassword {
 //        int[] a = {5, 2, 6, 4, 1};
 //        int[][] b = {{3, 1, 2}, {4, 10, 3}, {3, 10, 100}, {4, 100, 30}, {1, 3, 1}};
 //        System.out.println(canEat(a, b));
-        int[] a = {1, 1, 1, 1, 1};
+//        int[] a = {1, 1, 1, 1, 1};
 //        System.out.println(findMaxLength(a));
-        System.out.println(findTargetSumWays(a, 3));
+//        System.out.println(findTargetSumWays(a, 3));
+        int[] a = {2,4};
+        System.out.println(largestRectangleArea(a));
     }
 
 
@@ -262,6 +264,31 @@ public class NacosPassword {
         }
     }
 
+    //84. 柱状图中最大的矩形
+//    给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
+//    求在该柱状图中，能够勾勒出来的矩形的最大面积。
+    public static int largestRectangleArea(int[] heights) {
+        int res = 0;
+        int n = heights.length;
+        int[] left = new int[n];//记录每个柱子的左边界
+        int[] right = new int[n];//记录每个柱子的右边界
+        Arrays.fill(right, n);//默认每个柱子的右边界是最后一个柱子，避免数组递增时无法更新右边界
+        Stack<Integer> stack = new Stack<>();//单调栈
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && heights[i] <= heights[stack.peek()]) {
+                //当单调栈不空时，遇到的第一个比当前柱子小的，为当前柱子的右边界
+                right[stack.peek()] = i;
+                stack.pop();
+            }
+            //单调栈中当前柱子的左边界为栈顶元素
+            left[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(i);
+        }
+        for (int i = 0; i < n; i++) {
+            res = Math.max(res, (right[i] - left[i] - 1) * heights[i]);
+        }
+        return res;
+    }
     //494. 目标和
 //    给你一个整数数组 nums 和一个整数 target 。
 //
