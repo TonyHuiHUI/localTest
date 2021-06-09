@@ -234,7 +234,7 @@ public class NacosPassword {
 //        System.out.println(findTargetSumWays(a, 3));
 //        int[] a = {2,4};
 //        System.out.println(largestRectangleArea(a));
-        int[] a ={2,7,4,1,8,1};
+        int[] a = {2, 7, 4, 1, 8, 1};
         System.out.println(lastStoneWeightII(a));
     }
 
@@ -266,6 +266,46 @@ public class NacosPassword {
         }
     }
 
+    //879. 盈利计划
+//    集团里有 n 名员工，他们可以完成各种各样的工作创造利润。
+//
+//    第 i 种工作会产生 profit[i] 的利润，它要求 group[i] 名成员共同参与。如果成员参与了其中一项工作，就不能参与另一项工作。
+//
+//    工作的任何至少产生 minProfit 利润的子集称为 盈利计划 。并且工作的成员总数最多为 n 。
+//
+//    有多少种计划可以选择？因为答案很大，所以 返回结果模 10^9 + 7 的值。
+     /**
+     * @param   n 员工人数
+     * @param   minProfit 最少利润
+     * @param  group  工作集合 group[i]表示该工作需要的员工数
+     * @param  profit 工作利润集合 profir[i]表示该工作产生的利润
+     * @return
+     */
+    public static int profitableSchemes(int n, int minProfit, int[] group, int[] profit) {
+        int MOD = (int) 1e9 + 7;
+        int gl = group.length;
+        int[][][] dp = new int[gl + 1][n + 1][minProfit + 1];//dp[i][j][k]表示前i个工作选择j个员工，产生利润至少为k的盈利计划数
+        dp[0][0][0] = 1;
+        for (int i = 1; i <= gl; i++) {
+            int member = group[i - 1];
+            int earn = profit[i - 1];
+            for (int j = 0; j <= n; j++) {
+                for (int k = 0; k <= minProfit; k++) {
+                    if (j < member) {
+                        dp[i][j][k] = dp[i - 1][j][k];
+                    } else {
+                        dp[i][j][k] = (dp[i - 1][j][k] + dp[i - 1][j - member][Math.max(0, k - earn)]) % MOD;
+                    }
+                }
+            }
+        }
+        int res = 0;
+        for (int i = 0; i <= n; i++) {
+            res = (res + dp[gl][i][minProfit]) % MOD;
+        }
+        return res;
+    }
+
     //1049. 最后一块石头的重量 II
 //    有一堆石头，用整数数组 stones 表示。其中 stones[i] 表示第 i 块石头的重量。
 //
@@ -294,6 +334,7 @@ public class NacosPassword {
         }
         return Math.abs(sum - f[n][t] - f[n][t]);
     }
+
     //84. 柱状图中最大的矩形
 //    给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
 //    求在该柱状图中，能够勾勒出来的矩形的最大面积。
