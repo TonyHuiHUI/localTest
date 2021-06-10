@@ -234,8 +234,9 @@ public class NacosPassword {
 //        System.out.println(findTargetSumWays(a, 3));
 //        int[] a = {2,4};
 //        System.out.println(largestRectangleArea(a));
-        int[] a = {2, 7, 4, 1, 8, 1};
-        System.out.println(lastStoneWeightII(a));
+        int[] a = {2, 1, 5};
+//        System.out.println(lastStoneWeightII(a));
+        System.out.println(change(5, a));
     }
 
 
@@ -266,6 +267,42 @@ public class NacosPassword {
         }
     }
 
+    //518. 零钱兑换 II
+    //给定不同面额的硬币和一个总金额。写出函数来计算可以凑成总金额的硬币组合数。假设每一种面额的硬币有无限个。
+    public static int change(int amount, int[] coins) {
+
+        return 1;
+    }
+
+    //322. 零钱兑换
+//    给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。
+//
+//    你可以认为每种硬币的数量是无限的。
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        //dp[i][j]表示前i个硬币，总和为j的最少的硬币数
+        int[][] dp = new int[n + 1][amount + 1];
+        dp[0][0] = 0;
+        //没有硬币的情况下，金额>0的硬币数为无效值，定义为Integer.MAX_VALUE;
+        for (int i = 1; i <= amount; i++) {
+            dp[0][i] = Integer.MAX_VALUE;
+        }
+        for (int i = 1; i <= n; i++) {
+            int coin = coins[i - 1];
+            for (int j = 0; j <= amount; j++) {
+                //不使用当前硬币的情况
+                dp[i][j] = dp[i - 1][j];
+                //使用当前硬币，考虑多次使用
+                for (int k = 1; k * coin <= j; k++) {
+                    if (dp[i - 1][j - k * coin] != Integer.MAX_VALUE) {
+                        dp[i][j] = Math.min(dp[i][j], dp[i - 1][j - k * coin] + k);
+                    }
+                }
+            }
+        }
+        return dp[n][amount] == Integer.MAX_VALUE ? -1 : dp[n][amount];
+    }
+
     //879. 盈利计划
 //    集团里有 n 名员工，他们可以完成各种各样的工作创造利润。
 //
@@ -274,11 +311,12 @@ public class NacosPassword {
 //    工作的任何至少产生 minProfit 利润的子集称为 盈利计划 。并且工作的成员总数最多为 n 。
 //
 //    有多少种计划可以选择？因为答案很大，所以 返回结果模 10^9 + 7 的值。
-     /**
-     * @param   n 员工人数
-     * @param   minProfit 最少利润
-     * @param  group  工作集合 group[i]表示该工作需要的员工数
-     * @param  profit 工作利润集合 profir[i]表示该工作产生的利润
+
+    /**
+     * @param n         员工人数
+     * @param minProfit 最少利润
+     * @param group     工作集合 group[i]表示该工作需要的员工数
+     * @param profit    工作利润集合 profir[i]表示该工作产生的利润
      * @return
      */
     public static int profitableSchemes(int n, int minProfit, int[] group, int[] profit) {
