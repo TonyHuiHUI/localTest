@@ -267,22 +267,73 @@ public class NacosPassword {
         }
     }
 
+    //279. 完全平方数
+//    给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, ...）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。
+//
+//    给你一个整数 n ，返回和为 n 的完全平方数的 最少数量 。
+//
+//    完全平方数 是一个整数，其值等于另一个整数的平方；换句话说，其值等于一个整数自乘的积。例如，1、4、9 和 16 都是完全平方数，而 3 和 11 不是。
+    public static int numSquares(int n) {
+//        List<Integer> num = new ArrayList<>();
+//        for (int i = 1; i * i <= n; i++) {
+//            num.add(i * i);
+//        }
+//        int count = num.size();
+//        int[][] dp = new int[count + 1][n + 1];
+//        Arrays.fill(dp[0], Integer.MAX_VALUE);
+//        dp[0][0] = 0;
+//        for (int i = 1; i <= count; i++) {
+//            int val = num.get(i - 1);
+//            for (int j = 0; j <= n; j++) {
+//                dp[i][j] = dp[i - 1][j];
+//                for (int k = 1; k * val <= j; k++) {
+//                    if(dp[i - 1][j - k * val] != Integer.MAX_VALUE) {
+//                        dp[i][j] = Math.min(dp[i][j], dp[i - 1][j - k * val] + k);
+//                    }
+//                }
+//            }
+//        }
+//        return dp[count][n] == Integer.MAX_VALUE ? -1 :dp[count][n];
+        //优化
+        int[] f = new int[n + 1];
+        Arrays.fill(f, Integer.MAX_VALUE);
+        f[0] = 0;
+        for (int t = 1; t * t <= n; t++) {
+            int x = t * t;
+            for (int j = x; j <= n; j++) {
+                f[j] = Math.min(f[j], f[j - x] + 1);
+            }
+        }
+        return f[n];
+    }
+
     //518. 零钱兑换 II
     //给定不同面额的硬币和一个总金额。写出函数来计算可以凑成总金额的硬币组合数。假设每一种面额的硬币有无限个。
     public static int change(int cnt, int[] cs) {
+//        int n = cs.length;
+//        int[][] f = new int[n + 1][cnt + 1];
+//        f[0][0] = 1;
+//        for (int i = 1; i <= n; i++) {
+//            int val = cs[i - 1];
+//            for (int j = 0; j <= cnt; j++) {
+//                f[i][j] = f[i - 1][j];
+//                for (int k = 1; k * val <= j; k++) {
+//                    f[i][j] += f[i - 1][j - k * val];
+//                }
+//            }
+//        }
+//        return f[n][cnt];
+        //一维优化
         int n = cs.length;
-        int[][] f = new int[n + 1][cnt + 1];
-        f[0][0] = 1;
+        int[] f = new int[cnt + 1];
+        f[0] = 1;
         for (int i = 1; i <= n; i++) {
             int val = cs[i - 1];
-            for (int j = 0; j <= cnt; j++) {
-                f[i][j] = f[i - 1][j];
-                for (int k = 1; k * val <= j; k++) {
-                    f[i][j] += f[i - 1][j - k * val];
-                }
+            for (int j = val; j <= cnt; j++) {
+                f[j] += f[j - val];
             }
         }
-        return f[n][cnt];
+        return f[cnt];
     }
 
     //322. 零钱兑换
@@ -290,28 +341,39 @@ public class NacosPassword {
 //
 //    你可以认为每种硬币的数量是无限的。
     public int coinChange(int[] coins, int amount) {
+//        int n = coins.length;
+//        //dp[i][j]表示前i个硬币，总和为j的最少的硬币数
+//        int[][] dp = new int[n + 1][amount + 1];
+//        dp[0][0] = 0;
+//        //没有硬币的情况下，金额>0的硬币数为无效值，定义为Integer.MAX_VALUE;
+//        for (int i = 1; i <= amount; i++) {
+//            dp[0][i] = Integer.MAX_VALUE;
+//        }
+//        for (int i = 1; i <= n; i++) {
+//            int coin = coins[i - 1];
+//            for (int j = 0; j <= amount; j++) {
+//                //不使用当前硬币的情况
+//                dp[i][j] = dp[i - 1][j];
+//                //使用当前硬币，考虑多次使用
+//                for (int k = 1; k * coin <= j; k++) {
+//                    if (dp[i - 1][j - k * coin] != Integer.MAX_VALUE) {
+//                        dp[i][j] = Math.min(dp[i][j], dp[i - 1][j - k * coin] + k);
+//                    }
+//                }
+//            }
+//        }
+//        return dp[n][amount] == Integer.MAX_VALUE ? -1 : dp[n][amount];
+        //一维优化
         int n = coins.length;
-        //dp[i][j]表示前i个硬币，总和为j的最少的硬币数
-        int[][] dp = new int[n + 1][amount + 1];
-        dp[0][0] = 0;
-        //没有硬币的情况下，金额>0的硬币数为无效值，定义为Integer.MAX_VALUE;
-        for (int i = 1; i <= amount; i++) {
-            dp[0][i] = Integer.MAX_VALUE;
-        }
+        int[] f = new int[amount + 1];
+        for (int i = 1; i <= amount; i++) f[i] = Integer.MAX_VALUE;
         for (int i = 1; i <= n; i++) {
-            int coin = coins[i - 1];
-            for (int j = 0; j <= amount; j++) {
-                //不使用当前硬币的情况
-                dp[i][j] = dp[i - 1][j];
-                //使用当前硬币，考虑多次使用
-                for (int k = 1; k * coin <= j; k++) {
-                    if (dp[i - 1][j - k * coin] != Integer.MAX_VALUE) {
-                        dp[i][j] = Math.min(dp[i][j], dp[i - 1][j - k * coin] + k);
-                    }
-                }
+            int val = coins[i - 1];
+            for (int j = val; j <= amount; j++) {
+                f[j] = Math.min(f[j], f[j - val] + 1);
             }
         }
-        return dp[n][amount] == Integer.MAX_VALUE ? -1 : dp[n][amount];
+        return f[amount] == Integer.MAX_VALUE ? -1 : f[amount];
     }
 
     //879. 盈利计划
