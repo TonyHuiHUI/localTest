@@ -267,6 +267,39 @@ public class NacosPassword {
         }
     }
 
+    //852. 山脉数组的峰顶索引
+//    符合下列属性的数组 arr 称为 山脉数组 ：
+//    arr.length >= 3
+//    存在 i（0 < i < arr.length - 1）使得：
+//    arr[0] < arr[1] < ... arr[i-1] < arr[i]
+//    arr[i] > arr[i+1] > ... > arr[arr.length - 1]
+//    给你由整数组成的山脉数组 arr ，返回任何满足 arr[0] < arr[1] < ... arr[i - 1] < arr[i] > arr[i + 1] > ... > arr[arr.length - 1] 的下标 i 。
+    public static int peakIndexInMountainArray(int[] arr) {
+        //遍历枚举 O(n)
+//        int n = arr.length;
+//        int index = 0;
+//        while (arr[index] < arr[index + 1]) {
+//            index++;
+//        }
+//        return index;
+
+        //二分查找
+        int n = arr.length;
+        int left = 0;
+        int right = n - 1;
+        int result = 0;
+        while (left <= right){
+            int mid = ( right + left) / 2;
+            if(arr[mid] > arr[mid + 1]){
+                result = mid;
+                right = mid - 1;
+            }else {
+                left = mid + 1;
+            }
+        }
+        return result;
+    }
+
     //279. 完全平方数
 //    给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, ...）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。
 //
