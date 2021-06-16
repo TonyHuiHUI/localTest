@@ -234,9 +234,10 @@ public class NacosPassword {
 //        System.out.println(findTargetSumWays(a, 3));
 //        int[] a = {2,4};
 //        System.out.println(largestRectangleArea(a));
-        int[] a = {2, 1, 5};
+        int[] a = {5,3,4,5};
 //        System.out.println(lastStoneWeightII(a));
-        System.out.println(change(5, a));
+//        System.out.println(change(5, a));
+        System.out.println(stoneGame(a));
     }
 
 
@@ -267,6 +268,36 @@ public class NacosPassword {
         }
     }
 
+    //877. 石子游戏
+//    亚历克斯和李用几堆石子在做游戏。偶数堆石子排成一行，每堆都有正整数颗石子 piles[i] 。
+//    游戏以谁手中的石子最多来决出胜负。石子的总数是奇数，所以没有平局。
+//    亚历克斯和李轮流进行，亚历克斯先开始。 每回合，玩家从行的开始或结束处取走整堆石头。 这种情况一直持续到没有更多的石子堆为止，此时手中石子最多的玩家获胜。
+//    假设亚历克斯和李都发挥出最佳水平，当亚历克斯赢得比赛时返回 true ，当李赢得比赛时返回 false 。
+    public static boolean stoneGame(int[] piles) {
+//        int n = piles.length;
+//        int[][] dp = new int[n][n];
+//        for (int i = 0; i < n; i++) {
+//            dp[i][i] = piles[i];
+//        }
+//        for (int i = n - 2; i >= 0; i--) {
+//            for (int j = i + 1; j < n; j++) {
+//                dp[i][j] = Math.max(piles[i] - dp[i + 1][j], piles[j] - dp[i][j - 1]);
+//            }
+//        }
+//        return dp[0][n - 1] > 0;
+        int n = piles.length;
+        int[][] f = new int[n + 2][n + 2];
+        for (int len = 1; len <= n; len++) { // 枚举区间长度
+            for (int l = 1; l + len - 1 <= n; l++) { // 枚举左端点
+                int r = l + len - 1; // 计算右端点
+                int a = piles[l - 1] - f[l + 1][r];
+                int b = piles[r - 1] - f[l][r - 1];
+                f[l][r] = Math.max(a, b);
+            }
+        }
+        return f[1][n] > 0;
+    }
+
     //852. 山脉数组的峰顶索引
 //    符合下列属性的数组 arr 称为 山脉数组 ：
 //    arr.length >= 3
@@ -288,12 +319,12 @@ public class NacosPassword {
         int left = 0;
         int right = n - 1;
         int result = 0;
-        while (left <= right){
-            int mid = ( right + left) / 2;
-            if(arr[mid] > arr[mid + 1]){
+        while (left <= right) {
+            int mid = (right + left) / 2;
+            if (arr[mid] > arr[mid + 1]) {
                 result = mid;
                 right = mid - 1;
-            }else {
+            } else {
                 left = mid + 1;
             }
         }
