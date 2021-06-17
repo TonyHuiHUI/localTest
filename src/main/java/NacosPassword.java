@@ -1,5 +1,7 @@
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author hui
@@ -266,6 +268,23 @@ public class NacosPassword {
             this.val = val;
             this.next = next;
         }
+    }
+//    65. 有效数字
+//    有效数字（按顺序）可以分成以下几个部分：
+//              一个 小数 或者 整数
+//              （可选）一个 'e' 或 'E' ，后面跟着一个 整数
+//    小数（按顺序）可以分成以下几个部分：
+//     （可选）一个符号字符（'+' 或 '-'）
+//      下述格式之一：
+//              至少一位数字，后面跟着一个点 '.'
+//              至少一位数字，后面跟着一个点 '.' ，后面再跟着至少一位数字
+//              一个点 '.' ，后面跟着至少一位数字
+//    整数（按顺序）可以分成以下几个部分：
+//      （可选）一个符号字符（'+' 或 '-'）
+//       至少一位数字
+    public static boolean isNumber2(String s) {
+        String REG = "[+-]?(\\d+\\.?\\d*|\\.\\d+)([eE]{1}[+-]?\\d+)?\\d*";
+        return Pattern.matches(REG,s);
     }
 
     //877. 石子游戏
@@ -2061,7 +2080,7 @@ public class NacosPassword {
             }
         }
     }
-
+    //    65. 有效数字(有限状态机)
     public static boolean isNumber(String s) {
         Map<State, Map<CharType, State>> transfer = new HashMap<State, Map<CharType, State>>();
         Map<CharType, State> initialMap = new HashMap<CharType, State>() {{
