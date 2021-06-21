@@ -236,10 +236,11 @@ public class NacosPassword {
 //        System.out.println(findTargetSumWays(a, 3));
 //        int[] a = {2,4};
 //        System.out.println(largestRectangleArea(a));
-        int[] a = {5,3,4,5};
+        int[] a = {5, 3, 4, 5};
 //        System.out.println(lastStoneWeightII(a));
 //        System.out.println(change(5, a));
-        System.out.println(stoneGame(a));
+//        System.out.println(stoneGame(a));
+        System.out.println(smallestGoodBase("4681"));
     }
 
 
@@ -269,7 +270,41 @@ public class NacosPassword {
             this.next = next;
         }
     }
-//    65. 有效数字
+//401. 二进制手表
+//    二进制手表顶部有 4 个 LED 代表 小时（0-11），底部的 6 个 LED 代表 分钟（0-59）。每个 LED 代表一个 0 或 1，最低位在右侧。
+    public List<String> readBinaryWatch(int turnedOn) {
+        List<String> result = new ArrayList<>();
+        for (int h = 0; h < 12; h++) {
+            for (int m = 0; m < 60; m++) {
+                if (Integer.bitCount(h) + Integer.bitCount(m) == turnedOn) {
+                    result.add(h + ":" + (m < 10 ? "0" : "") + m);
+                }
+            }
+        }
+        return result;
+    }
+
+    //483. 最小好进制
+    //对于给定的整数 n, 如果n的k（k>=2）进制数的所有数位全为1，则称 k（k>=2）是 n 的一个好进制。
+    //以字符串的形式给出 n, 以字符串的形式返回 n 的最小好进制。
+    public static String smallestGoodBase(String n) {
+        long nVal = Long.parseLong(n);
+        int mMax = (int) Math.floor(Math.log(nVal) / Math.log(2));
+        for (int m = mMax; m > 1; m--) {
+            int k = (int) Math.pow(nVal, 1.0 / m);
+            long mul = 1, sum = 1;
+            for (int i = 0; i < m; i++) {
+                mul *= k;
+                sum += mul;
+            }
+            if (sum == nVal) {
+                return Integer.toString(k);
+            }
+        }
+        return Long.toString(nVal - 1);
+    }
+
+    //    65. 有效数字
 //    有效数字（按顺序）可以分成以下几个部分：
 //              一个 小数 或者 整数
 //              （可选）一个 'e' 或 'E' ，后面跟着一个 整数
@@ -284,7 +319,7 @@ public class NacosPassword {
 //       至少一位数字
     public static boolean isNumber2(String s) {
         String REG = "[+-]?(\\d+\\.?\\d*|\\.\\d+)([eE]{1}[+-]?\\d+)?\\d*";
-        return Pattern.matches(REG,s);
+        return Pattern.matches(REG, s);
     }
 
     //877. 石子游戏
@@ -2080,6 +2115,7 @@ public class NacosPassword {
             }
         }
     }
+
     //    65. 有效数字(有限状态机)
     public static boolean isNumber(String s) {
         Map<State, Map<CharType, State>> transfer = new HashMap<State, Map<CharType, State>>();
