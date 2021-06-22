@@ -1,5 +1,6 @@
 
 import java.util.*;
+import java.util.concurrent.locks.LockSupport;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -236,11 +237,12 @@ public class NacosPassword {
 //        System.out.println(findTargetSumWays(a, 3));
 //        int[] a = {2,4};
 //        System.out.println(largestRectangleArea(a));
-        int[] a = {5, 3, 4, 5};
+//        int[] a = {5, 3, 4, 5};
 //        System.out.println(lastStoneWeightII(a));
 //        System.out.println(change(5, a));
 //        System.out.println(stoneGame(a));
-        System.out.println(smallestGoodBase("4681"));
+//        System.out.println(smallestGoodBase("4681"));
+        System.out.println(permutation("abc"));
     }
 
 
@@ -268,6 +270,33 @@ public class NacosPassword {
         ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;
+        }
+    }
+    //剑指 Offer 38. 字符串的排列
+    //    输入一个字符串，打印出该字符串中字符的所有排列。
+    //    你可以以任意顺序返回这个字符串数组，但里面不能有重复元素。
+
+    public static String[] permutation(String s) {
+        int n = s.length();
+        Set<String> list = new HashSet<>();
+        boolean[] visited = new boolean[n];
+        char[] arr = s.toCharArray();
+        dfs(arr, "", visited, list);
+        return list.toArray(new String[0]);
+    }
+
+    public static void dfs(char[] arr, String s, boolean[] visited, Set<String> list){
+        if(s.length() == arr.length){
+            list.add(s);
+            return;
+        }
+        for(int i = 0; i < arr.length; i++){
+            if(visited[i]){
+                continue;
+            }
+            visited[i] = true;
+            dfs(arr, s + String.valueOf(arr[i]), visited, list);
+            visited[i] = false;
         }
     }
 //401. 二进制手表
