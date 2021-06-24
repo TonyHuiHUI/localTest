@@ -242,7 +242,9 @@ public class NacosPassword {
 //        System.out.println(change(5, a));
 //        System.out.println(stoneGame(a));
 //        System.out.println(smallestGoodBase("4681"));
-        System.out.println(permutation("abc"));
+//        System.out.println(permutation("abc"));
+        int[][] a = { {1,1},{3,2},{5,3},{4,1},{2,3},{1,4}};
+        System.out.println(maxPoints(a));
     }
 
 
@@ -272,12 +274,39 @@ public class NacosPassword {
             this.next = next;
         }
     }
-//    剑指 Offer 15. 二进制中1的个数
+
+    //149. 直线上最多的点数
+    //给你一个数组 points ，其中 points[i] = [xi, yi] 表示 X-Y 平面上的一个点。求最多有多少个点在同一条直线上。
+    public static int maxPoints(int[][] points) {
+        int n = points.length;
+        int result = 0;
+        for (int i = 0; i < n; i++) {
+            HashMap<String, Integer> hashMap = new HashMap<>();
+            int max = 0;
+            for (int j = i + 1; j < n; j++) {
+                int x = points[i][0] - points[j][0];
+                int y = points[i][1] - points[j][1];
+                int k = gcb(x, y);
+                String key = (x / k) + "-" + (y / k);
+                hashMap.put(key, hashMap.getOrDefault(key, 0) + 1);
+                max = Math.max(max, hashMap.get(key));
+            }
+            result = Math.max(max + 1, result);
+        }
+        return result;
+    }
+
+    //最大公约数
+    public static int gcb(int a, int b) {
+        return b == 0 ? a : gcb(b, a % b);
+    }
+
+    //    剑指 Offer 15. 二进制中1的个数
 //    请实现一个函数，输入一个整数（以二进制串形式），输出该数二进制表示中 1 的个数。例如，把 9 表示成二进制是 1001，有 2 位是 1。因此，如果输入 9，则该函数输出 2。
     public int hammingWeight(int n) {
         int count = 0;
-        while(n != 0){
-            n = n & (n -1);
+        while (n != 0) {
+            n = n & (n - 1);
             count++;
         }
         return count;
@@ -295,13 +324,13 @@ public class NacosPassword {
         return list.toArray(new String[0]);
     }
 
-    public static void dfs(char[] arr, String s, boolean[] visited, Set<String> list){
-        if(s.length() == arr.length){
+    public static void dfs(char[] arr, String s, boolean[] visited, Set<String> list) {
+        if (s.length() == arr.length) {
             list.add(s);
             return;
         }
-        for(int i = 0; i < arr.length; i++){
-            if(visited[i]){
+        for (int i = 0; i < arr.length; i++) {
+            if (visited[i]) {
                 continue;
             }
             visited[i] = true;
@@ -309,7 +338,8 @@ public class NacosPassword {
             visited[i] = false;
         }
     }
-//401. 二进制手表
+
+    //401. 二进制手表
 //    二进制手表顶部有 4 个 LED 代表 小时（0-11），底部的 6 个 LED 代表 分钟（0-59）。每个 LED 代表一个 0 或 1，最低位在右侧。
     public List<String> readBinaryWatch(int turnedOn) {
         List<String> result = new ArrayList<>();
