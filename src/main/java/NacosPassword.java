@@ -243,8 +243,8 @@ public class NacosPassword {
 //        System.out.println(stoneGame(a));
 //        System.out.println(smallestGoodBase("4681"));
 //        System.out.println(permutation("abc"));
-        int[][] a = { {1,1},{3,2},{5,3},{4,1},{2,3},{1,4}};
-        System.out.println(maxPoints(a));
+        String[] a = {"0201","0101","0102","1212","2002"};
+        System.out.println(openLock(a,"0202"));
     }
 
 
@@ -273,6 +273,58 @@ public class NacosPassword {
             this.val = val;
             this.next = next;
         }
+    }
+
+    //752. 打开转盘锁
+//    你有一个带有四个圆形拨轮的转盘锁。每个拨轮都有10个数字： '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' 。每个拨轮可以自由旋转：例如把 '9' 变为 '0'，'0' 变为 '9' 。每次旋转都只能旋转一个拨轮的一位数字。
+//    锁的初始数字为 '0000' ，一个代表四个拨轮的数字的字符串。
+//    列表 deadends 包含了一组死亡数字，一旦拨轮的数字和列表里的任何一个元素相同，这个锁将会被永久锁定，无法再被旋转。
+//    字符串 target 代表可以解锁的数字，你需要给出最小的旋转次数，如果无论如何不能解锁，返回 -1。
+
+    //实际求“0000”到target的最短路劲 广度优先搜索 || 启发式搜索 A*
+    public static int openLock(String[] deadends, String target) {
+        Set<String> set = new HashSet<>();
+        for (String deadend : deadends) {
+            set.add(deadend);
+        }
+        if (set.contains("0000")) {
+            return -1;
+        }
+        int step = 0;
+        Queue<String> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+        queue.offer("0000");
+        while (!queue.isEmpty()) {
+            int len = queue.size();
+            for (int i = 0; i < len; i++) {
+                String str = queue.poll();
+                if (str.equals(target)) {
+                    return step;
+                }
+                for (String next : getNexts(str)) {
+                    if (!set.contains(next) && !visited.contains(next)) {
+                        queue.offer(next);
+                        visited.add(next);
+                    }
+                }
+            }
+            step++;
+        }
+        return -1;
+    }
+
+    public static List<String> getNexts(String str) {
+        List<String> result = new LinkedList<>();
+        char[] chars = str.toCharArray();
+        for (int i = 0; i < 4; i++) {
+            char ch = chars[i];
+            chars[i] = ch == '0' ? '9' : (char) (ch - 1);
+            result.add(new String(chars));
+            chars[i] = ch == '9' ? '0' : (char) (ch + 1);
+            result.add(new String(chars));
+            chars[i] = ch;
+        }
+        return result;
     }
 
     //149. 直线上最多的点数
