@@ -276,7 +276,16 @@ public class NacosPassword {
             this.next = next;
         }
     }
-
+//    168. Excel表列名称
+    //给定一个正整数，返回它在 Excel 表中相对应的列名称。
+    public static String convertToTitle(int columnNumber) {
+        StringBuilder sb = new StringBuilder();
+        while (columnNumber > 0){
+            sb.append((char)(--columnNumber % 26 + 'A'));
+            columnNumber = columnNumber / 26;
+        }
+        return sb.reverse().toString();
+    }
     //815. 公交路线
 //    给你一个数组 routes ，表示一系列公交线路，其中每个 routes[i] 表示一条公交线路，第 i 辆公交车将会在上面循环行驶。
 //    例如，路线 routes[0] = [1, 5, 7] 表示第 0 辆公交车会一直按序列 1 -> 5 -> 7 -> 1 -> 5 -> 7 -> 1 -> ... 这样的车站路线行驶。
