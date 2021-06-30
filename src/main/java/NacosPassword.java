@@ -245,8 +245,15 @@ public class NacosPassword {
 //        System.out.println(permutation("abc"));
 //        String[] a = {"0201", "0101", "0102", "1212", "2002"};
 //        System.out.println(openLock(a, "0202"));
-        int[][] a = {{1, 2, 7}, {3, 6, 7}};
-        System.out.println(numBusesToDestination(a, 1, 6));
+//        int[][] a = {{1, 2, 7}, {3, 6, 7}};
+//        System.out.println(numBusesToDestination(a, 1, 6));
+        TreeNode root = new TreeNode(1);
+        TreeNode left = root.left = new TreeNode(2);
+        TreeNode right = root.right = new TreeNode(3);
+        right.left = new TreeNode(4);
+        right.right = new TreeNode(5);
+        System.out.println(serialize(root));
+        System.out.println(deserialize(serialize(root)));
     }
 
 
@@ -276,16 +283,70 @@ public class NacosPassword {
             this.next = next;
         }
     }
+//剑指 Offer 37. 序列化二叉树
+//    请实现两个函数，分别用来序列化和反序列化二叉树。
+//    你需要设计一个算法来实现二叉树的序列化与反序列化。这里不限定你的序列 / 反序列化算法执行逻辑，你只需要保证一个二叉树可以被序列化为一个字符串并且将这个字符串反序列化为原始的树结构。
+    // Encodes a tree to a single string.
+    public static String serialize(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        String result = "";
+        if (root == null) {
+            return "null";
+        } else {
+            queue.offer(root);
+        }
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (node != null) {
+                result += node.val + ",";
+                queue.offer(node.left);
+                queue.offer(node.right);
+            } else {
+                result += "null,";
+            }
+        }
+        return result;
+    }
+
+    // Decodes your encoded data to tree.
+    public static TreeNode deserialize(String data) {
+        if ("null".equals(data)) {
+            return null;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        String[] nodes = data.split(",");
+        TreeNode root = new TreeNode(Integer.valueOf(nodes[0]));
+        queue.offer(root);
+        int index = 0;
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if ("null".equals(nodes[index + 1])) {
+                node.left = null;
+            } else {
+                node.left = new TreeNode(Integer.valueOf(nodes[index + 1]));
+                queue.offer(node.left);
+            }
+            if ("null".equals(nodes[index + 2])) {
+                node.right = null;
+            } else {
+                node.right = new TreeNode(Integer.valueOf(nodes[index + 2]));
+                queue.offer(node.right);
+            }
+            index += 2;
+        }
+        return root;
+    }
 //    168. Excel表列名称
     //给定一个正整数，返回它在 Excel 表中相对应的列名称。
     public static String convertToTitle(int columnNumber) {
         StringBuilder sb = new StringBuilder();
-        while (columnNumber > 0){
-            sb.append((char)(--columnNumber % 26 + 'A'));
+        while (columnNumber > 0) {
+            sb.append((char) (--columnNumber % 26 + 'A'));
             columnNumber = columnNumber / 26;
         }
         return sb.reverse().toString();
     }
+
     //815. 公交路线
 //    给你一个数组 routes ，表示一系列公交线路，其中每个 routes[i] 表示一条公交线路，第 i 辆公交车将会在上面循环行驶。
 //    例如，路线 routes[0] = [1, 5, 7] 表示第 0 辆公交车会一直按序列 1 -> 5 -> 7 -> 1 -> 5 -> 7 -> 1 -> ... 这样的车站路线行驶。
