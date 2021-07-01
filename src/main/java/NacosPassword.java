@@ -247,13 +247,15 @@ public class NacosPassword {
 //        System.out.println(openLock(a, "0202"));
 //        int[][] a = {{1, 2, 7}, {3, 6, 7}};
 //        System.out.println(numBusesToDestination(a, 1, 6));
-        TreeNode root = new TreeNode(1);
-        TreeNode left = root.left = new TreeNode(2);
-        TreeNode right = root.right = new TreeNode(3);
-        right.left = new TreeNode(4);
-        right.right = new TreeNode(5);
-        System.out.println(serialize(root));
-        System.out.println(deserialize(serialize(root)));
+//        TreeNode root = new TreeNode(1);
+//        TreeNode left = root.left = new TreeNode(2);
+//        TreeNode right = root.right = new TreeNode(3);
+//        right.left = new TreeNode(4);
+//        right.right = new TreeNode(5);
+//        System.out.println(serialize(root));
+//        System.out.println(deserialize(serialize(root)));
+        int[] a = {1,3,5,7,2,4,6,8};
+        System.out.println(smallestK(a,0));
     }
 
 
@@ -283,7 +285,39 @@ public class NacosPassword {
             this.next = next;
         }
     }
-//剑指 Offer 37. 序列化二叉树
+
+    //面试题 17.14. 最小K个数
+    public static int[] smallestK(int[] arr, int k) {
+        //排序
+//        int[] vec = new int[k];
+//        Arrays.sort(arr);
+//        for (int i = 0; i < k; ++i) {
+//            vec[i] = arr[i];
+//        }
+//        return vec;
+
+        //堆
+        int[] result = new int[k];
+        if(k == 0){
+            return result;
+        }
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>((o1, o2) -> o2 - o1);
+        for (int num : arr){
+            if(priorityQueue.size() < k || priorityQueue.peek() > num){
+                priorityQueue.offer(num);
+            }
+            if(priorityQueue.size() > k){
+                priorityQueue.poll();
+            }
+        }
+
+        for(int i = 0; i < k; i++){
+            result[i] = priorityQueue.poll();
+        }
+        return result;
+    }
+
+    //剑指 Offer 37. 序列化二叉树
 //    请实现两个函数，分别用来序列化和反序列化二叉树。
 //    你需要设计一个算法来实现二叉树的序列化与反序列化。这里不限定你的序列 / 反序列化算法执行逻辑，你只需要保证一个二叉树可以被序列化为一个字符串并且将这个字符串反序列化为原始的树结构。
     // Encodes a tree to a single string.
@@ -336,7 +370,8 @@ public class NacosPassword {
         }
         return root;
     }
-//    168. Excel表列名称
+
+    //    168. Excel表列名称
     //给定一个正整数，返回它在 Excel 表中相对应的列名称。
     public static String convertToTitle(int columnNumber) {
         StringBuilder sb = new StringBuilder();
