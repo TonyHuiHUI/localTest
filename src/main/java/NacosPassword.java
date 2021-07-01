@@ -254,8 +254,10 @@ public class NacosPassword {
 //        right.right = new TreeNode(5);
 //        System.out.println(serialize(root));
 //        System.out.println(deserialize(serialize(root)));
-        int[] a = {1,3,5,7,2,4,6,8};
-        System.out.println(smallestK(a,0));
+//        int[] a = {1, 3, 5, 7, 2, 4, 6, 8};
+//        System.out.println(smallestK(a, 0));
+        int[][] a = {{0,2},{2,1},{3,4},{2,3},{1,4},{2,0},{0,4}};
+        System.out.println(numWays(5, a, 3));
     }
 
 
@@ -286,6 +288,39 @@ public class NacosPassword {
         }
     }
 
+    //LCP 07. 传递信息
+//    小朋友 A 在和 ta 的小伙伴们玩传信息游戏，游戏规则如下：
+//    有 n 名玩家，所有玩家编号分别为 0 ～ n-1，其中小朋友 A 的编号为 0
+//    每个玩家都有固定的若干个可传信息的其他玩家（也可能没有）。传信息的关系是单向的（比如 A 可以向 B 传信息，但 B 不能向 A 传信息）。
+//    每轮信息必须需要传递给另一个人，且信息可重复经过同一个人
+//    给定总玩家数 n，以及按 [玩家编号,对应可传递玩家编号] 关系组成的二维数组 relation。返回信息从小 A (编号 0 ) 经过 k 轮传递到编号为 n-1 的小伙伴处的方案数；若不能到达，返回 0。
+    public static int numWays(int n, int[][] relation, int k) {
+        Queue<Integer> queue = new LinkedList<>();
+        HashMap<Integer, List<Integer>> hashMap = new HashMap<>();
+        for (int[] edge : relation) {
+            List<Integer> list = hashMap.getOrDefault(edge[0], new LinkedList<>());
+            list.add(edge[1]);
+            hashMap.put(edge[0], list);
+        }
+        queue.offer(0);
+        while (!queue.isEmpty() && k-- > 0) {
+            int len = queue.size();
+            for (int i = 0; i < len; i++) {
+                int point = queue.poll();
+                for (int next : hashMap.get(point)) {
+                    queue.offer(next);
+                }
+            }
+        }
+        int result = 0;
+        while (!queue.isEmpty()) {
+            if (queue.poll() == n - 1) {
+                result++;
+            }
+        }
+        return result;
+    }
+
     //面试题 17.14. 最小K个数
     public static int[] smallestK(int[] arr, int k) {
         //排序
@@ -298,20 +333,20 @@ public class NacosPassword {
 
         //堆
         int[] result = new int[k];
-        if(k == 0){
+        if (k == 0) {
             return result;
         }
         PriorityQueue<Integer> priorityQueue = new PriorityQueue<>((o1, o2) -> o2 - o1);
-        for (int num : arr){
-            if(priorityQueue.size() < k || priorityQueue.peek() > num){
+        for (int num : arr) {
+            if (priorityQueue.size() < k || priorityQueue.peek() > num) {
                 priorityQueue.offer(num);
             }
-            if(priorityQueue.size() > k){
+            if (priorityQueue.size() > k) {
                 priorityQueue.poll();
             }
         }
 
-        for(int i = 0; i < k; i++){
+        for (int i = 0; i < k; i++) {
             result[i] = priorityQueue.poll();
         }
         return result;
