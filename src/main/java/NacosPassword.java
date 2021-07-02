@@ -256,7 +256,7 @@ public class NacosPassword {
 //        System.out.println(deserialize(serialize(root)));
 //        int[] a = {1, 3, 5, 7, 2, 4, 6, 8};
 //        System.out.println(smallestK(a, 0));
-        int[][] a = {{0,2},{2,1},{3,4},{2,3},{1,4},{2,0},{0,4}};
+        int[][] a = {{0, 2}, {2, 1}, {3, 4}, {2, 3}, {1, 4}, {2, 0}, {0, 4}};
         System.out.println(numWays(5, a, 3));
     }
 
@@ -286,6 +286,24 @@ public class NacosPassword {
             this.val = val;
             this.next = next;
         }
+    }
+
+    //1833. 雪糕的最大数量
+    //夏日炎炎，小男孩 Tony 想买一些雪糕消消暑。
+    //商店中新到 n 支雪糕，用长度为 n 的数组 costs 表示雪糕的定价，其中 costs[i] 表示第 i 支雪糕的现金价格。Tony 一共有 coins 现金可以用于消费，他想要买尽可能多的雪糕。
+    //给你价格数组 costs 和现金量 coins ，请你计算并返回 Tony 用 coins 现金能够买到的雪糕的 最大数量 。
+    public int maxIceCream(int[] costs, int coins) {
+        Arrays.sort(costs);
+        int count = 0;
+        for (int i = 0; i < costs.length; i++){
+            coins -= costs[i];
+            if(coins < 0){
+                return count;
+            }else {
+                count++;
+            }
+        }
+        return count;
     }
 
     //LCP 07. 传递信息
