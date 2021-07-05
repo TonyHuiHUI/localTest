@@ -288,6 +288,7 @@ public class NacosPassword {
             this.next = next;
         }
     }
+
     //726. 原子的数量
     //给定一个化学式formula（作为字符串），返回每种原子的数量。
     //原子总是以一个大写字母开始，接着跟随0个或任意个小写字母，表示原子的名字。
@@ -296,7 +297,7 @@ public class NacosPassword {
     //一个括号中的化学式和数字（可选择性添加）也是化学式。例如 (H2O2) 和 (H2O2)3 是化学式。
     //给定一个化学式，输出所有原子的数量。格式为：第一个（按字典序）原子的名子，跟着它的数量（如果数量大于 1），然后是第二个原子的名字（按字典序），跟着它的数量（如果数量大于 1），以此类推。
     public static String countOfAtoms(String formula) {
-        Stack<HashMap<String, Integer> > stack = new Stack<>();
+        Stack<HashMap<String, Integer>> stack = new Stack<>();
         stack.push(new HashMap<>());
         int n = formula.length();
         int index = 0;
@@ -316,7 +317,7 @@ public class NacosPassword {
                 }
                 HashMap<String, Integer> pop = stack.pop();
                 HashMap<String, Integer> peek = stack.peek();
-                for(Map.Entry<String, Integer> entry : pop.entrySet()){
+                for (Map.Entry<String, Integer> entry : pop.entrySet()) {
                     String atom = entry.getKey();
                     int v = entry.getValue();
                     peek.put(atom, peek.getOrDefault(atom, 0) + v * Integer.valueOf(num.toString()));
@@ -432,6 +433,37 @@ public class NacosPassword {
             result[i] = priorityQueue.poll();
         }
         return result;
+    }
+    // quickSelect 求无需数组第k大的数
+    public static int quickSelect(int[] arr, int begin, int end, int k) {
+        if (begin == end) {
+            return arr[begin];
+        }
+        int left = begin;
+        int right = end;
+        int mid = arr[(begin + end) / 2];
+        while (left <= right) {
+            while (left <= right && arr[left] > mid) {
+                left++;
+            }
+            while (left <= right && arr[right] < mid) {
+                right--;
+            }
+            if (left <= right) {
+                int temp = arr[left];
+                arr[left] = arr[right];
+                arr[right] = temp;
+                left++;
+                right--;
+            }
+        }
+        if (begin + k - 1 <= right) {
+            return quickSelect(arr, begin, right, k);
+        }
+        if (begin + k - 1 >= left) {
+            return quickSelect(arr, left, end, k - (left - begin));
+        }
+        return arr[right + 1];
     }
 
     //剑指 Offer 37. 序列化二叉树
