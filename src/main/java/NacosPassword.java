@@ -288,6 +288,29 @@ public class NacosPassword {
             this.next = next;
         }
     }
+    //53. 最大子序和
+    //给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+    public static int maxSubArray(int[] nums) {
+//        int pre = 0;
+//        int maxAns = nums[0];
+//        for(int num : nums){
+//            pre = Math.max(pre + num, num);
+//            maxAns = Math.max(maxAns, pre);
+//        }
+//        return maxAns;
+
+        int result = nums[0];
+        int sum = 0;
+        for(int num : nums){
+            if(sum > 0){
+                sum += num;
+            }else {
+                sum = num;
+            }
+            result = Math.max(result, sum);
+        }
+        return result;
+    }
 
     //1418. 点菜展示表
     //给你一个数组 orders，表示客户在餐厅中完成的订单，确切地说， orders[i]=[customerNamei,tableNumberi,foodItemi] ，其中 customerNamei 是客户的姓名，tableNumberi 是客户所在餐桌的桌号，而 foodItemi 是客户点的餐品名称。
