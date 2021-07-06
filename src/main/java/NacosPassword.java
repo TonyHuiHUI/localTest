@@ -289,6 +289,50 @@ public class NacosPassword {
         }
     }
 
+    //1418. 点菜展示表
+    //给你一个数组 orders，表示客户在餐厅中完成的订单，确切地说， orders[i]=[customerNamei,tableNumberi,foodItemi] ，其中 customerNamei 是客户的姓名，tableNumberi 是客户所在餐桌的桌号，而 foodItemi 是客户点的餐品名称。
+    //请你返回该餐厅的 点菜展示表 。在这张表中，表中第一行为标题，其第一列为餐桌桌号 “Table” ，后面每一列都是按字母顺序排列的餐品名称。接下来每一行中的项则表示每张餐桌订购的相应餐品数量，第一列应当填对应的桌号，后面依次填写下单的餐品数量。
+    //注意：客户姓名不是点菜展示表的一部分。此外，表中的数据行应该按餐桌桌号升序排列。
+    public static List<List<String>> displayTable(List<List<String>> orders) {
+        HashMap<Integer, Map<String, Integer>> orderMap = new HashMap<>();
+        Set<String> foodNameSet = new HashSet<>();
+        for (List<String> order : orders) {
+            foodNameSet.add(order.get(2));
+            int tableNum = Integer.valueOf(order.get(1));
+            Map<String, Integer> map = orderMap.getOrDefault(tableNum, new HashMap<String, Integer>());
+            map.put(order.get(2), map.getOrDefault(order.get(2), 0) + 1);
+            orderMap.put(tableNum, map);
+        }
+        List<String> names = new ArrayList<>();
+        for (String name : foodNameSet){
+            names.add(name);
+        }
+        Collections.sort(names);
+        List<Integer> nums = new ArrayList<>();
+        for (int num : orderMap.keySet()){
+            nums.add(num);
+        }
+        Collections.sort(nums);
+
+        List<List<String>> result = new ArrayList<List<String>>();
+        List<String> header = new ArrayList<>();
+        header.add("Table");
+        for (String name : names){
+            header.add(name);
+        }
+        result.add(header);
+        for (int num : nums){
+            Map<String, Integer> order = orderMap.get(num);
+            List<String> row = new ArrayList<>();
+            row.add(Integer.toString(num));
+            for (String name : names){
+                row.add(Integer.toString(order.getOrDefault(name,0)));
+            }
+            result.add(row);
+        }
+        return result;
+    }
+
     //726. 原子的数量
     //给定一个化学式formula（作为字符串），返回每种原子的数量。
     //原子总是以一个大写字母开始，接着跟随0个或任意个小写字母，表示原子的名字。
@@ -434,6 +478,7 @@ public class NacosPassword {
         }
         return result;
     }
+
     // quickSelect 求无需数组第k大的数
     public static int quickSelect(int[] arr, int begin, int end, int k) {
         if (begin == end) {
