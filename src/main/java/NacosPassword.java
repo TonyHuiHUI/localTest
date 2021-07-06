@@ -288,6 +288,24 @@ public class NacosPassword {
             this.next = next;
         }
     }
+//645. 错误的集合
+//集合 s 包含从 1 到 n 的整数。不幸的是，因为数据错误，导致集合里面某一个数字复制了成了集合里面的另外一个数字的值，导致集合 丢失了一个数字 并且 有一个数字重复 。
+//    给定一个数组 nums 代表了集合 S 发生错误后的结果。
+//    请你找出重复出现的整数，再找到丢失的整数，将它们以数组的形式返回。
+    public int[] findErrorNums(int[] nums) {
+        Set<Integer> set = new HashSet<>();//利用Set去重
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+            set.add(num);
+        }
+        int sumA = 0;
+        for (int num : set) {
+            sumA += num;
+        }
+        return new int[]{(sum - sumA), (nums.length * (nums.length + 1)) / 2 - sumA};
+    }
+
     //53. 最大子序和
     //给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
     public static int maxSubArray(int[] nums) {
@@ -301,10 +319,10 @@ public class NacosPassword {
 
         int result = nums[0];
         int sum = 0;
-        for(int num : nums){
-            if(sum > 0){
+        for (int num : nums) {
+            if (sum > 0) {
                 sum += num;
-            }else {
+            } else {
                 sum = num;
             }
             result = Math.max(result, sum);
@@ -327,12 +345,12 @@ public class NacosPassword {
             orderMap.put(tableNum, map);
         }
         List<String> names = new ArrayList<>();
-        for (String name : foodNameSet){
+        for (String name : foodNameSet) {
             names.add(name);
         }
         Collections.sort(names);
         List<Integer> nums = new ArrayList<>();
-        for (int num : orderMap.keySet()){
+        for (int num : orderMap.keySet()) {
             nums.add(num);
         }
         Collections.sort(nums);
@@ -340,16 +358,16 @@ public class NacosPassword {
         List<List<String>> result = new ArrayList<List<String>>();
         List<String> header = new ArrayList<>();
         header.add("Table");
-        for (String name : names){
+        for (String name : names) {
             header.add(name);
         }
         result.add(header);
-        for (int num : nums){
+        for (int num : nums) {
             Map<String, Integer> order = orderMap.get(num);
             List<String> row = new ArrayList<>();
             row.add(Integer.toString(num));
-            for (String name : names){
-                row.add(Integer.toString(order.getOrDefault(name,0)));
+            for (String name : names) {
+                row.add(Integer.toString(order.getOrDefault(name, 0)));
             }
             result.add(row);
         }
