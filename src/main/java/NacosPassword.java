@@ -288,6 +288,21 @@ public class NacosPassword {
             this.next = next;
         }
     }
+    //1. 两数之和
+    public static int[] twoSum(int[] nums, int target) {
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        int[] result = new int[2];
+        for (int i = 0; i < nums.length; i++){
+            int temp = target - nums[i];
+            if(hashMap.containsKey(temp)){
+                result[0] = hashMap.get(temp);
+                result[1] = i;
+                return result;
+            }
+            hashMap.put(nums[i], i);
+        }
+        return null;
+    }
     //1711. 大餐计数
     //大餐 是指 恰好包含两道不同餐品 的一餐，其美味程度之和等于 2 的幂。
     //你可以搭配 任意 两道餐品做一顿大餐。
