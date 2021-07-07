@@ -1,4 +1,6 @@
 
+import com.alibaba.druid.sql.visitor.functions.Char;
+
 import java.util.*;
 import java.util.concurrent.locks.LockSupport;
 import java.util.regex.Matcher;
@@ -288,7 +290,23 @@ public class NacosPassword {
             this.next = next;
         }
     }
-
+    //3. 无重复字符的最长子串
+    public static int lengthOfLongestSubstring(String s) {
+        Set<Character> set = new HashSet<>();
+        int index = 0;
+        int result = 0;
+        for(int i = 0; i < s.length(); i++){
+            if(i != 0){
+                set.remove(s.charAt(i-1));
+            }
+            while (index < s.length() && !set.contains(s.charAt(index))){
+                set.add(s.charAt(index));
+                index++;
+            }
+            result = Math.max(result, index - i +1);
+        }
+        return result;
+    }
     //88. 合并两个有序数组
     //给你两个有序整数数组 nums1 和 nums2，请你将 nums2 合并到 nums1 中，使 nums1 成为一个有序数组。
     //初始化 nums1 和 nums2 的元素数量分别为 m 和 n 。你可以假设 nums1 的空间大小等于 m + n，这样它就有足够的空间保存来自 nums2 的元素。
