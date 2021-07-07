@@ -288,6 +288,31 @@ public class NacosPassword {
             this.next = next;
         }
     }
+    //1711. 大餐计数
+    //大餐 是指 恰好包含两道不同餐品 的一餐，其美味程度之和等于 2 的幂。
+    //你可以搭配 任意 两道餐品做一顿大餐。
+    //给你一个整数数组 deliciousness ，其中 deliciousness[i] 是第 i​​​​​​​​​​​​​​ 道餐品的美味程度，返回你可以用数组中的餐品做出的不同 大餐 的数量。结果需要对 109 + 7 取余。
+    //注意，只要餐品下标不同，就可以认为是不同的餐品，即便它们的美味程度相同。
+    public int countPairs(int[] deliciousness) {
+        final int MOD = 1000000007;
+        int maxVal = 0;
+        for (int val : deliciousness) {
+            maxVal = Math.max(maxVal, val);
+        }
+        int maxSum = maxVal * 2;
+        int pairs = 0;
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        int n = deliciousness.length;
+        for (int i = 0; i < n; i++) {
+            int val = deliciousness[i];
+            for (int sum = 1; sum <= maxSum; sum <<= 1) {
+                int count = map.getOrDefault(sum - val, 0);
+                pairs = (pairs + count) % MOD;
+            }
+            map.put(val, map.getOrDefault(val, 0) + 1);
+        }
+        return pairs;
+    }
 //645. 错误的集合
 //集合 s 包含从 1 到 n 的整数。不幸的是，因为数据错误，导致集合里面某一个数字复制了成了集合里面的另外一个数字的值，导致集合 丢失了一个数字 并且 有一个数字重复 。
 //    给定一个数组 nums 代表了集合 S 发生错误后的结果。
