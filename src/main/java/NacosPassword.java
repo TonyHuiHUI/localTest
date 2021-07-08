@@ -261,7 +261,7 @@ public class NacosPassword {
 //        int[][] a = {{0, 2}, {2, 1}, {3, 4}, {2, 3}, {1, 4}, {2, 0}, {0, 4}};
 ////        System.out.println(numWays(5, a, 3));
 //        System.out.println(countOfAtoms("K4(ON(SO3)2)2"));
-        int[] a = {1,0,1,0,1};
+        int[] a = {1, 0, 1, 0, 1};
         System.out.println(numSubarraysWithSum(a, 2));
     }
 
@@ -292,7 +292,51 @@ public class NacosPassword {
             this.next = next;
         }
     }
-//930. 和相同的二元子数组
+
+    //350. 两个数组的交集 II
+    //给定两个数组，编写一个函数来计算它们的交集
+    public static int[] intersect(int[] nums1, int[] nums2) {
+        //排序
+//        Arrays.sort(nums1);
+//        Arrays.sort(nums2);
+//        int length1 = nums1.length;
+//        int length2 = nums2.length;
+//        int[] result = new int[Math.min(length1, length2)];
+//        int index = 0;
+//        int index1 = 0;
+//        int index2 = 0;
+//        while (index1 < length1 && index2 < length2) {
+//            if (nums1[index1] == nums2[index2]) {
+//                result[index++] = nums1[index1];
+//                index1++;
+//                index2++;
+//            } else if (nums1[index1] < nums2[index2]) {
+//                index1++;
+//            } else {
+//                index2++;
+//            }
+//        }
+//        return Arrays.copyOfRange(result, 0, index);
+        //hash
+        if (nums2.length < nums1.length) {
+            return intersect(nums2, nums1);
+        }
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        int[] result = new int[nums1.length];
+        int index = 0;
+        for (int num : nums1) {
+            hashMap.put(num, hashMap.getOrDefault(num, 0) + 1);
+        }
+        for (int num : nums2) {
+            if (hashMap.containsKey(num) && hashMap.get(num) != 0) {
+                result[index++] = num;
+                hashMap.put(num, hashMap.get(num) - 1);
+            }
+        }
+        return Arrays.copyOfRange(result, 0, index);
+    }
+
+    //930. 和相同的二元子数组
 //给你一个二元数组 nums ，和一个整数 goal ，请你统计并返回有多少个和为 goal 的 非空 子数组。
 //    子数组 是数组的一段连续部分。
     public static int numSubarraysWithSum(int[] nums, int goal) {
