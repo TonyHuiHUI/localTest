@@ -260,7 +260,9 @@ public class NacosPassword {
 //        System.out.println(smallestK(a, 0));
 //        int[][] a = {{0, 2}, {2, 1}, {3, 4}, {2, 3}, {1, 4}, {2, 0}, {0, 4}};
 ////        System.out.println(numWays(5, a, 3));
-        System.out.println(countOfAtoms("K4(ON(SO3)2)2"));
+//        System.out.println(countOfAtoms("K4(ON(SO3)2)2"));
+        int[] a = {0,0,0,0,0};
+        System.out.println(numSubarraysWithSum(a, 0));
     }
 
 
@@ -289,6 +291,23 @@ public class NacosPassword {
             this.val = val;
             this.next = next;
         }
+    }
+//930. 和相同的二元子数组
+//给你一个二元数组 nums ，和一个整数 goal ，请你统计并返回有多少个和为 goal 的 非空 子数组。
+//    子数组 是数组的一段连续部分。
+    public static int numSubarraysWithSum(int[] nums, int goal) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        int result = 0;
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+            if (map.containsKey(sum - goal)) {
+                result += map.get(sum - goal);
+            }
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        return result;
     }
 
     //3. 无重复字符的最长子串
