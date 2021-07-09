@@ -263,7 +263,7 @@ public class NacosPassword {
 //        System.out.println(countOfAtoms("K4(ON(SO3)2)2"));
 //        int[] a = {1, 0, 1, 0, 1};
 //        System.out.println(numSubarraysWithSum(a, 2));
-        int[] a = {1,2,5,9,5,9,5,5,5};
+        int[] a = {1, 2, 5, 9, 5, 9, 5, 5, 5};
         System.out.println(majorityElement(a));
     }
 
@@ -294,31 +294,50 @@ public class NacosPassword {
             this.next = next;
         }
     }
+    //566. 重塑矩阵
+    //在MATLAB中，有一个非常有用的函数 reshape，它可以将一个矩阵重塑为另一个大小不同的新矩阵，但保留其原始数据。
+    //给出一个由二维数组表示的矩阵，以及两个正整数r和c，分别表示想要的重构的矩阵的行数和列数。
+    //重构后的矩阵需要将原始矩阵的所有元素以相同的行遍历顺序填充。
+    //如果具有给定参数的reshape操作是可行且合理的，则输出新的重塑矩阵；否则，输出原始矩阵。
+    public static int[][] matrixReshape(int[][] mat, int r, int c) {
+        int n = mat.length;
+        int m = mat[0].length;
+        if (n * m != r * c) {
+            return mat;
+        }
+        int[][] result = new int[r][c];
+        for (int i = 0; i < n * m; i++) {
+            result[i / c][i % c] = mat[i / m][i % m];
+        }
+        return result;
+    }
+
     //面试题 17.10. 主要元素
     //数组中占比超过一半的元素称之为主要元素。给你一个 整数 数组，找出其中的主要元素。若没有，返回 -1 。请设计时间复杂度为 O(N) 、空间复杂度为 O(1) 的解决方案。
 //    Boyer-Moore 投票算法
     public static int majorityElement(int[] nums) {
         int candidate = -1;
         int count = 0;
-        for(int num : nums){
-            if(count == 0){
+        for (int num : nums) {
+            if (count == 0) {
                 candidate = num;
             }
-            if(num == candidate){
+            if (num == candidate) {
                 count++;
-            }else {
+            } else {
                 count--;
             }
         }
         //可能不存在主要元素，需要再遍历一遍统计candidate的数量
-        count =0;
-        for (int num : nums){
-            if(num == candidate){
+        count = 0;
+        for (int num : nums) {
+            if (num == candidate) {
                 count++;
             }
         }
-        return count * 2 > nums.length ? candidate: -1;
+        return count * 2 > nums.length ? candidate : -1;
     }
+
     //121. 买卖股票的最佳时机
     //给定一个数组 prices ，它的第 i 个元素 prices[i] 表示一支给定股票第 i 天的价格。
 //你只能选择 某一天 买入这只股票，并选择在 未来的某一个不同的日子 卖出该股票。设计一个算法来计算你所能获取的最大利润。
