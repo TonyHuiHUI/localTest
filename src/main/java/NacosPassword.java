@@ -263,8 +263,9 @@ public class NacosPassword {
 //        System.out.println(countOfAtoms("K4(ON(SO3)2)2"));
 //        int[] a = {1, 0, 1, 0, 1};
 //        System.out.println(numSubarraysWithSum(a, 2));
-        int[] a = {1, 2, 5, 9, 5, 9, 5, 5, 5};
-        System.out.println(majorityElement(a));
+//        int[] a = {1, 2, 5, 9, 5, 9, 5, 5, 5};
+//        System.out.println(majorityElement(a));
+        System.out.println(longestPalindrome("babad"));
     }
 
 
@@ -294,23 +295,87 @@ public class NacosPassword {
             this.next = next;
         }
     }
+
+    //5. 最长回文子串
+    //给你一个字符串 s，找到 s 中最长的回文子串。
+    public static String longestPalindrome(String s) {
+        //中心扩展
+//        if (s == null || s.length() < 1) {
+//            return "";
+//        }
+//        int start = 0;
+//        int end = 0;
+//        for (int i = 0; i < s.length(); i++) {
+//            int lenO = expand(s, i, i);
+//            int lenE = expand(s, i, i + 1);
+//            int len = Math.max(lenE, lenO);
+//            if (len > end - start) {
+//                start = i - (len - 1) / 2;
+//                end = i + len / 2;
+//            }
+//        }
+//        return s.substring(start, end + 1);
+        //动态规划
+        int len = s.length();
+        if (len < 2) {
+            return s;
+        }
+        int maxLen = 1;
+        int begin = 0;
+        boolean[][] dp = new boolean[len][len];
+        for (int i = 0; i < len; i++) {
+            dp[i][i] = true;
+        }
+        for (int L = 2; L <= len; L++) {
+            for (int left = 0; left < len; left++) {
+                int right = left + L - 1;
+                if (right >= len) {
+                    break;
+                }
+                if (s.charAt(left) != s.charAt(right)) {
+                    dp[left][right] = false;
+                } else {
+                    if (right - left < 3) {
+                        dp[left][right] = true;
+                    } else {
+                        dp[left][right] = dp[++left][--right];
+                    }
+                }
+                if (dp[left][right] && right - left + 1 > maxLen) {
+                    maxLen = right - left + 1;
+                    begin = left;
+                }
+            }
+        }
+        return s.substring(begin, begin + maxLen);
+    }
+
+    public static int expand(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return right - left - 1;
+    }
+
     //118. 杨辉三角
 //    给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。
     public static List<List<Integer>> generate(int numRows) {
         List<List<Integer>> result = new LinkedList<>();
-        for(int i = 0; i < numRows; i++){
+        for (int i = 0; i < numRows; i++) {
             List<Integer> temp = new LinkedList<>();
-            for(int j = 0; j <= i; j++){
-                if(j == 0 || j == i){
+            for (int j = 0; j <= i; j++) {
+                if (j == 0 || j == i) {
                     temp.add(1);
-                }else {
-                    temp.add(result.get(i-1).get(j-1)+result.get(i-1).get(j));
+                } else {
+                    temp.add(result.get(i - 1).get(j - 1) + result.get(i - 1).get(j));
                 }
             }
             result.add(temp);
         }
         return result;
     }
+
     //566. 重塑矩阵
     //在MATLAB中，有一个非常有用的函数 reshape，它可以将一个矩阵重塑为另一个大小不同的新矩阵，但保留其原始数据。
     //给出一个由二维数组表示的矩阵，以及两个正整数r和c，分别表示想要的重构的矩阵的行数和列数。
