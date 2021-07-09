@@ -261,8 +261,10 @@ public class NacosPassword {
 //        int[][] a = {{0, 2}, {2, 1}, {3, 4}, {2, 3}, {1, 4}, {2, 0}, {0, 4}};
 ////        System.out.println(numWays(5, a, 3));
 //        System.out.println(countOfAtoms("K4(ON(SO3)2)2"));
-        int[] a = {1, 0, 1, 0, 1};
-        System.out.println(numSubarraysWithSum(a, 2));
+//        int[] a = {1, 0, 1, 0, 1};
+//        System.out.println(numSubarraysWithSum(a, 2));
+        int[] a = {1,2,5,9,5,9,5,5,5};
+        System.out.println(majorityElement(a));
     }
 
 
@@ -292,7 +294,31 @@ public class NacosPassword {
             this.next = next;
         }
     }
-
+    //面试题 17.10. 主要元素
+    //数组中占比超过一半的元素称之为主要元素。给你一个 整数 数组，找出其中的主要元素。若没有，返回 -1 。请设计时间复杂度为 O(N) 、空间复杂度为 O(1) 的解决方案。
+//    Boyer-Moore 投票算法
+    public static int majorityElement(int[] nums) {
+        int candidate = -1;
+        int count = 0;
+        for(int num : nums){
+            if(count == 0){
+                candidate = num;
+            }
+            if(num == candidate){
+                count++;
+            }else {
+                count--;
+            }
+        }
+        //可能不存在主要元素，需要再遍历一遍统计candidate的数量
+        count =0;
+        for (int num : nums){
+            if(num == candidate){
+                count++;
+            }
+        }
+        return count * 2 > nums.length ? candidate: -1;
+    }
     //121. 买卖股票的最佳时机
     //给定一个数组 prices ，它的第 i 个元素 prices[i] 表示一支给定股票第 i 天的价格。
 //你只能选择 某一天 买入这只股票，并选择在 未来的某一个不同的日子 卖出该股票。设计一个算法来计算你所能获取的最大利润。
