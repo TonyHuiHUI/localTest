@@ -294,6 +294,23 @@ public class NacosPassword {
             this.next = next;
         }
     }
+    //118. 杨辉三角
+//    给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。
+    public static List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> result = new LinkedList<>();
+        for(int i = 0; i < numRows; i++){
+            List<Integer> temp = new LinkedList<>();
+            for(int j = 0; j <= i; j++){
+                if(j == 0 || j == i){
+                    temp.add(1);
+                }else {
+                    temp.add(result.get(i-1).get(j-1)+result.get(i-1).get(j));
+                }
+            }
+            result.add(temp);
+        }
+        return result;
+    }
     //566. 重塑矩阵
     //在MATLAB中，有一个非常有用的函数 reshape，它可以将一个矩阵重塑为另一个大小不同的新矩阵，但保留其原始数据。
     //给出一个由二维数组表示的矩阵，以及两个正整数r和c，分别表示想要的重构的矩阵的行数和列数。
