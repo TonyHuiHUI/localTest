@@ -7,6 +7,53 @@ public class ProblemSet {
         int[] a = {3,0,6,1,5};
         System.out.println(hIndex(a));
     }
+    //73. 矩阵置零
+//    给定一个 m x n 的矩阵，如果一个元素为 0 ，则将其所在行和列的所有元素都设为 0 。请使用 原地 算法。
+    public static void setZeroes(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        boolean row0 = false;//第一行是否有0
+        boolean col0 = false;//第一列是否有0
+        for(int i = 0; i < n; i++){
+            if(matrix[i][0] == 0){
+                col0 = true;
+            }
+        }
+        for(int i = 0; i < m; i++){
+            if(matrix[0][i] == 0){
+                row0 = true;
+            }
+        }
+        //利用第一行和第一列记录矩阵是否有0
+        for(int i = 1; i < n; i++){
+            for (int j = 1; j < m; j++){
+                if(matrix[i][j] == 0){
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        //覆盖原矩阵
+        for(int i = 1; i < n; i++){
+            for(int j = 1; j < m; j++){
+                if(matrix[i][0] == 0 || matrix[0][j] == 0){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        //还原原第一行
+        if(row0){
+            for(int i = 0; i < m; i++){
+                matrix[0][i] = 0;
+            }
+        }
+        //还原原第一列
+        if(col0){
+            for(int i = 0; i < n; i++){
+                matrix[i][0] = 0;
+            }
+        }
+    }
     //36. 有效的数独
     //请你判断一个 9x9 的数独是否有效。只需要 根据以下规则 ，验证已经填入的数字是否有效即可。
     //数字 1-9 在每一行只能出现一次。
