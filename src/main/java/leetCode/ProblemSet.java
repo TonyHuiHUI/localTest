@@ -1,11 +1,26 @@
 package leetCode;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class ProblemSet {
     public static void main(String[] args) {
         int[] a = {3,0,6,1,5};
         System.out.println(hIndex(a));
+    }
+    //387. 字符串中的第一个唯一字符
+    //给定一个字符串，找到它的第一个不重复的字符，并返回它的索引。如果不存在，则返回 -1。
+    public static int firstUniqChar(String s) {
+        HashMap<Character,Integer> hashMap = new HashMap<>();
+        for (int i = 0 ;i < s.length(); i++){
+            hashMap.put(s.charAt(i), hashMap.getOrDefault(s.charAt(i), 0) + 1);
+        }
+        for(int i = 0; i < s.length(); i++){
+            if(hashMap.get(s.charAt(i)) == 1){
+                return i;
+            }
+        }
+        return -1;
     }
     //275. H 指数 II
     //给定一位研究者论文被引用次数的数组（被引用次数是非负整数），数组已经按照 升序排列 。编写一个方法，计算出研究者的 h 指数。
