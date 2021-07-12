@@ -8,6 +8,24 @@ public class ProblemSet {
         int[] a = {3,0,6,1,5};
         System.out.println(hIndex(a));
     }
+    //242. 有效的字母异位词
+    //给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。
+    public boolean isAnagram(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
+        int[] table = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            table[s.charAt(i) - 'a']++;
+        }
+        for (int i = 0; i < t.length(); i++) {
+            table[t.charAt(i) - 'a']--;
+            if (table[t.charAt(i) - 'a'] < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
     //383. 赎金信
     //给定一个赎金信 (ransom) 字符串和一个杂志(magazine)字符串，判断第一个字符串 ransom 能不能由第二个字符串 magazines 里面的字符构成。如果可以构成，返回 true ；否则返回 false。
     public static boolean canConstruct(String ransomNote, String magazine) {

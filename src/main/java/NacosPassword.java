@@ -1,6 +1,4 @@
 
-import com.alibaba.druid.sql.visitor.functions.Char;
-
 import java.util.*;
 import java.util.concurrent.locks.LockSupport;
 import java.util.regex.Matcher;
