@@ -8,6 +8,32 @@ public class ProblemSet {
         int[] a = {3,0,6,1,5};
         System.out.println(hIndex(a));
     }
+    public class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int x) {
+            val = x;
+            next = null;
+        }
+
+    }
+    //141. 环形链表
+    //给定一个链表，判断链表中是否有环。
+    public static boolean hasCycle(ListNode head) {
+        if(head == null || head.next == null){
+            return false;
+        }
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (fast != slow ){
+            if(fast == null || slow == null){
+                return false;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return true;
+    }
     //242. 有效的字母异位词
     //给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。
     public boolean isAnagram(String s, String t) {
