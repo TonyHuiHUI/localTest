@@ -26,7 +26,7 @@ public class ProblemSet {
         ListNode slow = head;
         ListNode fast = head.next;
         while (fast != slow ){
-            if(fast == null || slow == null){
+            if(fast == null || fast.next == null){
                 return false;
             }
             slow = slow.next;
