@@ -7,6 +7,29 @@ public class ProblemSet {
         int[] a = {3,0,6,1,5};
         System.out.println(hIndex(a));
     }
+    //275. H 指数 II
+    //给定一位研究者论文被引用次数的数组（被引用次数是非负整数），数组已经按照 升序排列 。编写一个方法，计算出研究者的 h 指数。
+    public static int hIndex2(int[] citations) {
+//        int len = citations.length;
+////        for(int i = 0 ; i < len; i++){
+////            int h = len - i;
+////            if(citations[i] >= h){
+////                return h;
+////            }
+////        }
+////        return 0;
+        int n = citations.length;
+        int left = 0, right = n - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (citations[mid] >= n - mid) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return n - left;
+    }
     //73. 矩阵置零
 //    给定一个 m x n 的矩阵，如果一个元素为 0 ，则将其所在行和列的所有元素都设为 0 。请使用 原地 算法。
     public static void setZeroes(int[][] matrix) {
