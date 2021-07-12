@@ -30,17 +30,24 @@ public class ProblemSet {
     //203. 移除链表元素
 //给你一个链表的头节点 head 和一个整数 val ，请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。
     public static ListNode removeElements(ListNode head, int val) {
-        ListNode dummyHead = new ListNode();
-        dummyHead.next = head;
-        ListNode cur = dummyHead;
-        while (cur.next != null) {
-            if(cur.next.val == val){
-                cur.next = cur.next.next;
-            }else {
-                cur = cur.next;
-            }
+        //迭代
+//        ListNode dummyHead = new ListNode();
+//        dummyHead.next = head;
+//        ListNode cur = dummyHead;
+//        while (cur.next != null) {
+//            if(cur.next.val == val){
+//                cur.next = cur.next.next;
+//            }else {
+//                cur = cur.next;
+//            }
+//        }
+//        return dummyHead.next;
+        //递归
+        if (head == null) {
+            return head;
         }
-        return dummyHead.next;
+        head.next = removeElements(head.next, val);
+        return head.val == val ? head.next : head;
     }
 
     //    21. 合并两个有序链表
