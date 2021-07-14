@@ -8,8 +8,8 @@ public class ProblemSet {
 //        System.out.println(hIndex(a));
 //        int[][] a = {{2,9,10},{3,7,15},{5,12,12},{15,20,10},{19,24,8}};
 //        System.out.println(getSkyline(a));
-        int[] a = {1,10,4,4,2,7};
-        int[] b = {9,3,5,1,7,4};
+        int[] a = {1, 10, 4, 4, 2, 7};
+        int[] b = {9, 3, 5, 1, 7, 4};
         System.out.println(minAbsoluteSumDiff(a, b));
     }
 
@@ -30,7 +30,29 @@ public class ProblemSet {
             this.next = next;
         }
     }
-//    1818. 绝对差值和
+
+    //    20. 有效的括号
+//    给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+//    有效字符串需满足：
+//    左括号必须用相同类型的右括号闭合。
+//    左括号必须以正确的顺序闭合。
+    public static boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (char ch : s.toCharArray()) {
+            if(ch == '('){
+                stack.push(')');
+            }else if(ch == '{'){
+                stack.push('}');
+            }else if(ch == '['){
+                stack.push(']');
+            }else if(stack.isEmpty() || ch != stack.pop()){
+                return false;
+            }
+       }
+        return stack.isEmpty();
+    }
+
+    //    1818. 绝对差值和
     //给你两个正整数数组 nums1 和 nums2 ，数组的长度都是 n 。
 //数组 nums1 和 nums2 的 绝对差值和 定义为所有 |nums1[i] - nums2[i]|（0 <= i < n）的 总和（下标从 0 开始）。
 //你可以选用 nums1 中的 任意一个 元素来替换 nums1 中的 至多 一个元素，以 最小化 绝对差值和。
@@ -45,52 +67,55 @@ public class ProblemSet {
         int maxChange = 0;
         int[] nums1Clone = nums1.clone();
         Arrays.sort(nums1Clone);
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             int diff = Math.abs(nums1[i] - nums2[i]);
             sum = (sum + diff) % mod;
             int index = binarySearch(nums1Clone, nums2[i]);
-            if(index < n){
-                maxChange = Math.max(maxChange,diff - (nums1Clone[index] - nums2[i]));
+            if (index < n) {
+                maxChange = Math.max(maxChange, diff - (nums1Clone[index] - nums2[i]));
             }
-            if(index > 0){
+            if (index > 0) {
                 maxChange = Math.max(maxChange, diff - (nums2[i] - nums1Clone[index - 1]));
             }
         }
-        return (sum - maxChange) % mod;
+        return (sum - maxChange + mod) % mod;
     }
-    public static int binarySearch(int[] arr , int target){
+
+    public static int binarySearch(int[] arr, int target) {
         int left = 0;
         int right = arr.length - 1;
-        if(arr[right] < target){
+        if (arr[right] < target) {
             return right + 1;
         }
-        while (left < right){
+        while (left < right) {
             int mid = (left + right) / 2;
-            if(arr[mid] < target){
+            if (arr[mid] < target) {
                 left = mid + 1;
-            }else {
+            } else {
                 right = mid;
             }
         }
         return left;
     }
+
     //83. 删除排序链表中的重复元素
     //存在一个按升序排列的链表，给你这个链表的头节点 head ，请你删除所有重复的元素，使每个元素 只出现一次 。
     //返回同样按升序排列的结果链表。
-    public static  ListNode deleteDuplicates(ListNode head) {
-        if(head == null){
+    public static ListNode deleteDuplicates(ListNode head) {
+        if (head == null) {
             return head;
         }
         ListNode cur = head;
-        while (cur.next != null){
-            if(cur.val == cur.next.val){
+        while (cur.next != null) {
+            if (cur.val == cur.next.val) {
                 cur.next = cur.next.next;
-            }else {
+            } else {
                 cur = cur.next;
             }
         }
         return head;
     }
+
     //206. 反转链表
     //给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
     public static ListNode reverseList(ListNode head) {
@@ -105,14 +130,15 @@ public class ProblemSet {
 //        }
 //        return pre;
         //递归
-        if(head == null || head.next == null){
+        if (head == null || head.next == null) {
             return head;
         }
-        ListNode newHead  = reverseList(head.next);
+        ListNode newHead = reverseList(head.next);
         head.next.next = head;
         head.next = null;
         return newHead;
     }
+
     //218. 天际线问题
     //城市的天际线是从远处观看该城市中所有建筑物形成的轮廓的外部轮廓。给你所有建筑物的位置和高度，请返回由这些建筑物形成的 天际线 。
     //每个建筑物的几何信息由数组 buildings 表示，其中三元组 buildings[i] = [lefti, righti, heighti] 表示：
@@ -145,6 +171,7 @@ public class ProblemSet {
         }
         return ret;
     }
+
     //203. 移除链表元素
 //给你一个链表的头节点 head 和一个整数 val ，请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。
     public static ListNode removeElements(ListNode head, int val) {
@@ -187,14 +214,14 @@ public class ProblemSet {
 //        cur.next = l1 == null ? l2 : l1;
 //        return head.next;
         //递归
-        if(l1 == null){
+        if (l1 == null) {
             return l1;
-        }else if(l2 == null){
+        } else if (l2 == null) {
             return l2;
-        }else if(l1.val <= l2.val){
+        } else if (l1.val <= l2.val) {
             l1.next = mergeTwoLists(l1.next, l2);
             return l1;
-        }else {
+        } else {
             l2.next = mergeTwoLists(l1, l2.next);
             return l2;
         }
