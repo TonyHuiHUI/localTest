@@ -6,8 +6,11 @@ public class ProblemSet {
     public static void main(String[] args) {
 //        int[] a = {3, 0, 6, 1, 5};
 //        System.out.println(hIndex(a));
-        int[][] a = {{2,9,10},{3,7,15},{5,12,12},{15,20,10},{19,24,8}};
-        System.out.println(getSkyline(a));
+//        int[][] a = {{2,9,10},{3,7,15},{5,12,12},{15,20,10},{19,24,8}};
+//        System.out.println(getSkyline(a));
+        int[] a = {1,10,4,4,2,7};
+        int[] b = {9,3,5,1,7,4};
+        System.out.println(minAbsoluteSumDiff(a, b));
     }
 
     public static class ListNode {
@@ -26,6 +29,50 @@ public class ProblemSet {
             this.val = val;
             this.next = next;
         }
+    }
+//    1818. 绝对差值和
+    //给你两个正整数数组 nums1 和 nums2 ，数组的长度都是 n 。
+//数组 nums1 和 nums2 的 绝对差值和 定义为所有 |nums1[i] - nums2[i]|（0 <= i < n）的 总和（下标从 0 开始）。
+//你可以选用 nums1 中的 任意一个 元素来替换 nums1 中的 至多 一个元素，以 最小化 绝对差值和。
+//在替换数组 nums1 中最多一个元素 之后 ，返回最小绝对差值和。因为答案可能很大，所以需要对 109 + 7 取余 后返回。
+//|x| 定义为：
+//    如果 x >= 0 ，值为 x ，或者
+//    如果 x <= 0 ，值为 -x
+    public static int minAbsoluteSumDiff(int[] nums1, int[] nums2) {
+        int mod = 1000000007;
+        int n = nums1.length;
+        int sum = 0;
+        int maxChange = 0;
+        int[] nums1Clone = nums1.clone();
+        Arrays.sort(nums1Clone);
+        for(int i = 0; i < n; i++){
+            int diff = Math.abs(nums1[i] - nums2[i]);
+            sum = (sum + diff) % mod;
+            int index = binarySearch(nums1Clone, nums2[i]);
+            if(index < n){
+                maxChange = Math.max(maxChange,diff - (nums1Clone[index] - nums2[i]));
+            }
+            if(index > 0){
+                maxChange = Math.max(maxChange, diff - (nums2[i] - nums1Clone[index - 1]));
+            }
+        }
+        return (sum - maxChange) % mod;
+    }
+    public static int binarySearch(int[] arr , int target){
+        int left = 0;
+        int right = arr.length - 1;
+        if(arr[right] < target){
+            return right + 1;
+        }
+        while (left < right){
+            int mid = (left + right) / 2;
+            if(arr[mid] < target){
+                left = mid + 1;
+            }else {
+                right = mid;
+            }
+        }
+        return left;
     }
     //83. 删除排序链表中的重复元素
     //存在一个按升序排列的链表，给你这个链表的头节点 head ，请你删除所有重复的元素，使每个元素 只出现一次 。
