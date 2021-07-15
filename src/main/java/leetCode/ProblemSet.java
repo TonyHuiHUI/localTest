@@ -12,6 +12,56 @@ public class ProblemSet {
         int[] b = {9, 3, 5, 1, 7, 4};
         System.out.println(minAbsoluteSumDiff(a, b));
     }
+
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+//   144. 二叉树的前序遍历
+    public static List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result = new LinkedList<>();
+//        //递归
+//        preorder(root, result);
+        //迭代
+        if(root == null){
+            return result;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            result.add(node.val);
+            if(node.right != null){
+                stack.push(node.right);
+            }
+            if(node.left != null){
+                stack.push(node.left);
+            }
+        }
+        return result;
+    }
+    public static void preorder(TreeNode root, List<Integer> result){
+        if(root == null){
+            return;
+        }
+        result.add(root.val);
+        preorder(root.left, result);
+        preorder(root.right, result);
+    }
     //232. 用栈实现队列
 //    请你仅使用两个栈实现先入先出队列。队列应当支持一般队列支持的所有操作（push、pop、peek、empty）：
 //    实现 MyQueue 类：
@@ -22,38 +72,49 @@ public class ProblemSet {
     class MyQueue {
         Stack<Integer> in;
         Stack<Integer> out;
-        /** Initialize your data structure here. */
+
+        /**
+         * Initialize your data structure here.
+         */
         public MyQueue() {
             in = new Stack<>();
             out = new Stack<>();
         }
 
-        /** Push element x to the back of queue. */
+        /**
+         * Push element x to the back of queue.
+         */
         public void push(int x) {
             in.push(x);
         }
 
-        /** Removes the element from in front of queue and returns that element. */
+        /**
+         * Removes the element from in front of queue and returns that element.
+         */
         public int pop() {
-            if(out.isEmpty()){
-                while (!in.isEmpty()){
+            if (out.isEmpty()) {
+                while (!in.isEmpty()) {
                     out.push(in.pop());
                 }
             }
             return out.pop();
         }
 
-        /** Get the front element. */
+        /**
+         * Get the front element.
+         */
         public int peek() {
-            if(out.isEmpty()){
-                while (!in.isEmpty()){
+            if (out.isEmpty()) {
+                while (!in.isEmpty()) {
                     out.push(in.pop());
                 }
             }
             return out.peek();
         }
 
-        /** Returns whether the queue is empty. */
+        /**
+         * Returns whether the queue is empty.
+         */
         public boolean empty() {
             return in.isEmpty() && out.isEmpty();
         }
@@ -85,16 +146,16 @@ public class ProblemSet {
     public static boolean isValid(String s) {
         Stack<Character> stack = new Stack<>();
         for (char ch : s.toCharArray()) {
-            if(ch == '('){
+            if (ch == '(') {
                 stack.push(')');
-            }else if(ch == '{'){
+            } else if (ch == '{') {
                 stack.push('}');
-            }else if(ch == '['){
+            } else if (ch == '[') {
                 stack.push(']');
-            }else if(stack.isEmpty() || ch != stack.pop()){
+            } else if (stack.isEmpty() || ch != stack.pop()) {
                 return false;
             }
-       }
+        }
         return stack.isEmpty();
     }
 
