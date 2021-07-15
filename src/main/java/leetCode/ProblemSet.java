@@ -8,12 +8,16 @@ public class ProblemSet {
 //        System.out.println(hIndex(a));
 //        int[][] a = {{2,9,10},{3,7,15},{5,12,12},{15,20,10},{19,24,8}};
 //        System.out.println(getSkyline(a));
-        int[] a = {1, 10, 4, 4, 2, 7};
-        int[] b = {9, 3, 5, 1, 7, 4};
-        System.out.println(minAbsoluteSumDiff(a, b));
+//        int[] a = {1, 10, 4, 4, 2, 7};
+//        int[] b = {9, 3, 5, 1, 7, 4};
+//        System.out.println(minAbsoluteSumDiff(a, b));
+        TreeNode node2 = new TreeNode(2, new TreeNode(4), new TreeNode(5));
+        TreeNode node3 = new TreeNode(3, new TreeNode(6), new TreeNode(7));
+        TreeNode root = new TreeNode(1, node2, node3);
+        postorderTraversal(root);
     }
 
-    public class TreeNode {
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
@@ -37,26 +41,69 @@ public class ProblemSet {
         List<Integer> result = new LinkedList<>();
         //递归
 //        postorder(root, result);
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode pre = null;//记录上一个节点
+//        Stack<TreeNode> stack = new Stack<>();
+//        TreeNode pre = null;//记录上一个节点
+//        TreeNode cur = root;
+//        while (cur != null || !stack.isEmpty()){
+//            if(cur != null){
+//                stack.push(cur);
+//                cur = cur.left;
+//            }else {
+//                cur = stack.peek();
+//                if(cur.right == null || cur.right == pre){
+//                    result.add(cur.val);
+//                    pre = cur;
+//                    stack.pop();
+//                    cur = null;
+//                }else {
+//                    cur = cur.right;
+//                }
+//            }
+//        }
         TreeNode cur = root;
-        while (cur != null || !stack.isEmpty()){
-            if(cur != null){
-                stack.push(cur);
-                cur = cur.left;
-            }else {
-                cur = stack.peek();
-                if(cur.right == null || cur.right == pre){
-                    result.add(cur.val);
-                    pre = cur;
-                    stack.pop();
-                    cur = null;
-                }else {
-                    cur = cur.right;
+        TreeNode mostRight = null;
+        while (cur != null) {
+            mostRight = cur.left;
+            if (mostRight != null) {
+                while (mostRight.right != null && mostRight.right != cur) {
+                    mostRight = mostRight.right;
+                }
+                if (mostRight.right == null) {
+                    mostRight.right = cur;
+                    cur = cur.left;
+                    continue;
+                } else {
+                    mostRight.right = null;
+                    printEdge(cur.left, result);
                 }
             }
+            cur = cur.right;
         }
+        printEdge(root, result);
         return result;
+    }
+
+    public static void printEdge(TreeNode node, List<Integer> result) {
+        TreeNode tail = reverseEdge(node);
+        TreeNode cur = tail;
+        while (cur != null) {
+            System.out.println(cur.val + "--");
+            result.add(cur.val);
+            cur = cur.right;
+        }
+        reverseEdge(tail);
+    }
+
+    public static TreeNode reverseEdge(TreeNode node) {
+        TreeNode pre = null;
+        TreeNode next = null;
+        while (node != null) {
+            next = node.right;
+            node.right = pre;
+            pre = node;
+            node = next;
+        }
+        return pre;
     }
 
     public static void postorder(TreeNode root, List<Integer> result) {
@@ -88,21 +135,21 @@ public class ProblemSet {
 //        }
         TreeNode cur = root;
         TreeNode mostright = null;
-        while (cur != null){
+        while (cur != null) {
             mostright = cur.left;
-            if(mostright != null){
-                while (mostright.right != null && mostright.right != cur){
+            if (mostright != null) {
+                while (mostright.right != null && mostright.right != cur) {
                     mostright = mostright.right;
                 }
-                if(mostright.right == null){
+                if (mostright.right == null) {
                     mostright.right = cur;
-                    cur = cur.right;
+                    cur = cur.left;
                     continue;
-                }else {
+                } else {
                     result.add(cur.val);
                     mostright.right = null;
                 }
-            }else {
+            } else {
                 result.add(cur.val);
             }
             cur = cur.right;
@@ -148,21 +195,21 @@ public class ProblemSet {
         //如果mostright的right指针指向cur，让其指向空，cur向右移动（cur=cur.right）
         TreeNode cur = root;
         TreeNode mostright = null;
-        while (cur != null){
+        while (cur != null) {
             mostright = cur.left;
-            if(mostright != null){
-                while (mostright.right != null && mostright.right != cur){
+            if (mostright != null) {
+                while (mostright.right != null && mostright.right != cur) {
                     mostright = mostright.right;
                 }
-                if(mostright.right == null){
+                if (mostright.right == null) {
                     result.add(cur.val);
                     mostright.right = cur;
                     cur = cur.left;
                     continue;
-                }else {
+                } else {
                     mostright.right = null;
                 }
-            }else {
+            } else {
                 result.add(cur.val);
             }
             cur = cur.right;
