@@ -32,6 +32,42 @@ public class ProblemSet {
         }
     }
 
+    //145. 二叉树的后序遍历
+    public static List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> result = new LinkedList<>();
+        //递归
+//        postorder(root, result);
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode pre = null;//记录上一个节点
+        TreeNode cur = root;
+        while (cur != null || !stack.isEmpty()){
+            if(cur != null){
+                stack.push(cur);
+                cur = cur.left;
+            }else {
+                cur = stack.peek();
+                if(cur.right == null || cur.right == pre){
+                    result.add(cur.val);
+                    pre = cur;
+                    stack.pop();
+                    cur = null;
+                }else {
+                    cur = cur.right;
+                }
+            }
+        }
+        return result;
+    }
+
+    public static void postorder(TreeNode root, List<Integer> result) {
+        if (root == null) {
+            return;
+        }
+        postorder(root.left, result);
+        postorder(root.right, result);
+        result.add(root.val);
+    }
+
     //94. 二叉树的中序遍历
     public static List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new LinkedList<>();
@@ -40,11 +76,11 @@ public class ProblemSet {
         //迭代
         Stack<TreeNode> stack = new Stack<>();
         TreeNode cur = root;
-        while (cur != null || !stack.isEmpty()){
-            if(cur != null){
+        while (cur != null || !stack.isEmpty()) {
+            if (cur != null) {
                 stack.push(cur);
                 cur = cur.left;
-            }else {
+            } else {
                 cur = stack.pop();
                 result.add(cur.val);
                 cur = cur.right;
