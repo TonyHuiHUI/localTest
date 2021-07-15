@@ -31,37 +31,70 @@ public class ProblemSet {
             this.right = right;
         }
     }
-//   144. 二叉树的前序遍历
+
+    //94. 二叉树的中序遍历
+    public static List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new LinkedList<>();
+        //递归
+//        inorder(root, result);
+        //迭代
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        while (cur != null || !stack.isEmpty()){
+            if(cur != null){
+                stack.push(cur);
+                cur = cur.left;
+            }else {
+                cur = stack.pop();
+                result.add(cur.val);
+                cur = cur.right;
+            }
+        }
+        return result;
+    }
+
+    public static void inorder(TreeNode root, List<Integer> result) {
+        if (root == null) {
+            return;
+        }
+        inorder(root.left, result);
+        result.add(root.val);
+        inorder(root.right, result);
+    }
+
+    //   144. 二叉树的前序遍历
     public static List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> result = new LinkedList<>();
 //        //递归
 //        preorder(root, result);
         //迭代
-        if(root == null){
+        if (root == null) {
             return result;
         }
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
-        while (!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
             result.add(node.val);
-            if(node.right != null){
+            if (node.right != null) {
                 stack.push(node.right);
             }
-            if(node.left != null){
+            if (node.left != null) {
                 stack.push(node.left);
             }
         }
         return result;
     }
-    public static void preorder(TreeNode root, List<Integer> result){
-        if(root == null){
+
+    public static void preorder(TreeNode root, List<Integer> result) {
+        if (root == null) {
             return;
         }
         result.add(root.val);
         preorder(root.left, result);
         preorder(root.right, result);
     }
+
     //232. 用栈实现队列
 //    请你仅使用两个栈实现先入先出队列。队列应当支持一般队列支持的所有操作（push、pop、peek、empty）：
 //    实现 MyQueue 类：
