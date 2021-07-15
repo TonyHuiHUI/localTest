@@ -74,17 +74,38 @@ public class ProblemSet {
         //递归
 //        inorder(root, result);
         //迭代
-        Stack<TreeNode> stack = new Stack<>();
+//        Stack<TreeNode> stack = new Stack<>();
+//        TreeNode cur = root;
+//        while (cur != null || !stack.isEmpty()) {
+//            if (cur != null) {
+//                stack.push(cur);
+//                cur = cur.left;
+//            } else {
+//                cur = stack.pop();
+//                result.add(cur.val);
+//                cur = cur.right;
+//            }
+//        }
         TreeNode cur = root;
-        while (cur != null || !stack.isEmpty()) {
-            if (cur != null) {
-                stack.push(cur);
-                cur = cur.left;
-            } else {
-                cur = stack.pop();
+        TreeNode mostright = null;
+        while (cur != null){
+            mostright = cur.left;
+            if(mostright != null){
+                while (mostright.right != null && mostright.right != cur){
+                    mostright = mostright.right;
+                }
+                if(mostright.right == null){
+                    mostright.right = cur;
+                    cur = cur.right;
+                    continue;
+                }else {
+                    result.add(cur.val);
+                    mostright.right = null;
+                }
+            }else {
                 result.add(cur.val);
-                cur = cur.right;
             }
+            cur = cur.right;
         }
         return result;
     }
@@ -104,20 +125,47 @@ public class ProblemSet {
 //        //递归
 //        preorder(root, result);
         //迭代
-        if (root == null) {
-            return result;
-        }
-        Stack<TreeNode> stack = new Stack<>();
-        stack.push(root);
-        while (!stack.isEmpty()) {
-            TreeNode node = stack.pop();
-            result.add(node.val);
-            if (node.right != null) {
-                stack.push(node.right);
+//        if (root == null) {
+//            return result;
+//        }
+//        Stack<TreeNode> stack = new Stack<>();
+//        stack.push(root);
+//        while (!stack.isEmpty()) {
+//            TreeNode node = stack.pop();
+//            result.add(node.val);
+//            if (node.right != null) {
+//                stack.push(node.right);
+//            }
+//            if (node.left != null) {
+//                stack.push(node.left);
+//            }
+//        }
+//        return result;
+        //Morris 遍历
+        //如果cur无左孩子，cur向右移动（cur=cur.right）
+        //如果cur有左孩子，找到cur左子树上最右的节点，记为mostright
+        //如果mostright的right指针指向空，让其指向cur，cur向左移动（cur=cur.left）
+        //如果mostright的right指针指向cur，让其指向空，cur向右移动（cur=cur.right）
+        TreeNode cur = root;
+        TreeNode mostright = null;
+        while (cur != null){
+            mostright = cur.left;
+            if(mostright != null){
+                while (mostright.right != null && mostright.right != cur){
+                    mostright = mostright.right;
+                }
+                if(mostright.right == null){
+                    result.add(cur.val);
+                    mostright.right = cur;
+                    cur = cur.left;
+                    continue;
+                }else {
+                    mostright.right = null;
+                }
+            }else {
+                result.add(cur.val);
             }
-            if (node.left != null) {
-                stack.push(node.left);
-            }
+            cur = cur.right;
         }
         return result;
     }
