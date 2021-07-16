@@ -37,6 +37,44 @@ public class ProblemSet {
             this.right = right;
         }
     }
+
+    //    101. 对称二叉树
+    public static boolean isSymmetric(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        //递归
+//        return helper(root.left, root.right);
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        queue.offer(root);
+        while (!queue.isEmpty()){
+            TreeNode node1 = queue.poll();
+            TreeNode node2 = queue.poll();
+            if(node1 == null && node2 == null){
+                continue;
+            }
+            if (node1 == null || node2 == null || node1.val != node2.val){
+                return false;
+            }
+            queue.offer(node1.left);
+            queue.offer(node2.right);
+            queue.offer(node1.right);
+            queue.offer(node2.left);
+        }
+        return true;
+    }
+
+    public static boolean helper(TreeNode node1, TreeNode node2) {
+        if(node1 == null && node2 == null){
+            return true;
+        }
+        if(node1 == null || node2 == null || node1.val != node2.val){
+            return false;
+        }
+        return (node1.val == node2.val && helper(node1.left, node2.right) && helper(node1.right, node2.left));
+    }
+
     //104. 二叉树的最大深度
     public static int maxDepth(TreeNode root) {
         //广度优先搜索
@@ -61,31 +99,32 @@ public class ProblemSet {
 //        }
 //        return depth;
         //递归
-        if(root == null){
+        if (root == null) {
             return 0;
-        }else {
-            return Math.max(maxDepth(root.left),maxDepth(root.right)) + 1;
+        } else {
+            return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
         }
     }
-//102. 二叉树的层序遍历
+
+    //102. 二叉树的层序遍历
     //给你一个二叉树，请你返回其按 层序遍历 得到的节点值。 （即逐层地，从左到右访问所有节点）。
     public static List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> result = new LinkedList<>();
-        if(root == null){
+        if (root == null) {
             return result;
         }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int n = queue.size();
             List<Integer> temp = new LinkedList<>();
-            for(int i = 0; i < n; i++){
+            for (int i = 0; i < n; i++) {
                 TreeNode node = queue.poll();
                 temp.add(node.val);
-                if(node.left != null){
+                if (node.left != null) {
                     queue.offer(node.left);
                 }
-                if(node.right != null){
+                if (node.right != null) {
                     queue.offer(node.right);
                 }
             }
@@ -93,26 +132,28 @@ public class ProblemSet {
         }
         return result;
     }
+
     //剑指 Offer 53 - I. 在排序数组中查找数字 I
     //统计一个数字在排序数组中出现的次数。
     public static int search(int[] nums, int target) {
         int n = nums.length;
         int left = 0;
         int right = n - 1;
-        while (left < right){
+        while (left < right) {
             int mid = (left + right) / 2;
-            if(nums[mid] >= target){
+            if (nums[mid] >= target) {
                 right = mid;
-            }else {
+            } else {
                 left = mid + 1;
             }
         }
         int count = 0;
-        while (left < n && nums[left++] == target){
+        while (left < n && nums[left++] == target) {
             count++;
         }
         return count;
     }
+
     //145. 二叉树的后序遍历
     public static List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> result = new LinkedList<>();
