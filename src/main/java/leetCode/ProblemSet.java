@@ -11,10 +11,12 @@ public class ProblemSet {
 //        int[] a = {1, 10, 4, 4, 2, 7};
 //        int[] b = {9, 3, 5, 1, 7, 4};
 //        System.out.println(minAbsoluteSumDiff(a, b));
-        TreeNode node2 = new TreeNode(2, new TreeNode(4), new TreeNode(5));
-        TreeNode node3 = new TreeNode(3, new TreeNode(6), new TreeNode(7));
-        TreeNode root = new TreeNode(1, node2, node3);
-        postorderTraversal(root);
+//        TreeNode node2 = new TreeNode(2, new TreeNode(4), new TreeNode(5));
+//        TreeNode node3 = new TreeNode(3, new TreeNode(6), new TreeNode(7));
+//        TreeNode root = new TreeNode(1, node2, node3);
+//        postorderTraversal(root);
+        int[] a = {5,7,7,8,8,10};
+        System.out.println(search(a,8));
     }
 
     public static class TreeNode {
@@ -35,7 +37,26 @@ public class ProblemSet {
             this.right = right;
         }
     }
-
+    //剑指 Offer 53 - I. 在排序数组中查找数字 I
+    //统计一个数字在排序数组中出现的次数。
+    public static int search(int[] nums, int target) {
+        int n = nums.length;
+        int left = 0;
+        int right = n - 1;
+        while (left < right){
+            int mid = (left + right) / 2;
+            if(nums[mid] >= target){
+                right = mid;
+            }else {
+                left = mid + 1;
+            }
+        }
+        int count = 0;
+        while (left < n && nums[left++] == target){
+            count++;
+        }
+        return count;
+    }
     //145. 二叉树的后序遍历
     public static List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> result = new LinkedList<>();
