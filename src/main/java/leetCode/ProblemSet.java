@@ -37,6 +37,36 @@ public class ProblemSet {
             this.right = right;
         }
     }
+    //104. 二叉树的最大深度
+    public static int maxDepth(TreeNode root) {
+        //广度优先搜索
+//        if(root == null){
+//            return 0;
+//        }
+//        Queue<TreeNode> queue = new LinkedList<>();
+//        int depth = 0;
+//        queue.offer(root);
+//        while (!queue.isEmpty()){
+//            depth++;
+//            int n = queue.size();
+//            for (int i = 0; i < n; i++){
+//                TreeNode node = queue.poll();
+//                if(node.left != null){
+//                    queue.offer(node.left);
+//                }
+//                if(node.right != null){
+//                    queue.offer(node.right);
+//                }
+//            }
+//        }
+//        return depth;
+        //递归
+        if(root == null){
+            return 0;
+        }else {
+            return Math.max(maxDepth(root.left),maxDepth(root.right)) + 1;
+        }
+    }
 //102. 二叉树的层序遍历
     //给你一个二叉树，请你返回其按 层序遍历 得到的节点值。 （即逐层地，从左到右访问所有节点）。
     public static List<List<Integer>> levelOrder(TreeNode root) {
