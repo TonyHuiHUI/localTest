@@ -15,8 +15,8 @@ public class ProblemSet {
 //        TreeNode node3 = new TreeNode(3, new TreeNode(6), new TreeNode(7));
 //        TreeNode root = new TreeNode(1, node2, node3);
 //        postorderTraversal(root);
-        int[] a = {5,7,7,8,8,10};
-        System.out.println(search(a,8));
+//        int[] a = {5,7,7,8,8,10};
+//        System.out.println(search(a,8));
     }
 
     public static class TreeNode {
@@ -36,6 +36,32 @@ public class ProblemSet {
             this.left = left;
             this.right = right;
         }
+    }
+//102. 二叉树的层序遍历
+    //给你一个二叉树，请你返回其按 层序遍历 得到的节点值。 （即逐层地，从左到右访问所有节点）。
+    public static List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new LinkedList<>();
+        if(root == null){
+            return result;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()){
+            int n = queue.size();
+            List<Integer> temp = new LinkedList<>();
+            for(int i = 0; i < n; i++){
+                TreeNode node = queue.poll();
+                temp.add(node.val);
+                if(node.left != null){
+                    queue.offer(node.left);
+                }
+                if(node.right != null){
+                    queue.offer(node.right);
+                }
+            }
+            result.add(temp);
+        }
+        return result;
     }
     //剑指 Offer 53 - I. 在排序数组中查找数字 I
     //统计一个数字在排序数组中出现的次数。
