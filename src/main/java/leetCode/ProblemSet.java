@@ -17,7 +17,7 @@ public class ProblemSet {
 //        postorderTraversal(root);
 //        int[] a = {5,7,7,8,8,10};
 //        System.out.println(search(a,8));
-        int[] a = {1,4,8,13};
+        int[] a = {1, 4, 8, 13};
         System.out.println(maxFrequency(a, 5));
     }
 
@@ -39,20 +39,36 @@ public class ProblemSet {
             this.right = right;
         }
     }
+
+    //    700. 二叉搜索树中的搜索
+    public static TreeNode searchBST(TreeNode root, int val) {
+        //递归
+//        if (root == null || root.val == val) {
+//            return root;
+//        }
+//        return root.val > val ? searchBST(root.left, val) : searchBST(root.right, val);
+        //迭代
+        while (root != null && root.val != val) {
+            root = root.val < val ? root.right : root.left;
+        }
+        return root;
+    }
+
     //112. 路径总和
     //给你二叉树的根节点 root 和一个表示目标和的整数 targetSum ，判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和 targetSum 。
     public static boolean hasPathSum(TreeNode root, int targetSum) {
-        if(root == null){
+        if (root == null) {
             return false;
         }
-        if(root.left == null && root.right == null && root.val == targetSum){
+        if (root.left == null && root.right == null && root.val == targetSum) {
             return true;
         }
-        return hasPathSum(root.left, targetSum - root.val)|| hasPathSum(root.right, targetSum - root.val);
+        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
     }
+
     //226. 翻转二叉树
     public TreeNode invertTree(TreeNode root) {
-        if(root == null){
+        if (root == null) {
             return null;
         }
         TreeNode left = invertTree(root.left);
@@ -61,6 +77,7 @@ public class ProblemSet {
         root.left = right;
         return root;
     }
+
     //1838. 最高频元素的频数
     //元素的 频数 是该元素在一个数组中出现的次数。
     //给你一个整数数组 nums 和一个整数 k 。在一步操作中，你可以选择 nums 的一个下标，并将该下标对应元素的值增加 1 。
@@ -110,6 +127,7 @@ public class ProblemSet {
 //        }
 //        return ans;
     }
+
     //    101. 对称二叉树
     public static boolean isSymmetric(TreeNode root) {
         if (root == null) {
@@ -120,13 +138,13 @@ public class ProblemSet {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
         queue.offer(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             TreeNode node1 = queue.poll();
             TreeNode node2 = queue.poll();
-            if(node1 == null && node2 == null){
+            if (node1 == null && node2 == null) {
                 continue;
             }
-            if (node1 == null || node2 == null || node1.val != node2.val){
+            if (node1 == null || node2 == null || node1.val != node2.val) {
                 return false;
             }
             queue.offer(node1.left);
@@ -138,10 +156,10 @@ public class ProblemSet {
     }
 
     public static boolean helper(TreeNode node1, TreeNode node2) {
-        if(node1 == null && node2 == null){
+        if (node1 == null && node2 == null) {
             return true;
         }
-        if(node1 == null || node2 == null || node1.val != node2.val){
+        if (node1 == null || node2 == null || node1.val != node2.val) {
             return false;
         }
         return (node1.val == node2.val && helper(node1.left, node2.right) && helper(node1.right, node2.left));
