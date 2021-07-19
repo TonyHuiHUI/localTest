@@ -39,6 +39,17 @@ public class ProblemSet {
             this.right = right;
         }
     }
+    //226. 翻转二叉树
+    public TreeNode invertTree(TreeNode root) {
+        if(root == null){
+            return null;
+        }
+        TreeNode left = invertTree(root.left);
+        TreeNode right = invertTree(root.right);
+        root.right = left;
+        root.left = right;
+        return root;
+    }
     //1838. 最高频元素的频数
     //元素的 频数 是该元素在一个数组中出现的次数。
     //给你一个整数数组 nums 和一个整数 k 。在一步操作中，你可以选择 nums 的一个下标，并将该下标对应元素的值增加 1 。
