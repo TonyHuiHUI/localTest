@@ -17,6 +17,8 @@ public class ProblemSet {
 //        postorderTraversal(root);
 //        int[] a = {5,7,7,8,8,10};
 //        System.out.println(search(a,8));
+        int[] a = {1,4,8,13};
+        System.out.println(maxFrequency(a, 5));
     }
 
     public static class TreeNode {
@@ -37,7 +39,55 @@ public class ProblemSet {
             this.right = right;
         }
     }
-
+    //1838. 最高频元素的频数
+    //元素的 频数 是该元素在一个数组中出现的次数。
+    //给你一个整数数组 nums 和一个整数 k 。在一步操作中，你可以选择 nums 的一个下标，并将该下标对应元素的值增加 1 。
+    //执行最多 k 次操作后，返回数组中最高频元素的 最大可能频数
+    public static int maxFrequency(int[] nums, int k) {
+        //排序+滑动窗口
+        Arrays.sort(nums);
+        int n = nums.length;
+        long total = 0;
+        int l = 0, res = 1;
+        for (int r = 1; r < n; ++r) {
+            total += (long) (nums[r] - nums[r - 1]) * (r - l);
+            while (total > k) {
+                total -= nums[r] - nums[l];
+                ++l;
+            }
+            res = Math.max(res, r - l + 1);
+        }
+        return res;
+        //枚举
+//        int n = nums.length;
+//        Map<Integer, Integer> map = new HashMap<>();
+//        for (int i : nums){
+//            map.put(i, map.getOrDefault(i, 0) + 1);
+//        }
+//        List<Integer> list = new ArrayList<>(map.keySet());
+//        Collections.sort(list);
+//        int ans = 1;
+//        for (int i = 0; i < list.size(); i++) {
+//            int x = list.get(i), cnt = map.get(x);
+//            if (i > 0) {
+//                int p = k;
+//                for (int j = i - 1; j >= 0; j--) {
+//                    int y = list.get(j);
+//                    int diff = x - y;
+//                    if (p >= diff) {
+//                        int add = p / diff;
+//                        int min = Math.min(map.get(y), add);
+//                        p -= min * diff;
+//                        cnt += min;
+//                    } else {
+//                        break;
+//                    }
+//                }
+//            }
+//            ans = Math.max(ans, cnt);
+//        }
+//        return ans;
+    }
     //    101. 对称二叉树
     public static boolean isSymmetric(TreeNode root) {
         if (root == null) {
