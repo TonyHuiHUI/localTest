@@ -40,6 +40,35 @@ public class ProblemSet {
         }
     }
 
+    //701. 二叉搜索树中的插入操作
+    public static TreeNode insertIntoBST(TreeNode root, int val) {
+        //递归
+//        if(root == null){
+//            return new TreeNode(val);
+//        }
+//        if(root.val < val){
+//            root.right = insertIntoBST(root.right, val);
+//        }else {
+//            root.left = insertIntoBST(root.left, val);
+//        }
+//        return root;
+        //迭代
+        if(root == null){
+            return new TreeNode(val);
+        }
+        TreeNode pre = root;
+        TreeNode p = root;
+        while (p != null){
+            pre = p;
+            p = p.val < val ? p.right : p.left;
+        }
+        if(pre.val < val){
+            pre.right = new TreeNode(val);
+        }else {
+            pre.left = new TreeNode(val);
+        }
+        return root;
+    }
     //    700. 二叉搜索树中的搜索
     public static TreeNode searchBST(TreeNode root, int val) {
         //递归
