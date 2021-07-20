@@ -39,7 +39,36 @@ public class ProblemSet {
             this.right = right;
         }
     }
-
+    //98. 验证二叉搜索树
+    public static boolean isValidBST(TreeNode root) {
+        //递归
+//        return isValid(root, Long.MIN_VALUE, Long.MAX_VALUE);
+        //中序遍历
+        Stack<TreeNode> stack = new Stack<>();
+        long pre = Long.MIN_VALUE;
+        while (!stack.isEmpty() || root != null){
+            while (root != null){
+                stack.push(root);
+                root = root.left;
+            }
+            TreeNode node = stack.pop();
+            if(node.val < pre){
+                return false;
+            }
+            pre = node.val;
+            root = root.right;
+        }
+        return true;
+    }
+    public static boolean isValid(TreeNode root, long min, long max){
+        if(root == null){
+            return true;
+        }
+        if(root.val <= min || root.val >= max){
+            return false;
+        }
+        return isValid(root.left, min, root.val)&&isValid(root.right, root.val,max);
+    }
     //701. 二叉搜索树中的插入操作
     public static TreeNode insertIntoBST(TreeNode root, int val) {
         //递归
