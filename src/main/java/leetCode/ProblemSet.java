@@ -39,6 +39,21 @@ public class ProblemSet {
             this.right = right;
         }
     }
+
+    //    剑指 Offer 52. 两个链表的第一个公共节点
+    public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode pa = headA;
+        ListNode pb = headB;
+        if (pa == null || pb == null) {
+            return null;
+        }
+        while (pa != pb) {
+            pa = pa == null ? headB : pa.next;
+            pb = pb == null ? headA : pb.next;
+        }
+        return pa;
+    }
+
     //1877. 数组中最大数对和的最小值
 //    一个数对 (a,b) 的 数对和 等于 a + b 。最大数对和 是一个数对数组中最大的 数对和 。
 //    比方说，如果我们有数对 (1,5) ，(2,3) 和 (4,4)，最大数对和 为 max(1+5, 2+3, 4+4) = max(6, 5, 8) = 8 。
@@ -50,11 +65,12 @@ public class ProblemSet {
         Arrays.sort(nums);
         int max = 0;
         int n = nums.length;
-        for (int i = 0; i < n/2; i++){
+        for (int i = 0; i < n / 2; i++) {
             max = Math.max(max, nums[i] + nums[n - i - 1]);
         }
-       return max;
+        return max;
     }
+
     //98. 验证二叉搜索树
     public static boolean isValidBST(TreeNode root) {
         //递归
@@ -62,13 +78,13 @@ public class ProblemSet {
         //中序遍历
         Stack<TreeNode> stack = new Stack<>();
         long pre = Long.MIN_VALUE;
-        while (!stack.isEmpty() || root != null){
-            while (root != null){
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
                 stack.push(root);
                 root = root.left;
             }
             TreeNode node = stack.pop();
-            if(node.val < pre){
+            if (node.val < pre) {
                 return false;
             }
             pre = node.val;
@@ -76,15 +92,17 @@ public class ProblemSet {
         }
         return true;
     }
-    public static boolean isValid(TreeNode root, long min, long max){
-        if(root == null){
+
+    public static boolean isValid(TreeNode root, long min, long max) {
+        if (root == null) {
             return true;
         }
-        if(root.val <= min || root.val >= max){
+        if (root.val <= min || root.val >= max) {
             return false;
         }
-        return isValid(root.left, min, root.val)&&isValid(root.right, root.val,max);
+        return isValid(root.left, min, root.val) && isValid(root.right, root.val, max);
     }
+
     //701. 二叉搜索树中的插入操作
     public static TreeNode insertIntoBST(TreeNode root, int val) {
         //递归
@@ -98,22 +116,23 @@ public class ProblemSet {
 //        }
 //        return root;
         //迭代
-        if(root == null){
+        if (root == null) {
             return new TreeNode(val);
         }
         TreeNode pre = root;
         TreeNode p = root;
-        while (p != null){
+        while (p != null) {
             pre = p;
             p = p.val < val ? p.right : p.left;
         }
-        if(pre.val < val){
+        if (pre.val < val) {
             pre.right = new TreeNode(val);
-        }else {
+        } else {
             pre.left = new TreeNode(val);
         }
         return root;
     }
+
     //    700. 二叉搜索树中的搜索
     public static TreeNode searchBST(TreeNode root, int val) {
         //递归
