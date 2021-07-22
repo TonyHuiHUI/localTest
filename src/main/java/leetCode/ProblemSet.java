@@ -39,7 +39,23 @@ public class ProblemSet {
             this.right = right;
         }
     }
-
+//    138. 复制带随机指针的链表
+    public ListNode copyRandomList(ListNode head) {
+        HashMap<ListNode, ListNode> hashMap = new HashMap<>();
+        return helper(head, hashMap);
+    }
+    public ListNode helper(ListNode head, HashMap<ListNode, ListNode> hashMap){
+        if(head == null){
+            return null;
+        }
+        if(!hashMap.containsKey(head)){
+            ListNode node = new ListNode(head.val);
+            hashMap.put(head, node);
+            node.next = helper(head.next, hashMap);
+            node.random = helper(head.random, hashMap);
+        }
+        return hashMap.get(head);
+    }
     //    剑指 Offer 52. 两个链表的第一个公共节点
     public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         ListNode pa = headA;
@@ -588,6 +604,7 @@ public class ProblemSet {
     public static class ListNode {
         int val;
         ListNode next;
+        ListNode random;
 
         ListNode() {
         }
@@ -595,6 +612,7 @@ public class ProblemSet {
         ListNode(int x) {
             this.val = x;
             this.next = null;
+            this.random = null;
         }
 
         ListNode(int val, ListNode next) {
