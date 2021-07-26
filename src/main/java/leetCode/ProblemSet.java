@@ -19,8 +19,11 @@ public class ProblemSet {
 //        System.out.println(search(a,8));
 //        int[] a = {1, 4, 8, 13};
 //        System.out.println(maxFrequency(a, 5));
-        int[][] a = {{1,10},{10,20}};
-        System.out.println(isCovered(a,21, 21));
+//        int[][] a = {{1, 10}, {10, 20}};
+//        System.out.println(isCovered(a, 21, 21));
+        int[] a = {6,4,8,1,3,2};
+        int[] b = {4,7,6,2,3,8,6,1};
+        System.out.println(minOperations(a, b));
     }
 
     public static class TreeNode {
@@ -41,12 +44,50 @@ public class ProblemSet {
             this.right = right;
         }
     }
+
     //1713. 得到子序列的最少操作次数
     //给你一个数组 target ，包含若干 互不相同 的整数，以及另一个整数数组 arr ，arr 可能 包含重复元素。
     //每一次操作中，你可以在 arr 的任意位置插入任一整数。比方说，如果 arr = [1,4,1,2] ，那么你可以在中间添加 3 得到 [1,4,3,1,2] 。你可以在数组最开始或最后面添加整数。
     //请你返回 最少 操作次数，使得 target 成为 arr 的一个子序列。
-    public int minOperations(int[] target, int[] arr) {
-        return 0;
+    public static int minOperations(int[] target, int[] arr) {
+        //原问题转化成求target和arr的最长公共子序列， 答案等于 target.length - 最长公共子序列的长度
+
+        //由于target中元素是不相同的，那么arr的对应的元素的在target中下标是单调递增的，
+        //问题进一步转换成求arr在target中对应元素的下标的最长递增子序列
+        int n = target.length;
+        Map<Integer, Integer> indexMap = new HashMap<>();//记录target的下标
+        for (int i = 0; i < n; i++) {
+            indexMap.put(target[i], i);
+        }
+        List<Integer> d = new LinkedList<>();
+        for (int val : arr) {
+            if (indexMap.containsKey(val)) {
+                int index = indexMap.get(val);
+                int i = binarySearch(d, index);
+                if(i == d.size()){
+                    d.add(index);
+                }else {
+                    d.set(i, index);
+                }
+            }
+        }
+        return n - d.size();
+    }
+    public static int binarySearch(List<Integer> d, int target) {
+        int size = d.size();
+        if (size == 0 || d.get(size - 1) < target) {
+            return size;
+        }
+        int low = 0, high = size - 1;
+        while (low < high) {
+            int mid = (high - low) / 2 + low;
+            if (d.get(mid) < target) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+        return low;
     }
     //300. 最长递增子序列
     public int lengthOfLIS(int[] nums) {
@@ -69,25 +110,25 @@ public class ProblemSet {
 //        return max;
         //贪心 + 二分
         int n = nums.length;
-        if(n == 0){
+        if (n == 0) {
             return 0;
         }
         int len = 1;
         int[] d = new int[n + 1];
         d[len] = nums[0];
-        for(int i = 1; i < n; i++){
-            if(d[len] < nums[i]){
+        for (int i = 1; i < n; i++) {
+            if (d[len] < nums[i]) {
                 d[++len] = nums[i];
-            }else {
+            } else {
                 int l = 1;
                 int r = len;
-                int pos  = 0;
-                while (l <= r){
-                    int mid = l +(r -l)/2;
-                    if(d[mid] < nums[i]){
+                int pos = 0;
+                while (l <= r) {
+                    int mid = l + (r - l) / 2;
+                    if (d[mid] < nums[i]) {
                         pos = mid;
                         l = mid + 1;
-                    }else {
+                    } else {
                         r = mid - 1;
                     }
                 }
@@ -96,24 +137,26 @@ public class ProblemSet {
         }
         return len;
     }
+
     //1143. 最长公共子序列
     public int longestCommonSubsequence(String text1, String text2) {
         int n = text1.length();
         int m = text2.length();
         int[][] dp = new int[n + 1][m + 1];
-        for(int i = 1; i <= n; i++){
+        for (int i = 1; i <= n; i++) {
             int cha1 = text1.charAt(i - 1);
-            for (int j = 1; j <= m; j++){
+            for (int j = 1; j <= m; j++) {
                 int cha2 = text2.charAt(j - 1);
-                if(cha1 == cha2){
+                if (cha1 == cha2) {
                     dp[i][j] = dp[i - 1][j - 1] + 1;
-                }else {
-                    dp[i][j] = Math.max(dp[i][j - 1] , dp[i - 1][j]);
+                } else {
+                    dp[i][j] = Math.max(dp[i][j - 1], dp[i - 1][j]);
                 }
             }
         }
         return dp[n][m];
     }
+
     //1893. 检查是否区域内所有整数都被覆盖
     //给你一个二维整数数组 ranges 和两个整数 left 和 right 。每个 ranges[i] = [starti, endi] 表示一个从 starti 到 endi 的 闭区间 。
     //如果闭区间 [left, right] 内每个整数都被 ranges 中 至少一个 区间覆盖，那么请你返回 true ，否则返回 false 。
