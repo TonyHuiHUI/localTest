@@ -58,6 +58,7 @@ public class ProblemSet {
         Map<Integer, Integer> indexMap = new HashMap<>();//记录target的下标
         for (int i = 0; i < n; i++) {
             indexMap.put(target[i], i);
+
         }
         List<Integer> d = new LinkedList<>();
         for (int val : arr) {
