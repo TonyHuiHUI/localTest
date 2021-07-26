@@ -48,6 +48,54 @@ public class ProblemSet {
     public int minOperations(int[] target, int[] arr) {
         return 0;
     }
+    //300. 最长递增子序列
+    public int lengthOfLIS(int[] nums) {
+        //dp
+//        int n = nums.length;
+//        if(n == 0){
+//            return 0;
+//        }
+//        int[] dp = new int[n];
+//        int max = 1;
+//        Arrays.fill(dp,1);
+//        for(int i = 1; i < n; i++){
+//            for (int j = 0; j < i; j++){
+//                if(nums[i] > nums[j]){
+//                    dp[i] = Math.max(dp[i], dp[j] + 1);
+//                }
+//            }
+//            max = Math.max(dp[i], max);
+//        }
+//        return max;
+        //贪心 + 二分
+        int n = nums.length;
+        if(n == 0){
+            return 0;
+        }
+        int len = 1;
+        int[] d = new int[n + 1];
+        d[len] = nums[0];
+        for(int i = 1; i < n; i++){
+            if(d[len] < nums[i]){
+                d[++len] = nums[i];
+            }else {
+                int l = 1;
+                int r = len;
+                int pos  = 0;
+                while (l <= r){
+                    int mid = l +(r -l)/2;
+                    if(d[mid] < nums[i]){
+                        pos = mid;
+                        l = mid + 1;
+                    }else {
+                        r = mid - 1;
+                    }
+                }
+                d[pos + 1] = nums[i];
+            }
+        }
+        return len;
+    }
     //1143. 最长公共子序列
     public int longestCommonSubsequence(String text1, String text2) {
         int n = text1.length();
