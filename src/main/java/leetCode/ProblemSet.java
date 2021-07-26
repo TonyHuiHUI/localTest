@@ -41,6 +41,31 @@ public class ProblemSet {
             this.right = right;
         }
     }
+    //1713. 得到子序列的最少操作次数
+    //给你一个数组 target ，包含若干 互不相同 的整数，以及另一个整数数组 arr ，arr 可能 包含重复元素。
+    //每一次操作中，你可以在 arr 的任意位置插入任一整数。比方说，如果 arr = [1,4,1,2] ，那么你可以在中间添加 3 得到 [1,4,3,1,2] 。你可以在数组最开始或最后面添加整数。
+    //请你返回 最少 操作次数，使得 target 成为 arr 的一个子序列。
+    public int minOperations(int[] target, int[] arr) {
+        return 0;
+    }
+    //1143. 最长公共子序列
+    public int longestCommonSubsequence(String text1, String text2) {
+        int n = text1.length();
+        int m = text2.length();
+        int[][] dp = new int[n + 1][m + 1];
+        for(int i = 1; i <= n; i++){
+            int cha1 = text1.charAt(i - 1);
+            for (int j = 1; j <= m; j++){
+                int cha2 = text2.charAt(j - 1);
+                if(cha1 == cha2){
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                }else {
+                    dp[i][j] = Math.max(dp[i][j - 1] , dp[i - 1][j]);
+                }
+            }
+        }
+        return dp[n][m];
+    }
     //1893. 检查是否区域内所有整数都被覆盖
     //给你一个二维整数数组 ranges 和两个整数 left 和 right 。每个 ranges[i] = [starti, endi] 表示一个从 starti 到 endi 的 闭区间 。
     //如果闭区间 [left, right] 内每个整数都被 ranges 中 至少一个 区间覆盖，那么请你返回 true ，否则返回 false 。
