@@ -21,8 +21,8 @@ public class ProblemSet {
 //        System.out.println(maxFrequency(a, 5));
 //        int[][] a = {{1, 10}, {10, 20}};
 //        System.out.println(isCovered(a, 21, 21));
-        int[] a = {6,4,8,1,3,2};
-        int[] b = {4,7,6,2,3,8,6,1};
+        int[] a = {6, 4, 8, 1, 3, 2};
+        int[] b = {4, 7, 6, 2, 3, 8, 6, 1};
         System.out.println(minOperations(a, b));
     }
 
@@ -45,6 +45,29 @@ public class ProblemSet {
         }
     }
 
+    //671. 二叉树中第二小的节点
+    //给定一个非空特殊的二叉树，每个节点都是正数，并且每个节点的子节点数量只能为 2 或 0。如果一个节点有两个子节点的话，那么该节点的值等于两个子节点中较小的一个。
+    //更正式地说，root.val = min(root.left.val, root.right.val) 总成立。
+    //给出这样的一个二叉树，你需要输出所有节点中的第二小的值。如果第二小的值不存在的话，输出 -1 。
+    public int findSecondMinimumValue(TreeNode root) {
+        //递归找到第一个大于root.val的
+        return findSecond(root, root.val);
+    }
+    public int findSecond(TreeNode root, int val){
+        if(root == null){
+            return -1;
+        }
+        if(root.val > val){
+            return root.val;
+        }
+        int left = findSecond(root.left, val);
+        int right = findSecond(root.right, val);
+        if(left > val && right > val){
+            return Math.min(left, right);
+        }
+        return Math.max(left, right);
+    }
+
     //1713. 得到子序列的最少操作次数
     //给你一个数组 target ，包含若干 互不相同 的整数，以及另一个整数数组 arr ，arr 可能 包含重复元素。
     //每一次操作中，你可以在 arr 的任意位置插入任一整数。比方说，如果 arr = [1,4,1,2] ，那么你可以在中间添加 3 得到 [1,4,3,1,2] 。你可以在数组最开始或最后面添加整数。
@@ -65,15 +88,16 @@ public class ProblemSet {
             if (indexMap.containsKey(val)) {
                 int index = indexMap.get(val);
                 int i = binarySearch(d, index);
-                if(i == d.size()){
+                if (i == d.size()) {
                     d.add(index);
-                }else {
+                } else {
                     d.set(i, index);
                 }
             }
         }
         return n - d.size();
     }
+
     public static int binarySearch(List<Integer> d, int target) {
         int size = d.size();
         if (size == 0 || d.get(size - 1) < target) {
@@ -90,6 +114,7 @@ public class ProblemSet {
         }
         return low;
     }
+
     //300. 最长递增子序列
     public int lengthOfLIS(int[] nums) {
         //dp
