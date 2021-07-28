@@ -1,5 +1,7 @@
 package leetCode;
 
+import scala.io.BytePickle;
+
 import java.util.*;
 
 public class ProblemSet {
@@ -21,9 +23,19 @@ public class ProblemSet {
 //        System.out.println(maxFrequency(a, 5));
 //        int[][] a = {{1, 10}, {10, 20}};
 //        System.out.println(isCovered(a, 21, 21));
-        int[] a = {6, 4, 8, 1, 3, 2};
-        int[] b = {4, 7, 6, 2, 3, 8, 6, 1};
-        System.out.println(minOperations(a, b));
+//        int[] a = {6, 4, 8, 1, 3, 2};
+//        int[] b = {4, 7, 6, 2, 3, 8, 6, 1};
+//        System.out.println(minOperations(a, b));
+        TreeNode node7 = new TreeNode(7);
+        TreeNode node4 = new TreeNode(4);
+        TreeNode node6 = new TreeNode(6);
+        TreeNode node0 = new TreeNode(0);
+        TreeNode node8 = new TreeNode(8);
+        TreeNode node2 = new TreeNode(2, node7, node4);
+        TreeNode node1 = new TreeNode(1, node0, node8);
+        TreeNode node5 = new TreeNode(5, node6, node2);
+        TreeNode node3 = new TreeNode(3, node5, node1);
+        System.out.println(distanceK(node3, node5, 2));
     }
 
     public static class TreeNode {
@@ -45,6 +57,47 @@ public class ProblemSet {
         }
     }
 
+    //863. 二叉树中所有距离为 K 的结点
+    //给定一个二叉树（具有根结点 root）， 一个目标结点 target ，和一个整数值 K 。
+    //返回到目标结点 target 距离为 K 的所有结点的值的列表。 答案可以以任何顺序返回。。
+    public static List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        HashMap<Integer, TreeNode> hashMap = new HashMap<>();
+        List<Integer> result = new LinkedList<>();
+        findParent(hashMap, root);
+        findNode(hashMap, result, target, null, 0, k);
+        return result;
+    }
+
+    public static void findNode(HashMap<Integer, TreeNode> hashMap, List<Integer> result, TreeNode node, TreeNode from, int depth, int k) {
+        if (node == null) {
+            return;
+        }
+        if (depth == k) {
+            result.add(node.val);
+            return;
+        }
+        if (node.left != from) {
+            findNode(hashMap, result, node.left, node, depth + 1, k);
+        }
+        if (node.right != from) {
+            findNode(hashMap, result, node.right, node, depth + 1, k);
+        }
+        if (hashMap.get(node.val) != from) {
+            findNode(hashMap, result, hashMap.get(node.val), node, depth + 1, k);
+        }
+    }
+
+    public static void findParent(HashMap<Integer, TreeNode> hashMap, TreeNode node) {
+        if (node.left != null) {
+            hashMap.put(node.left.val, node);
+            findParent(hashMap, node.left);
+        }
+        if (node.right != null) {
+            hashMap.put(node.right.val, node);
+            findParent(hashMap, node.right);
+        }
+    }
+
     //671. 二叉树中第二小的节点
     //给定一个非空特殊的二叉树，每个节点都是正数，并且每个节点的子节点数量只能为 2 或 0。如果一个节点有两个子节点的话，那么该节点的值等于两个子节点中较小的一个。
     //更正式地说，root.val = min(root.left.val, root.right.val) 总成立。
@@ -53,16 +106,17 @@ public class ProblemSet {
         //递归找到第一个大于root.val的
         return findSecond(root, root.val);
     }
-    public int findSecond(TreeNode root, int val){
-        if(root == null){
+
+    public int findSecond(TreeNode root, int val) {
+        if (root == null) {
             return -1;
         }
-        if(root.val > val){
+        if (root.val > val) {
             return root.val;
         }
         int left = findSecond(root.left, val);
         int right = findSecond(root.right, val);
-        if(left > val && right > val){
+        if (left > val && right > val) {
             return Math.min(left, right);
         }
         return Math.max(left, right);
