@@ -26,16 +26,17 @@ public class ProblemSet {
 //        int[] a = {6, 4, 8, 1, 3, 2};
 //        int[] b = {4, 7, 6, 2, 3, 8, 6, 1};
 //        System.out.println(minOperations(a, b));
-        TreeNode node7 = new TreeNode(7);
-        TreeNode node4 = new TreeNode(4);
-        TreeNode node6 = new TreeNode(6);
-        TreeNode node0 = new TreeNode(0);
-        TreeNode node8 = new TreeNode(8);
-        TreeNode node2 = new TreeNode(2, node7, node4);
-        TreeNode node1 = new TreeNode(1, node0, node8);
-        TreeNode node5 = new TreeNode(5, node6, node2);
-        TreeNode node3 = new TreeNode(3, node5, node1);
-        System.out.println(distanceK(node3, node5, 2));
+//        TreeNode node7 = new TreeNode(7);
+//        TreeNode node4 = new TreeNode(4);
+//        TreeNode node6 = new TreeNode(6);
+//        TreeNode node0 = new TreeNode(0);
+//        TreeNode node8 = new TreeNode(8);
+//        TreeNode node2 = new TreeNode(2, node7, node4);
+//        TreeNode node1 = new TreeNode(1, node0, node8);
+//        TreeNode node5 = new TreeNode(5, node6, node2);
+//        TreeNode node3 = new TreeNode(3, node5, node1);
+//        System.out.println(distanceK(node3, node5, 2));
+        System.out.println(pathInZigZagTree(14));
     }
 
     public static class TreeNode {
@@ -55,6 +56,39 @@ public class ProblemSet {
             this.left = left;
             this.right = right;
         }
+    }
+
+    //1104. 二叉树寻路
+    //在一棵无限的二叉树上，每个节点都有两个子节点，树中的节点 逐行 依次按 “之” 字形进行标记。
+    //如下图所示，在奇数行（即，第一行、第三行、第五行……）中，按从左到右的顺序进行标记；
+    // 而偶数行（即，第二行、第四行、第六行……）中，按从右到左的顺序进行标记。
+    //给你树上某一个节点的标号 label，请你返回从根节点到该标号为 label 节点的路径，该路径是由途经的节点标号所组成的。
+    public static List<Integer> pathInZigZagTree(int label) {
+//        List<Integer> result = new LinkedList<>();
+//        int row = (int) (Math.log(label) / Math.log(2)) + 1;
+//        if (row % 2 == 0) {
+//            label = (1 << row - 1) + (1 << row) - 1 - label;
+//        }
+//        while (row > 0) {
+//            if (row % 2 == 0) {
+//                result.add((1 << row - 1) + (1 << row) - 1 - label);
+//            } else {
+//                result.add(label);
+//            }
+//            label >>= 1;
+//            row--;
+//        }
+//        Collections.reverse(result);
+//        return result;
+        LinkedList<Integer> res = new LinkedList<>();
+        res.add(label);
+        int c = (int) (Math.log(label) / Math.log(2));
+        while (c != 0) {
+            label = (int) (Math.pow(2, c) - 1) + (int) (Math.pow(2, c - 1)) - label / 2;
+            res.addFirst(label);
+            c--;
+        }
+        return res;
     }
 
     //863. 二叉树中所有距离为 K 的结点
