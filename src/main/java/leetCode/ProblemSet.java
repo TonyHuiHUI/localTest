@@ -65,6 +65,7 @@ public class ProblemSet {
         for(int i = 0; i < n; i++){
             result += (columnTitle.charAt(i) - 'A' + 1) * Math.pow(26, n - i - 1);
         }
+
         return result;
     }
 
