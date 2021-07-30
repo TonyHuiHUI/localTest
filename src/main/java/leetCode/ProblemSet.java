@@ -36,7 +36,8 @@ public class ProblemSet {
 //        TreeNode node5 = new TreeNode(5, node6, node2);
 //        TreeNode node3 = new TreeNode(3, node5, node1);
 //        System.out.println(distanceK(node3, node5, 2));
-        System.out.println(pathInZigZagTree(14));
+//        System.out.println(pathInZigZagTree(14));
+        System.out.println(titleToNumber("ZY"));
     }
 
     public static class TreeNode {
@@ -56,6 +57,15 @@ public class ProblemSet {
             this.left = left;
             this.right = right;
         }
+    }
+    //171. Excel表列序号
+    public static int titleToNumber(String columnTitle) {
+        int n = columnTitle.length();
+        int result = 0;
+        for(int i = 0; i < n; i++){
+            result += (columnTitle.charAt(i) - 'A' + 1) * Math.pow(26, n - i - 1);
+        }
+        return result;
     }
 
     //1104. 二叉树寻路
