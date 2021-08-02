@@ -37,7 +37,9 @@ public class ProblemSet {
 //        TreeNode node3 = new TreeNode(3, node5, node1);
 //        System.out.println(distanceK(node3, node5, 2));
 //        System.out.println(pathInZigZagTree(14));
-        System.out.println(titleToNumber("ZY"));
+//        System.out.println(titleToNumber("ZY"));
+        int[][] a = {{2,1,1},{2,3,1},{3,4,1}};
+        System.out.println(networkDelayTime(a, 4, 2));
     }
 
     public static class TreeNode {
@@ -58,11 +60,47 @@ public class ProblemSet {
             this.right = right;
         }
     }
+
+    //743. 网络延迟时间
+//    有 n 个网络节点，标记为 1 到 n。
+//    给你一个列表 times，表示信号经过 有向 边的传递时间。 times[i] = (ui, vi, wi)，其中 ui 是源节点，vi 是目标节点， wi 是一个信号从源节点传递到目标节点的时间。
+//    现在，从某个节点 K 发出一个信号。需要多久才能使所有节点都收到信号？如果不能使所有节点收到信号，返回 -1 。
+    public static int networkDelayTime(int[][] times, int n, int k) {
+        int INF = Integer.MAX_VALUE / 2;
+        int[][] w = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                w[i][j] = i == j ? 0 : INF;
+            }
+        }
+        for (int[] time : times) {
+            w[time[0] - 1][time[1] - 1] = time[2];
+        }
+        int[] dist = new int[n];
+        Arrays.fill(dist, INF);
+        dist[k - 1] = 0;
+        boolean[] visited = new boolean[n];
+        for (int i = 0; i < n; i++) {
+            int p = -1;
+            for (int j = 0; j < n; j++) {
+                if (!visited[j] && (p == -1 || dist[j] < dist[p])) {
+                    p = j;
+                }
+            }
+            visited[p] = true;
+            for (int j = 0; j < n; j++) {
+                dist[j] = Math.min(dist[j], dist[p] + w[p][j]);
+            }
+        }
+        int result = Arrays.stream(dist).max().getAsInt();
+        return result == INF ? -1 : result;
+    }
+
     //171. Excel表列序号
     public static int titleToNumber(String columnTitle) {
         int n = columnTitle.length();
         int result = 0;
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             result += (columnTitle.charAt(i) - 'A' + 1) * Math.pow(26, n - i - 1);
         }
 
