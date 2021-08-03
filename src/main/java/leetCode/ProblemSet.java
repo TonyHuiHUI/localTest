@@ -38,8 +38,10 @@ public class ProblemSet {
 //        System.out.println(distanceK(node3, node5, 2));
 //        System.out.println(pathInZigZagTree(14));
 //        System.out.println(titleToNumber("ZY"));
-        int[][] a = {{2,1,1},{2,3,1},{3,4,1}};
-        System.out.println(networkDelayTime(a, 4, 2));
+//        int[][] a = {{2,1,1},{2,3,1},{3,4,1}};
+//        System.out.println(networkDelayTime(a, 4, 2));
+        int[] a = {2,15,4,8,10,9,6};
+        System.out.println(findUnsortedSubarray(a));
     }
 
     public static class TreeNode {
@@ -60,7 +62,29 @@ public class ProblemSet {
             this.right = right;
         }
     }
-
+    //581. 最短无序连续子数组
+    //给你一个整数数组 nums ，你需要找出一个 连续子数组 ，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序。
+    //请你找出符合题意的 最短 子数组，并输出它的长度。
+    public static int findUnsortedSubarray(int[] nums) {
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        int right = -1;
+        int left = -1;
+        int n = nums.length;
+        for(int i = 0; i < n; i++){
+            if(nums[i] < max){
+                right = i;
+            }else {
+                max = nums[i];
+            }
+            if(nums[n - i - 1] > min){
+                left = n - i - 1;
+            }else {
+                min = nums[n - i - 1];
+            }
+        }
+        return right == -1 ? 0 : right - left + 1;
+    }
     //743. 网络延迟时间
 //    有 n 个网络节点，标记为 1 到 n。
 //    给你一个列表 times，表示信号经过 有向 边的传递时间。 times[i] = (ui, vi, wi)，其中 ui 是源节点，vi 是目标节点， wi 是一个信号从源节点传递到目标节点的时间。
