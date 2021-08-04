@@ -67,6 +67,7 @@ public class ProblemSet {
     //611. 有效三角形的个数
     //给定一个包含非负整数的数组，你的任务是统计其中可以组成三角形三条边的三元组个数。
     public static int triangleNumber(int[] nums) {
+        //排序+二分
         Arrays.sort(nums);
         int result = 0;
         int n = nums.length;
