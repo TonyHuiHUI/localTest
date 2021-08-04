@@ -40,8 +40,10 @@ public class ProblemSet {
 //        System.out.println(titleToNumber("ZY"));
 //        int[][] a = {{2,1,1},{2,3,1},{3,4,1}};
 //        System.out.println(networkDelayTime(a, 4, 2));
-        int[] a = {2,15,4,8,10,9,6};
-        System.out.println(findUnsortedSubarray(a));
+//        int[] a = {2,15,4,8,10,9,6};
+//        System.out.println(findUnsortedSubarray(a));
+        int[] a = {2,2,3,4};
+        System.out.println(triangleNumber(a));
     }
 
     public static class TreeNode {
@@ -61,6 +63,31 @@ public class ProblemSet {
             this.left = left;
             this.right = right;
         }
+    }
+    //611. 有效三角形的个数
+    //给定一个包含非负整数的数组，你的任务是统计其中可以组成三角形三条边的三元组个数。
+    public static int triangleNumber(int[] nums) {
+        Arrays.sort(nums);
+        int result = 0;
+        int n = nums.length;
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j < n; j++){
+                int left = j + 1;
+                int right = n - 1;
+                int index = j;
+                while (left <= right){
+                    int mid = left + (right - left)/2;
+                    if(nums[mid] < nums[i] + nums[j]){
+                        index = mid;
+                        left = mid + 1;
+                    }else {
+                        right = mid - 1;
+                    }
+                }
+                result += index - j;
+            }
+        }
+        return result;
     }
     //581. 最短无序连续子数组
     //给你一个整数数组 nums ，你需要找出一个 连续子数组 ，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序。
