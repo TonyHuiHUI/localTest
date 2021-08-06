@@ -42,8 +42,10 @@ public class ProblemSet {
 //        System.out.println(networkDelayTime(a, 4, 2));
 //        int[] a = {2,15,4,8,10,9,6};
 //        System.out.println(findUnsortedSubarray(a));
-        int[] a = {2,2,3,4};
-        System.out.println(triangleNumber(a));
+//        int[] a = {2,2,3,4};
+//        System.out.println(triangleNumber(a));
+        int[][] a = {{1}, {0, 2, 4}, {1, 3, 4}, {2}, {1, 2}};
+        System.out.println(shortestPathLength(a));
     }
 
     public static class TreeNode {
@@ -64,6 +66,38 @@ public class ProblemSet {
             this.right = right;
         }
     }
+
+    //847. 访问所有节点的最短路径
+//    存在一个由 n 个节点组成的无向连通图，图中的节点按从 0 到 n - 1 编号。
+//    给你一个数组 graph 表示这个图。其中，graph[i] 是一个列表，由所有与节点 i 直接相连的节点组成。
+//    返回能够访问所有节点的最短路径的长度。你可以在任一节点开始和停止，也可以多次重访节点，并且可以重用边。
+    public static int shortestPathLength(int[][] graph) {
+        int n = graph.length;
+        Queue<int[]> queue = new LinkedList<>();
+        boolean[][] visited = new boolean[n][1 << n];
+        for (int i = 0; i < n; i++) {
+            queue.offer(new int[]{i, 1 << i, 0});
+            visited[i][1 << i] = true;
+        }
+        int result = 0;
+        while (!queue.isEmpty()) {
+            int[] nodeInfo = queue.poll();
+            int node = nodeInfo[0], mask = nodeInfo[1], dist = nodeInfo[2];
+            if (mask == (1 << n) - 1) {
+                result = dist;
+                break;
+            }
+            for (int u : graph[node]) {
+                int maskU = mask | (1 << u);
+                if (!visited[u][maskU]) {
+                    queue.offer(new int[]{u, maskU, dist + 1});
+                    visited[u][maskU] = true;
+                }
+            }
+        }
+        return result;
+    }
+
     //802. 找到最终的安全状态
     //在有向图中，以某个节点为起始节点，从该点出发，每一步沿着图中的一条有向边行走。如果到达的节点是终点（即它没有连出的有向边），则停止。
     //对于一个起始节点，如果从该节点出发，无论每一步选择沿哪条有向边行走，最后必然在有限步内到达终点，则将该起始节点称作是 安全 的。
@@ -73,27 +107,28 @@ public class ProblemSet {
         List<Integer> result = new LinkedList<>();
         int n = graph.length;
         int[] color = new int[n];
-        for(int i = 0; i < n; i++){
-            if(issafe(graph, color, i)){
+        for (int i = 0; i < n; i++) {
+            if (issafe(graph, color, i)) {
                 result.add(i);
             }
         }
         return result;
     }
 
-    public static boolean issafe(int[][] graph, int[] color, int node ){
-        if(color[node] > 0){
+    public static boolean issafe(int[][] graph, int[] color, int node) {
+        if (color[node] > 0) {
             return color[node] == 2;
         }
         color[node] = 1;
-        for(int x : graph[node]){
-            if(!issafe(graph, color, x)){
+        for (int x : graph[node]) {
+            if (!issafe(graph, color, x)) {
                 return false;
             }
         }
         color[node] = 2;
         return true;
     }
+
     //611. 有效三角形的个数
     //给定一个包含非负整数的数组，你的任务是统计其中可以组成三角形三条边的三元组个数。
     public static int triangleNumber(int[] nums) {
@@ -101,17 +136,17 @@ public class ProblemSet {
         Arrays.sort(nums);
         int result = 0;
         int n = nums.length;
-        for(int i = 0; i < n; i++){
-            for(int j = i + 1; j < n; j++){
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
                 int left = j + 1;
                 int right = n - 1;
                 int index = j;
-                while (left <= right){
-                    int mid = left + (right - left)/2;
-                    if(nums[mid] < nums[i] + nums[j]){
+                while (left <= right) {
+                    int mid = left + (right - left) / 2;
+                    if (nums[mid] < nums[i] + nums[j]) {
                         index = mid;
                         left = mid + 1;
-                    }else {
+                    } else {
                         right = mid - 1;
                     }
                 }
@@ -120,6 +155,7 @@ public class ProblemSet {
         }
         return result;
     }
+
     //581. 最短无序连续子数组
     //给你一个整数数组 nums ，你需要找出一个 连续子数组 ，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序。
     //请你找出符合题意的 最短 子数组，并输出它的长度。
@@ -129,20 +165,21 @@ public class ProblemSet {
         int right = -1;
         int left = -1;
         int n = nums.length;
-        for(int i = 0; i < n; i++){
-            if(nums[i] < max){
+        for (int i = 0; i < n; i++) {
+            if (nums[i] < max) {
                 right = i;
-            }else {
+            } else {
                 max = nums[i];
             }
-            if(nums[n - i - 1] > min){
+            if (nums[n - i - 1] > min) {
                 left = n - i - 1;
-            }else {
+            } else {
                 min = nums[n - i - 1];
             }
         }
         return right == -1 ? 0 : right - left + 1;
     }
+
     //743. 网络延迟时间
 //    有 n 个网络节点，标记为 1 到 n。
 //    给你一个列表 times，表示信号经过 有向 边的传递时间。 times[i] = (ui, vi, wi)，其中 ui 是源节点，vi 是目标节点， wi 是一个信号从源节点传递到目标节点的时间。
