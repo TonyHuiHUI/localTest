@@ -44,8 +44,10 @@ public class ProblemSet {
 //        System.out.println(findUnsortedSubarray(a));
 //        int[] a = {2,2,3,4};
 //        System.out.println(triangleNumber(a));
-        int[][] a = {{1}, {0, 2, 4}, {1, 3, 4}, {2}, {1, 2}};
-        System.out.println(shortestPathLength(a));
+//        int[][] a = {{1}, {0, 2, 4}, {1, 3, 4}, {2}, {1, 2}};
+//        System.out.println(shortestPathLength(a));
+        int[] a = {2, 7, 13, 19};
+        System.out.println(nthSuperUglyNumber(12, a));
     }
 
     public static class TreeNode {
@@ -65,6 +67,65 @@ public class ProblemSet {
             this.left = left;
             this.right = right;
         }
+    }
+
+    //313. 超级丑数
+//    超级丑数 是一个正整数，并满足其所有质因数都出现在质数数组 primes 中。
+//    给你一个整数 n 和一个整数数组 primes ，返回第 n 个 超级丑数 。
+//    题目数据保证第 n 个 超级丑数 在 32-bit 带符号整数范围内。
+    public static int nthSuperUglyNumber(int n, int[] primes) {
+        //dp
+        int[] dp = new int[n + 1];
+        dp[1] = 1;
+        int m = primes.length;
+        int[] pointers = new int[m];
+        Arrays.fill(pointers, 1);
+        for (int i = 2; i <= n; i++) {
+            int[] nums = new int[m];
+            int minNum = Integer.MAX_VALUE;
+            for (int j = 0; j < m; j++) {
+                nums[j] = dp[pointers[j]] * primes[j];
+                minNum = Math.min(minNum, nums[j]);
+            }
+            dp[i] = minNum;
+            for (int j = 0; j < m; j++) {
+                if (minNum == nums[j]) {
+                    pointers[j]++;
+                }
+            }
+        }
+        return dp[n];
+        //小顶堆1
+//        PriorityQueue<Long> queue = new PriorityQueue<>();
+//        long res = 1;
+//        for (int i = 1; i < n; i++) {
+//            for (int prime : primes) {
+//                queue.add(prime * res);
+//            }
+//            res = queue.poll();
+//            while (!queue.isEmpty() && res == queue.peek()) {
+//                queue.poll();
+//            }
+//        }
+//        return (int) res;
+
+        //小顶堆2
+//        PriorityQueue<Long> queue = new PriorityQueue<>();
+//        Set<Long> seen = new HashSet<>();
+//        queue.offer(1L);
+//        seen.add(1L);
+//        int result = 0;
+//        for(int i = 0; i < n; i++){
+//            long cur = queue.poll();
+//            result = (int)cur;
+//            for(int prime : primes){
+//                long next =  prime * cur;
+//                if(seen.add(next)){
+//                    queue.offer(next);
+//                }
+//            }
+//        }
+//        return result;
     }
 
     //847. 访问所有节点的最短路径
@@ -88,6 +149,7 @@ public class ProblemSet {
                 break;
             }
             for (int u : graph[node]) {
+                //设置第u位二进制为1,表示该节点已经被访问
                 int maskU = mask | (1 << u);
                 if (!visited[u][maskU]) {
                     queue.offer(new int[]{u, maskU, dist + 1});
