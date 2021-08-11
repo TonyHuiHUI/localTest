@@ -84,7 +84,7 @@ public class ProblemSet {
         int n = nums.length;
         Map<Long, Integer>[] maps = new HashMap[n];
         for (int i = 0; i < n; i++) {
-            maps[i] = new HashMap<>();
+            maps[i] = new HashMap<>(16);
         }
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
