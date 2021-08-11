@@ -48,8 +48,8 @@ public class ProblemSet {
 //        System.out.println(shortestPathLength(a));
 //        int[] a = {2, 7, 13, 19};
 //        System.out.println(nthSuperUglyNumber(12, a));
-        int[] a = {1,2,3,4,5,6};
-        System.out.println(numberOfArithmeticSlices(a));
+        int[] a = {0, 2000000000, -294967296};
+        System.out.println(numberOfArithmeticSlices2(a));
     }
 
     public static class TreeNode {
@@ -69,6 +69,32 @@ public class ProblemSet {
             this.left = left;
             this.right = right;
         }
+    }
+
+    //446. 等差数列划分 II - 子序列
+    //给你一个整数数组 nums ，返回 nums 中所有 等差子序列 的数目。
+    //如果一个序列中 至少有三个元素 ，并且任意两个相邻元素之差相同，则称该序列为等差序列。
+    //    例如，[1, 3, 5, 7, 9]、[7, 7, 7, 7] 和 [3, -1, -5, -9] 都是等差序列。
+    //    再例如，[1, 1, 2, 5, 7] 不是等差序列。
+    //数组中的子序列是从数组中删除一些元素（也可能不删除）得到的一个序列。
+    //    例如，[2,5,10] 是 [1,2,1,2,4,1,5,10] 的一个子序列。
+    //题目数据保证答案是一个 32-bit 整数。
+    public static int numberOfArithmeticSlices2(int[] nums) {
+        int result = 0;
+        int n = nums.length;
+        Map<Long, Integer>[] maps = new HashMap[n];
+        for (int i = 0; i < n; i++) {
+            maps[i] = new HashMap<>();
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                long deta = 1L * nums[i] - nums[j];
+                int count = maps[j].getOrDefault(deta, 0);
+                result += count;
+                maps[i].put(deta, maps[i].getOrDefault(deta, 0) + count + 1);
+            }
+        }
+        return result;
     }
 
     //413. 等差数列划分
@@ -117,11 +143,11 @@ public class ProblemSet {
 
     public static int combinationCount(int left, int right) {
         int length = right - left + 1;
-        int count  = 0;
+        int count = 0;
         if (length < 3) {
             return 0;
         }
-        for(int i = 3; i <= length; i++){
+        for (int i = 3; i <= length; i++) {
             count += length - i + 1;
         }
         return count;
