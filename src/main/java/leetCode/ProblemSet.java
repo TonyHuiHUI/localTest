@@ -50,7 +50,8 @@ public class ProblemSet {
 //        System.out.println(nthSuperUglyNumber(12, a));
 //        int[] a = {0, 2000000000, -294967296};
 //        System.out.println(numberOfArithmeticSlices2(a));
-        System.out.println(longestPalindromeSubseq("bbbab"));
+//        System.out.println(longestPalindromeSubseq("bbbab"));
+        System.out.println(countDigitOne(13));
     }
 
     public static class TreeNode {
@@ -70,6 +71,32 @@ public class ProblemSet {
             this.left = left;
             this.right = right;
         }
+    }
+
+    //233. 数字 1 的个数
+    //给定一个整数 n，计算所有小于等于 n 的非负整数中数字 1 出现的个数。
+    public static int countDigitOne(int n) {
+        int result = 0;
+        String str = String.valueOf(n);
+        int len = str.length();
+        if (len == 1) {
+            return n > 0 ? 1 : 0;
+        }
+        for (int i = 0; i < len; i++) {
+            int x = str.charAt(i) - '0';
+            //数字x之后的剩余长度
+            int m = len - i - 1;
+            //以数字x为分界，suf后缀，pre前缀
+            int suf = (int) (n % Math.pow(10, len - i - 1));
+            int pre = (int) (n / Math.pow(10, len - i));
+            result += pre * Math.pow(10, m);
+            if(x == 1){
+                result += suf + 1;
+            }else if(x > 1) {
+                result += Math.pow(10, m);
+            }
+        }
+        return result;
     }
 
     //516. 最长回文子序列
