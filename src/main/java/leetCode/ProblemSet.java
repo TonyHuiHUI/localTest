@@ -51,7 +51,8 @@ public class ProblemSet {
 //        int[] a = {0, 2000000000, -294967296};
 //        System.out.println(numberOfArithmeticSlices2(a));
 //        System.out.println(longestPalindromeSubseq("bbbab"));
-        System.out.println(countDigitOne(13));
+//        System.out.println(countDigitOne(13));
+        System.out.println(countArrangement(2));
     }
 
     public static class TreeNode {
@@ -73,6 +74,45 @@ public class ProblemSet {
         }
     }
 
+    //526. 优美的排列
+    //假设有从 1 到 N 的 N 个整数，如果从这 N 个数字中成功构造出一个数组，使得数组的第 i 位 (1 <= i <= N) 满足如下两个条件中的一个，我们就称这个数组为一个优美的排列。条件：
+    //    第 i 位的数字能被 i 整除
+    //    i 能被第 i 位上的数字整除
+    //现在给定一个整数 N，请问可以构造多少个优美的排列？
+    public static HashMap<Integer, List<Integer>> match ;
+    public static boolean[] visited ;
+    public static int result ;
+    public static int countArrangement(int n) {
+        match = new HashMap<>();
+        visited = new boolean[n + 1];
+        result = 0;
+        for (int i = 1; i <= n; i++){
+            for(int j = 1; j <= n; j++){
+                if(i % j == 0 || j % i == 0){
+                    List<Integer> tmp = match.getOrDefault(i, new LinkedList<>());
+                    tmp.add(j);
+                    match.put(i, tmp);
+                }
+            }
+        }
+        //回溯
+        backtrace(1, n);
+        return result;
+    }
+
+    public static void backtrace(int index, int n){
+        if(index == n + 1){
+            result++;
+            return;
+        }
+        for(int i : match.get(index)){
+            if(!visited[i]){
+                visited[i] = true;
+                backtrace(index + 1, n);
+                visited[i] = false;
+            }
+        }
+    }
     //233. 数字 1 的个数
     //给定一个整数 n，计算所有小于等于 n 的非负整数中数字 1 出现的个数。
     public static int countDigitOne(int n) {
