@@ -73,7 +73,48 @@ public class ProblemSet {
             this.right = right;
         }
     }
-//551. 学生出勤记录 I
+
+    //552. 学生出勤记录 II
+//    可以用字符串表示一个学生的出勤记录，其中的每个字符用来标记当天的出勤情况（缺勤、迟到、到场）。记录中只含下面三种字符：
+//    'A'：Absent，缺勤
+//    'L'：Late，迟到
+//    'P'：Present，到场
+//    如果学生能够 同时 满足下面两个条件，则可以获得出勤奖励：
+//    按 总出勤 计，学生缺勤（'A'）严格 少于两天。
+//    学生 不会 存在 连续 3 天或 连续 3 天以上的迟到（'L'）记录。
+//    给你一个整数 n ，表示出勤记录的长度（次数）。请你返回记录长度为 n 时，可能获得出勤奖励的记录情况 数量 。答案可能很大，所以返回对 109 + 7 取余 的结果
+    public static int checkRecord2(int n) {
+        final int MOD = 1000000007;
+        int[][][] dp = new int[n + 1][2][3];//表示前 i天有j个‘A’且结尾有连续k个'L'的可奖励的出勤记录的数量
+        dp[0][0][0] = 1;
+        int sum = 0;
+        for (int i = 1; i <= n; i++) {
+            //当第i天为P时
+            for (int j = 0; j < 2; j++) {
+                for (int k = 0; k < 3; k++) {
+                    dp[i][j][0] = (dp[i][j][0] + dp[i - 1][j][k]) % MOD;
+                }
+            }
+            //当第i天为A时
+            for (int k = 0; k < 3; k++) {
+                dp[i][1][0] = (dp[i][1][0] + dp[i - 1][0][k]) % MOD;
+            }
+            //当第i天为L时
+            for (int j = 0; j < 2; j++) {
+                for (int k = 1; k < 3; k++) {
+                    dp[i][j][k] = (dp[i][j][k] + dp[i - 1][j][k - 1]) % MOD;
+                }
+            }
+        }
+        for (int j = 0; j < 2; j++){
+            for (int k = 0; k < 3; k++){
+                sum = (sum + dp[n][j][k]) % MOD;
+            }
+        }
+        return sum;
+    }
+
+    //551. 学生出勤记录 I
 //给你一个字符串 s 表示一个学生的出勤记录，其中的每个字符用来标记当天的出勤情况（缺勤、迟到、到场）。记录中只含下面三种字符：
 //    'A'：Absent，缺勤
 //    'L'：Late，迟到
@@ -86,17 +127,17 @@ public class ProblemSet {
         int absent = 0;
         int late = 0;
         int n = s.length();
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             char c = s.charAt(i);
-            if(c== 'A'){
+            if (c == 'A') {
                 absent++;
             }
-            if(c == 'L'){
+            if (c == 'L') {
                 late++;
-            }else {
+            } else {
                 late = 0;
             }
-            if(absent == 2 || late == 3){
+            if (absent == 2 || late == 3) {
                 return false;
             }
         }
@@ -108,16 +149,17 @@ public class ProblemSet {
     //    第 i 位的数字能被 i 整除
     //    i 能被第 i 位上的数字整除
     //现在给定一个整数 N，请问可以构造多少个优美的排列？
-    public static HashMap<Integer, List<Integer>> match ;
-    public static boolean[] visited ;
-    public static int result ;
+    public static HashMap<Integer, List<Integer>> match;
+    public static boolean[] visited;
+    public static int result;
+
     public static int countArrangement(int n) {
         match = new HashMap<>();
         visited = new boolean[n + 1];
         result = 0;
-        for (int i = 1; i <= n; i++){
-            for(int j = 1; j <= n; j++){
-                if(i % j == 0 || j % i == 0){
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (i % j == 0 || j % i == 0) {
                     List<Integer> tmp = match.getOrDefault(i, new LinkedList<>());
                     tmp.add(j);
                     match.put(i, tmp);
@@ -129,19 +171,20 @@ public class ProblemSet {
         return result;
     }
 
-    public static void backtrace(int index, int n){
-        if(index == n + 1){
+    public static void backtrace(int index, int n) {
+        if (index == n + 1) {
             result++;
             return;
         }
-        for(int i : match.get(index)){
-            if(!visited[i]){
+        for (int i : match.get(index)) {
+            if (!visited[i]) {
                 visited[i] = true;
                 backtrace(index + 1, n);
                 visited[i] = false;
             }
         }
     }
+
     //233. 数字 1 的个数
     //给定一个整数 n，计算所有小于等于 n 的非负整数中数字 1 出现的个数。
     public static int countDigitOne(int n) {
@@ -159,9 +202,9 @@ public class ProblemSet {
             int suf = (int) (n % Math.pow(10, len - i - 1));
             int pre = (int) (n / Math.pow(10, len - i));
             result += pre * Math.pow(10, m);
-            if(x == 1){
+            if (x == 1) {
                 result += suf + 1;
-            }else if(x > 1) {
+            } else if (x > 1) {
                 result += Math.pow(10, m);
             }
         }
