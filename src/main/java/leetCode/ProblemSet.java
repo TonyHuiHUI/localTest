@@ -73,7 +73,37 @@ public class ProblemSet {
             this.right = right;
         }
     }
+//345. 反转字符串中的元音字母
+    //写一个函数，以字符串作为输入，反转该字符串中的元音字母。
+    public String reverseVowels(String s) {
+        int n = s.length();
+        char[] arr = s.toCharArray();
+        int i = 0, j = n - 1;
+        while (i < j) {
+            while (i < n && !isVowel(arr[i])) {
+                ++i;
+            }
+            while (j > 0 && !isVowel(arr[j])) {
+                --j;
+            }
+            if (i < j) {
+                swap(arr, i, j);
+                ++i;
+                --j;
+            }
+        }
+        return new String(arr);
+    }
 
+    public boolean isVowel(char ch) {
+        return "aeiouAEIOU".indexOf(ch) >= 0;
+    }
+
+    public void swap(char[] arr, int i, int j) {
+        char temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
     //552. 学生出勤记录 II
 //    可以用字符串表示一个学生的出勤记录，其中的每个字符用来标记当天的出勤情况（缺勤、迟到、到场）。记录中只含下面三种字符：
 //    'A'：Absent，缺勤
