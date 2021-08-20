@@ -73,7 +73,35 @@ public class ProblemSet {
             this.right = right;
         }
     }
-//345. 反转字符串中的元音字母
+
+    //541. 反转字符串 II
+    //给定一个字符串 s 和一个整数 k，从字符串开头算起，每 2k 个字符反转前 k 个字符。
+//    如果剩余字符少于 k 个，则将剩余字符全部反转。
+//    如果剩余字符小于 2k 但大于或等于 k 个，则反转前 k 个字符，其余字符保持原样。
+    public String reverseStr(String s, int k) {
+        int n = s.length();
+        char[] arr = s.toCharArray();
+        for (int i = 0; i < n; i += 2 * k) {
+            if (i + k <= n) {
+                reverse(arr, i, i + k - 1);
+            } else {
+                reverse(arr, i, n - 1);
+            }
+        }
+        return new String(arr);
+    }
+
+    public void reverse(char[] arr, int begin, int end) {
+        while (begin < end) {
+            char c = arr[begin];
+            arr[begin] = arr[end];
+            arr[end] = c;
+            begin++;
+            end--;
+        }
+    }
+
+    //345. 反转字符串中的元音字母
     //写一个函数，以字符串作为输入，反转该字符串中的元音字母。
     public String reverseVowels(String s) {
         int n = s.length();
@@ -104,6 +132,7 @@ public class ProblemSet {
         arr[i] = arr[j];
         arr[j] = temp;
     }
+
     //552. 学生出勤记录 II
 //    可以用字符串表示一个学生的出勤记录，其中的每个字符用来标记当天的出勤情况（缺勤、迟到、到场）。记录中只含下面三种字符：
 //    'A'：Absent，缺勤
@@ -136,8 +165,8 @@ public class ProblemSet {
                 }
             }
         }
-        for (int j = 0; j < 2; j++){
-            for (int k = 0; k < 3; k++){
+        for (int j = 0; j < 2; j++) {
+            for (int k = 0; k < 3; k++) {
                 sum = (sum + dp[n][j][k]) % MOD;
             }
         }
