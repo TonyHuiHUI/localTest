@@ -74,6 +74,28 @@ public class ProblemSet {
         }
     }
 
+    //1646. 获取生成数组中的最大值
+    //给你一个整数 n 。按下述规则生成一个长度为 n + 1 的数组 nums ：
+//    nums[0] = 0
+//    nums[1] = 1
+//    当 2 <= 2 * i <= n 时，nums[2 * i] = nums[i]
+//    当 2 <= 2 * i + 1 <= n 时，nums[2 * i + 1] = nums[i] + nums[i + 1]
+//返回生成数组 nums 中的 最大 值。
+    public static int getMaximumGenerated(int n) {
+        if(n == 0 || n == 1){
+            return n;
+        }
+        int[] nums = new int[n + 1];
+        nums[0] = 0;
+        nums[1] = 1;
+        int max = 1;
+        for (int i = 2; i <= n; i++) {
+            nums[i] = i % 2 == 0 ? nums[i / 2] : nums[i / 2] + nums[i / 2 + 1];
+            max = Math.max(nums[i], max);
+        }
+        return max;
+    }
+
     //541. 反转字符串 II
     //给定一个字符串 s 和一个整数 k，从字符串开头算起，每 2k 个字符反转前 k 个字符。
 //    如果剩余字符少于 k 个，则将剩余字符全部反转。
