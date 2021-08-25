@@ -52,7 +52,9 @@ public class ProblemSet {
 //        System.out.println(numberOfArithmeticSlices2(a));
 //        System.out.println(longestPalindromeSubseq("bbbab"));
 //        System.out.println(countDigitOne(13));
-        System.out.println(countArrangement(2));
+//        System.out.println(countArrangement(2));
+        int[][] a = {{1,2},{3},{3},{}};
+        System.out.println(allPathsSourceTarget(a));
     }
 
     public static class TreeNode {
@@ -71,6 +73,28 @@ public class ProblemSet {
             this.val = val;
             this.left = left;
             this.right = right;
+        }
+    }
+    //797. 所有可能的路径
+//    给你一个有 n 个节点的 有向无环图（DAG），请你找出所有从节点 0 到节点 n-1 的路径并输出（不要求按特定顺序）
+//    二维数组的第 i 个数组中的单元都表示有向图中 i 号节点所能到达的下一些节点，空就是没有下一个结点了。
+    public static List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        List<List<Integer>> result = new ArrayList<>();
+        Stack<Integer> stack = new Stack<>();
+        int n = graph.length;
+        stack.push(0);
+        dfs(graph, result, stack, 0, n);
+        return result;
+    }
+    public static  void dfs(int[][] graph, List<List<Integer>> result, Stack<Integer> stack,int x, int n){
+        if(x == n - 1){
+            result.add(new ArrayList<>(stack));
+            return;
+        }
+        for(int i : graph[x]){
+            stack.push(i);
+            dfs(graph, result, stack, i, n);
+            stack.pop();
         }
     }
     //787. K 站中转内最便宜的航班
@@ -96,6 +120,7 @@ public class ProblemSet {
         }
         return ans == INF ? -1 : ans;
     }
+
     //1646. 获取生成数组中的最大值
     //给你一个整数 n 。按下述规则生成一个长度为 n + 1 的数组 nums ：
 //    nums[0] = 0
@@ -104,7 +129,7 @@ public class ProblemSet {
 //    当 2 <= 2 * i + 1 <= n 时，nums[2 * i + 1] = nums[i] + nums[i + 1]
 //返回生成数组 nums 中的 最大 值。
     public static int getMaximumGenerated(int n) {
-        if(n == 0 || n == 1){
+        if (n == 0 || n == 1) {
             return n;
         }
         int[] nums = new int[n + 1];
