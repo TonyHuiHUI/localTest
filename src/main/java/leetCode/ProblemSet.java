@@ -53,8 +53,10 @@ public class ProblemSet {
 //        System.out.println(longestPalindromeSubseq("bbbab"));
 //        System.out.println(countDigitOne(13));
 //        System.out.println(countArrangement(2));
-        int[][] a = {{1,2},{3},{3},{}};
-        System.out.println(allPathsSourceTarget(a));
+//        int[][] a = {{1,2},{3},{3},{}};
+//        System.out.println(allPathsSourceTarget(a));
+        int[] a = {5,1,4,2};
+        System.out.println(numRescueBoats(a, 6));
     }
 
     public static class TreeNode {
@@ -75,6 +77,25 @@ public class ProblemSet {
             this.right = right;
         }
     }
+
+    //881. 救生艇
+    //第 i 个人的体重为 people[i]，每艘船可以承载的最大重量为 limit。
+    //每艘船最多可同时载两人，但条件是这些人的重量之和最多为 limit。
+    //返回载到每一个人所需的最小船数。(保证每个人都能被船载)。
+    public static int numRescueBoats(int[] people, int limit) {
+        int result = 0;
+        Arrays.sort(people);
+        int left = 0, right = people.length - 1;
+        while (left <= right) {
+            if (people[left] + people[right] <= limit) {
+                ++left;
+            }
+            --right;
+            ++result;
+        }
+        return result;
+    }
+
     //797. 所有可能的路径
 //    给你一个有 n 个节点的 有向无环图（DAG），请你找出所有从节点 0 到节点 n-1 的路径并输出（不要求按特定顺序）
 //    二维数组的第 i 个数组中的单元都表示有向图中 i 号节点所能到达的下一些节点，空就是没有下一个结点了。
@@ -86,17 +107,19 @@ public class ProblemSet {
         dfs(graph, result, stack, 0, n);
         return result;
     }
-    public static  void dfs(int[][] graph, List<List<Integer>> result, Stack<Integer> stack,int x, int n){
-        if(x == n - 1){
+
+    public static void dfs(int[][] graph, List<List<Integer>> result, Stack<Integer> stack, int x, int n) {
+        if (x == n - 1) {
             result.add(new ArrayList<>(stack));
             return;
         }
-        for(int i : graph[x]){
+        for (int i : graph[x]) {
             stack.push(i);
             dfs(graph, result, stack, i, n);
             stack.pop();
         }
     }
+
     //787. K 站中转内最便宜的航班
     //有 n 个城市通过一些航班连接。给你一个数组 flights ，其中 flights[i] = [fromi, toi, pricei] ，表示该航班都从城市 fromi 开始，以价格 toi 抵达 pricei。
     //现在给定所有的城市和航班，以及出发城市 src 和目的地 dst，你的任务是找到出一条最多经过 k 站中转的路线，使得从 src 到 dst 的 价格最便宜 ，并返回该价格。 如果不存在这样的路线，则输出 -1
