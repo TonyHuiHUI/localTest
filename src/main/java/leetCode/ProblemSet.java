@@ -3,6 +3,7 @@ package leetCode;
 import scala.io.BytePickle;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ProblemSet {
     public static void main(String[] args) {
@@ -55,8 +56,15 @@ public class ProblemSet {
 //        System.out.println(countArrangement(2));
 //        int[][] a = {{1,2},{3},{3},{}};
 //        System.out.println(allPathsSourceTarget(a));
-        int[] a = {5, 1, 4, 2};
-        System.out.println(numRescueBoats(a, 6));
+//        int[] a = {5, 1, 4, 2};
+//        System.out.println(numRescueBoats(a, 6));
+        int[] a = {3, 14, 1, 7};
+        Solution solution = new Solution(a);
+        System.out.println(solution.pickIndex());
+        System.out.println(solution.pickIndex());
+        System.out.println(solution.pickIndex());
+
+
     }
 
     public static class TreeNode {
@@ -75,6 +83,63 @@ public class ProblemSet {
             this.val = val;
             this.left = left;
             this.right = right;
+        }
+    }
+
+    //528. 按权重随机选择
+    //给定一个正整数数组 w ，其中 w[i] 代表下标 i 的权重（下标从 0 开始），请写一个函数 pickIndex ，它可以随机地获取下标 i，选取下标 i 的概率与 w[i] 成正比。
+    //例如，对于 w = [1, 3]，挑选下标 0 的概率为 1 / (1 + 3) = 0.25 （即，25%），而选取下标 1 的概率为 3 / (1 + 3) = 0.75（即，75%）。
+    //也就是说，选取下标 i 的概率为 w[i] / sum(w) 。
+    static class Solution {
+//        int totalWeight;
+//        int n;
+//        int[] ins;
+//        public Solution(int[] w) {
+//            n = w.length;
+//            ins = w;
+//            for(int i : w){
+//                totalWeight += i;
+//            }
+//        }
+//
+//        public int pickIndex() {
+//            ThreadLocalRandom random =  ThreadLocalRandom.current();
+//            int offset = random.nextInt(totalWeight);
+//            for(int i = 0; i < n; i++){
+//                offset -= ins[i];
+//                if(offset < 0) {
+//                    return i;
+//                }
+//            }
+//            return 0;
+//        }
+        //前缀+二分
+
+        int[] pre;
+        int total;
+
+        public Solution(int[] w) {
+            pre = new int[w.length];
+            pre[0] = total = w[0];
+            for (int i = 1; i < w.length; i++) {
+                pre[i] = pre[i - 1] + w[i];
+                total += w[i];
+            }
+        }
+
+        public int pickIndex() {
+            int x = (int) (Math.random() * total) + 1;
+            int left = 0;
+            int right = pre.length - 1;
+            while (left < right) {
+                int mid = (right - left) / 2 + left;
+                if(pre[mid] < x){
+                    left = mid + 1;
+                }else {
+                    right = mid;
+                }
+            }
+            return left;
         }
     }
 
