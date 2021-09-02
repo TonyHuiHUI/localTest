@@ -87,6 +87,22 @@ public class ProblemSet {
         }
     }
 
+    //剑指 Offer 22. 链表中倒数第k个节点
+//    输入一个链表，输出该链表中倒数第k个节点。为了符合大多数人的习惯，本题从1开始计数，即链表的尾节点是倒数第1个节点。
+//    例如，一个链表有 6 个节点，从头节点开始，它们的值依次是 1、2、3、4、5、6。这个链表的倒数第 3 个节点是值为 4 的节点。
+    public ListNode getKthFromEnd(ListNode head, int k) {
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && k > 0){
+            fast = fast.next;
+            k--;
+        }
+        while (fast != null){
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
     //165. 比较版本号
     //给你两个版本号 version1 和 version2 ，请你比较它们。
     //版本号由一个或多个修订号组成，各修订号由一个 '.' 连接。每个修订号由 多位数字 组成，可能包含 前导零 。每个版本号至少包含一个字符。修订号从左到右编号，下标从 0 开始，最左边的修订号下标为 0 ，下一个修订号下标为 1 ，以此类推。例如，2.5.33 和 0.1 都是有效的版本号。
