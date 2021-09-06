@@ -93,16 +93,17 @@ public class ProblemSet {
     public ListNode getKthFromEnd(ListNode head, int k) {
         ListNode fast = head;
         ListNode slow = head;
-        while (fast != null && k > 0){
+        while (fast != null && k > 0) {
             fast = fast.next;
             k--;
         }
-        while (fast != null){
+        while (fast != null) {
             fast = fast.next;
             slow = slow.next;
         }
         return slow;
     }
+
     //165. 比较版本号
     //给你两个版本号 version1 和 version2 ，请你比较它们。
     //版本号由一个或多个修订号组成，各修订号由一个 '.' 连接。每个修订号由 多位数字 组成，可能包含 前导零 。每个版本号至少包含一个字符。修订号从左到右编号，下标从 0 开始，最左边的修订号下标为 0 ，下一个修订号下标为 1 ，以此类推。例如，2.5.33 和 0.1 都是有效的版本号。
@@ -114,23 +115,24 @@ public class ProblemSet {
     public static int compareVersion(String version1, String version2) {
         String[] v1 = version1.split("\\.");
         String[] v2 = version2.split("\\.");
-        for(int i = 0; i < v1.length || i < v2.length; i++){
+        for (int i = 0; i < v1.length || i < v2.length; i++) {
             int x1 = 0;
             int x2 = 0;
-            if(i < v1.length){
+            if (i < v1.length) {
                 x1 = Integer.valueOf(v1[i]);
             }
-            if(i < v2.length){
+            if (i < v2.length) {
                 x2 = Integer.valueOf(v2[i]);
             }
-            if(x1 < x2){
+            if (x1 < x2) {
                 return -1;
-            }else if(x1 > x2){
+            } else if (x1 > x2) {
                 return 1;
             }
         }
         return 0;
     }
+
     //1109. 航班预订统计
     //这里有 n 个航班，它们分别从 1 到 n 进行编号。
     //有一份航班预订表 bookings ，表中第 i 条预订记录 bookings[i] = [firsti, lasti, seatsi] 意味着在从 firsti 到 lasti （包含 firsti 和 lasti ）的 每个航班 上预订了 seatsi 个座位。
@@ -139,7 +141,7 @@ public class ProblemSet {
         int[] result = new int[n];
         for (int[] booking : bookings) {
             result[booking[0] - 1] += booking[2];
-            if(booking[1] < n){
+            if (booking[1] < n) {
                 result[booking[1]] -= booking[2];
             }
         }
@@ -1678,6 +1680,23 @@ public class ProblemSet {
             this.val = val;
             this.next = next;
         }
+    }
+
+    //704. 二分查找
+    //给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
+    public static int BSearch(int[] nums, int target) {
+        int n = nums.length;
+        int left = 0;
+        int right = n - 1;
+        while (left < right) {
+            int mid = (right - left) / 2 + left;
+            if(nums[mid] < target){
+                left = mid + 1;
+            }else {
+                right = mid;
+            }
+        }
+        return nums[left] == target ? left : -1;
     }
 
     //    20. 有效的括号
