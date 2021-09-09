@@ -1682,6 +1682,35 @@ public class ProblemSet {
         }
     }
 
+    //502. IPO
+    //给你 n 个项目。对于每个项目 i ，它都有一个纯利润 profits[i] ，和启动该项目需要的最小资本 capital[i] 。
+    //最初，你的资本为 w 。当你完成一个项目时，你将获得纯利润，且利润将被添加到你的总资本中。
+    //总而言之，从给定项目中选择 最多 k 个不同项目的列表，以 最大化最终资本 ，并输出最终可获得的最多资本。
+    //答案保证在 32 位有符号整数范围内
+    public static int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
+        int n = profits.length;
+        int[][] arr = new int[n][2];
+        int index = 0;
+        for (int i = 0; i < n; i++) {
+            arr[i][0] = capital[i];
+            arr[i][1] = profits[i];
+        }
+        Arrays.sort(arr, (a, b) -> a[0] - b[0]);//已启动资本从小到大排序
+        PriorityQueue<Integer> queue = new PriorityQueue<>((a, b) -> b - a);//大顶堆
+        for(int i = 0; i < k; i++){
+            while (index < n && arr[index][0] <= w){
+                queue.add(arr[index][1]);//启动资本小于w的，将其利润加入堆
+                index++;
+            }
+            if(!queue.isEmpty()){
+                w += queue.poll();//去利润最大的堆顶
+            }else {
+                break;
+            }
+        }
+        return w;
+    }
+
     //704. 二分查找
     //给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
     public static int BSearch(int[] nums, int target) {
@@ -1690,9 +1719,9 @@ public class ProblemSet {
         int right = n - 1;
         while (left < right) {
             int mid = (right - left) / 2 + left;
-            if(nums[mid] < target){
+            if (nums[mid] < target) {
                 left = mid + 1;
-            }else {
+            } else {
                 right = mid;
             }
         }
