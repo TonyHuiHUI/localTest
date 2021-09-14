@@ -1681,6 +1681,35 @@ public class ProblemSet {
             this.next = next;
         }
     }
+    //524. 通过删除字母匹配到字典里最长单词
+    //给你一个字符串 s 和一个字符串数组 dictionary 作为字典，找出并返回字典中最长的字符串，该字符串可以通过删除 s 中的某些字符得到。
+    //如果答案不止一个，返回长度最长且字典序最小的字符串。如果答案不存在，则返回空字符串。
+    public String findLongestWord(String s, List<String> dictionary) {
+        Collections.sort(dictionary, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                if(o1.length() != o2.length()){
+                    return o2.length() - o1.length();
+                }else {
+                    return o1.compareTo(o2);
+                }
+            }
+        });
+        for(String dic : dictionary){
+            int i = 0;
+            int j = 0;
+            while (i < s.length() && j < dic.length()){
+                if(s.charAt(i) == dic.charAt(j)){
+                    j++;
+                }
+                i++;
+            }
+            if(j == dic.length() ){
+                return dic;
+            }
+        }
+        return "";
+    }
     //447. 回旋镖的数量
     //给定平面上 n 对 互不相同 的点 points ，其中 points[i] = [xi, yi] 。回旋镖 是由点 (i, j, k) 表示的元组 ，其中 i 和 j 之间的距离和 i 和 k 之间的距离相等（需要考虑元组的顺序）。
     //返回平面上所有回旋镖的数量。
