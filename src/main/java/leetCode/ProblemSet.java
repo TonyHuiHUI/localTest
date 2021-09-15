@@ -1681,6 +1681,35 @@ public class ProblemSet {
             this.next = next;
         }
     }
+    //162. 寻找峰值
+    //峰值元素是指其值严格大于左右相邻值的元素。
+    //给你一个整数数组 nums，找到峰值元素并返回其索引。数组可能包含多个峰值，在这种情况下，返回 任何一个峰值 所在位置即可。
+    //你可以假设 nums[-1] = nums[n] = -∞ 。
+    //你必须实现时间复杂度为 O(log n) 的算法来解决此问题。
+    public int findPeakElement(int[] nums) {
+        //寻找最大值
+//        int index = 0;
+//        for(int i = 1; i < nums.length; i++){
+//            if(nums[index] < nums[i]){
+//                index = i;
+//            }
+//        }
+//        return index;
+
+        //二分
+        int left = 0;
+        int right = nums.length - 1;
+        while (left < right){
+            int mid = left + (right - left)/2;
+            if(nums[mid] < nums[mid+1]){
+                left = mid + 1;
+            }else {
+                right = mid;
+            }
+        }
+        return left;
+
+    }
     //524. 通过删除字母匹配到字典里最长单词
     //给你一个字符串 s 和一个字符串数组 dictionary 作为字典，找出并返回字典中最长的字符串，该字符串可以通过删除 s 中的某些字符得到。
     //如果答案不止一个，返回长度最长且字典序最小的字符串。如果答案不存在，则返回空字符串。
