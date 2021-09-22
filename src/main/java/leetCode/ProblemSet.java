@@ -64,8 +64,8 @@ public class ProblemSet {
 //        System.out.println(solution.pickIndex());
 //        int[][] a = {{1, 2, 10}, {2, 3, 20}, {2, 5, 25}};
 //        System.out.println(corpFlightBookings(a, 5));
-        char[][] a = {{'o','a','a','n'},{'e','t','a','e'},{'i','h','k','r'},{'i','f','l','v'}};
-        String[] b = {"oath","pea","eat","rain"};
+        char[][] a = {{'o', 'a', 'a', 'n'}, {'e', 't', 'a', 'e'}, {'i', 'h', 'k', 'r'}, {'i', 'f', 'l', 'v'}};
+        String[] b = {"oath", "pea", "eat", "rain"};
         System.out.println(findWords(a, b));
     }
 
@@ -87,29 +87,62 @@ public class ProblemSet {
             this.right = right;
         }
     }
+
+    //725. 分隔链表
+    //给你一个头结点为 head 的单链表和一个整数 k ，请你设计一个算法将链表分隔为 k 个连续的部分。
+    //每部分的长度应该尽可能的相等：任意两部分的长度差距不能超过 1 。这可能会导致有些部分为 null 。
+    //这 k 个部分应该按照在链表中出现的顺序排列，并且排在前面的部分的长度应该大于或等于排在后面的长度。
+    //返回一个由上述 k 部分组成的数组。
+    public static ListNode[] splitListToParts(ListNode head, int k) {
+        ListNode[] result = new ListNode[k];
+        int n = 0;
+        ListNode headTmp = head;
+        while (headTmp != null) {
+            n++;
+            headTmp = headTmp.next;
+        }
+        int quotient = n / k;
+        int remainder = n % k;
+        ListNode cur = head;
+        for (int i = 0; i < k && cur != null; i++) {
+            result[i] = cur;
+            int length = quotient + (i < remainder ? 1 : 0);
+            while (--length > 0) {
+                cur = cur.next;
+            }
+            ListNode next = cur.next;
+            cur.next = null;
+            cur = next;
+        }
+        return result;
+    }
+
     //212. 单词搜索 II
     //给定一个 m x n 二维字符网格 board 和一个单词（字符串）列表 words，找出所有同时在二维网格和字典中出现的单词。
     //单词必须按照字母顺序，通过 相邻的单元格 内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母在一个单词中不允许被重复使用。
     static class Trie {//字典树
         String word;
-        Map<Character,Trie> child;
-        public Trie(){
+        Map<Character, Trie> child;
+
+        public Trie() {
             this.word = "";
             this.child = new HashMap<>();
         }
-        public void insert(String word){
+
+        public void insert(String word) {
             int n = word.length();
             Trie cur = this;
-            for(int i = 0; i < n; i++){
+            for (int i = 0; i < n; i++) {
                 char c = word.charAt(i);
-                if(!cur.child.containsKey(c)){
-                    cur.child.put(c,new Trie());
+                if (!cur.child.containsKey(c)) {
+                    cur.child.put(c, new Trie());
                 }
                 cur = cur.child.get(c);
             }
             cur.word = word;
         }
     }
+
     static int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
     public static List<String> findWords(char[][] board, String[] words) {
@@ -1740,6 +1773,7 @@ public class ProblemSet {
             this.next = next;
         }
     }
+
     //162. 寻找峰值
     //峰值元素是指其值严格大于左右相邻值的元素。
     //给你一个整数数组 nums，找到峰值元素并返回其索引。数组可能包含多个峰值，在这种情况下，返回 任何一个峰值 所在位置即可。
@@ -1758,17 +1792,18 @@ public class ProblemSet {
         //二分
         int left = 0;
         int right = nums.length - 1;
-        while (left < right){
-            int mid = left + (right - left)/2;
-            if(nums[mid] < nums[mid+1]){
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < nums[mid + 1]) {
                 left = mid + 1;
-            }else {
+            } else {
                 right = mid;
             }
         }
         return left;
 
     }
+
     //524. 通过删除字母匹配到字典里最长单词
     //给你一个字符串 s 和一个字符串数组 dictionary 作为字典，找出并返回字典中最长的字符串，该字符串可以通过删除 s 中的某些字符得到。
     //如果答案不止一个，返回长度最长且字典序最小的字符串。如果答案不存在，则返回空字符串。
@@ -1776,46 +1811,48 @@ public class ProblemSet {
         Collections.sort(dictionary, new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                if(o1.length() != o2.length()){
+                if (o1.length() != o2.length()) {
                     return o2.length() - o1.length();
-                }else {
+                } else {
                     return o1.compareTo(o2);
                 }
             }
         });
-        for(String dic : dictionary){
+        for (String dic : dictionary) {
             int i = 0;
             int j = 0;
-            while (i < s.length() && j < dic.length()){
-                if(s.charAt(i) == dic.charAt(j)){
+            while (i < s.length() && j < dic.length()) {
+                if (s.charAt(i) == dic.charAt(j)) {
                     j++;
                 }
                 i++;
             }
-            if(j == dic.length() ){
+            if (j == dic.length()) {
                 return dic;
             }
         }
         return "";
     }
+
     //447. 回旋镖的数量
     //给定平面上 n 对 互不相同 的点 points ，其中 points[i] = [xi, yi] 。回旋镖 是由点 (i, j, k) 表示的元组 ，其中 i 和 j 之间的距离和 i 和 k 之间的距离相等（需要考虑元组的顺序）。
     //返回平面上所有回旋镖的数量。
     public int numberOfBoomerangs(int[][] points) {
         int result = 0;
-        for(int[] x: points){
+        for (int[] x : points) {
             HashMap<Integer, Integer> map = new HashMap<>();
-            for (int[] y : points){
+            for (int[] y : points) {
                 int dis = (x[0] - y[0]) * (x[0] - y[0]) + (x[1] - y[1]) * (x[1] - y[1]);
-                map.put(dis, map.getOrDefault(dis,0) + 1);
+                map.put(dis, map.getOrDefault(dis, 0) + 1);
             }
-            for(Map.Entry<Integer, Integer> entry : map.entrySet()){
+            for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
                 int n = entry.getValue();
                 result += n * (n - 1);
             }
         }
         return result;
     }
+
     //1894. 找到需要补充粉笔的学生编号
     //一个班级里有 n 个学生，编号为 0 到 n - 1 。每个学生会依次回答问题，编号为 0 的学生先回答，然后是编号为 1 的学生，以此类推，直到编号为 n - 1 的学生，然后老师会重复这个过程，重新从编号为 0 的学生开始回答问题。
     //给你一个长度为 n 且下标从 0 开始的整数数组 chalk 和一个整数 k 。一开始粉笔盒里总共有 k 支粉笔。当编号为 i 的学生回答问题时，他会消耗 chalk[i] 支粉笔。如果剩余粉笔数量 严格小于 chalk[i] ，那么学生 i 需要 补充 粉笔。
@@ -1823,13 +1860,13 @@ public class ProblemSet {
     public int chalkReplacer(int[] chalk, int k) {
         int n = chalk.length;
         long total = 0;
-        for (int i: chalk) {
+        for (int i : chalk) {
             total += i;
         }
         k %= total;
         int result = 0;
-        for(int i = 0; i < n; i++){
-            if(chalk[i] > k){
+        for (int i = 0; i < n; i++) {
+            if (chalk[i] > k) {
                 result = i;
                 break;
             }
@@ -1837,7 +1874,8 @@ public class ProblemSet {
         }
         return result;
     }
-//    68. 文本左右对齐
+
+    //    68. 文本左右对齐
 //    给定一个单词数组和一个长度 maxWidth，重新排版单词，使其成为每行恰好有 maxWidth 个字符，且左右两端对齐的文本。
 //    你应该使用“贪心算法”来放置给定的单词；也就是说，尽可能多地往每行中放置单词。必要时可用空格 ' ' 填充，使得每行恰好有 maxWidth 个字符。
 //    要求尽可能均匀分配单词间的空格数量。如果某一行单词间的空格不能均匀分配，则左侧放置的空格数要多于右侧的空格数。
@@ -1905,6 +1943,7 @@ public class ProblemSet {
         }
         return sb;
     }
+
     //502. IPO
     //给你 n 个项目。对于每个项目 i ，它都有一个纯利润 profits[i] ，和启动该项目需要的最小资本 capital[i] 。
     //最初，你的资本为 w 。当你完成一个项目时，你将获得纯利润，且利润将被添加到你的总资本中。
@@ -1920,14 +1959,14 @@ public class ProblemSet {
         }
         Arrays.sort(arr, (a, b) -> a[0] - b[0]);//已启动资本从小到大排序
         PriorityQueue<Integer> queue = new PriorityQueue<>((a, b) -> b - a);//大顶堆
-        for(int i = 0; i < k; i++){
-            while (index < n && arr[index][0] <= w){
+        for (int i = 0; i < k; i++) {
+            while (index < n && arr[index][0] <= w) {
                 queue.add(arr[index][1]);//启动资本小于w的，将其利润加入堆
                 index++;
             }
-            if(!queue.isEmpty()){
+            if (!queue.isEmpty()) {
                 w += queue.poll();//去利润最大的堆顶
-            }else {
+            } else {
                 break;
             }
         }
