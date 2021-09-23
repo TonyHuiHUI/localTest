@@ -87,7 +87,15 @@ public class ProblemSet {
             this.right = right;
         }
     }
-
+//    326. 3的幂
+    //给定一个整数，写一个函数来判断它是否是 3 的幂次方。如果是，返回 true ；否则，返回 false 。
+    //整数 n 是 3 的幂次方需满足：存在整数 x 使得 n == 3x
+    public boolean isPowerOfThree(int n) {
+        while(n != 0 && n % 3 == 0){
+            n /= 3;
+        }
+        return n == 1;
+    }
     //725. 分隔链表
     //给你一个头结点为 head 的单链表和一个整数 k ，请你设计一个算法将链表分隔为 k 个连续的部分。
     //每部分的长度应该尽可能的相等：任意两部分的长度差距不能超过 1 。这可能会导致有些部分为 null 。
