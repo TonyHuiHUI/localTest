@@ -87,6 +87,38 @@ public class ProblemSet {
             this.right = right;
         }
     }
+    class Node {
+        public int val;
+        public Node prev;
+        public Node next;
+        public Node child;
+    }
+    public Node flatten(Node head) {
+        dfs(head);
+        return head;
+    }
+    public Node dfs(Node head){
+        Node cur = head;
+        Node last = null;
+        while (cur != null){
+            Node next = cur.next;
+            if(cur.child == null){
+                last = cur;
+            }else {
+                Node childLast = dfs(cur.child);
+                cur.next = cur.child;
+                cur.child.prev = cur;
+                if(next != null){
+                    childLast.next = next;
+                    next.prev = childLast;
+                }
+                cur.child = null;
+                last = childLast;
+            }
+            cur = next;
+        }
+        return last;
+    }
 //    326. 3的幂
     //给定一个整数，写一个函数来判断它是否是 3 的幂次方。如果是，返回 true ；否则，返回 false 。
     //整数 n 是 3 的幂次方需满足：存在整数 x 使得 n == 3x
