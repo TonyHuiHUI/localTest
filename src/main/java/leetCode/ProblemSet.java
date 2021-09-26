@@ -64,9 +64,10 @@ public class ProblemSet {
 //        System.out.println(solution.pickIndex());
 //        int[][] a = {{1, 2, 10}, {2, 3, 20}, {2, 5, 25}};
 //        System.out.println(corpFlightBookings(a, 5));
-        char[][] a = {{'o', 'a', 'a', 'n'}, {'e', 't', 'a', 'e'}, {'i', 'h', 'k', 'r'}, {'i', 'f', 'l', 'v'}};
-        String[] b = {"oath", "pea", "eat", "rain"};
-        System.out.println(findWords(a, b));
+//        char[][] a = {{'o', 'a', 'a', 'n'}, {'e', 't', 'a', 'e'}, {'i', 'h', 'k', 'r'}, {'i', 'f', 'l', 'v'}};
+////        String[] b = {"oath", "pea", "eat", "rain"};
+////        System.out.println(findWords(a, b));
+        getSum(2,3);
     }
 
     public static class TreeNode {
@@ -118,6 +119,17 @@ public class ProblemSet {
             cur = next;
         }
         return last;
+    }
+
+    //371. 两整数之和
+    //给你两个整数 a 和 b ，不使用 运算符 + 和 - ​​​​​​​，计算并返回两整数之和。
+    public static int getSum(int a, int b) {
+        while (b != 0){
+            int carry = (a & b) << 1;
+            a = a ^ b;
+            b = carry;
+        }
+        return a;
     }
 //    326. 3的幂
     //给定一个整数，写一个函数来判断它是否是 3 的幂次方。如果是，返回 true ；否则，返回 false 。
