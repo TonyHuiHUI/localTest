@@ -2,6 +2,7 @@ import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.nio.MappedByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,6 +18,7 @@ public class DrawHeart extends JPanel {
     private List<Integer> values;
     private static final int MAX_VALUE = 200;
     private static final int MAX_COUNT_OF_VALUES = 50;
+    private static final double pi = 3.1415926;
     private static ThreadPoolExecutor executor = (ThreadPoolExecutor)Executors.newFixedThreadPool(1,
             new BasicThreadFactory.Builder()
                     .daemon(true)
@@ -33,6 +35,8 @@ public class DrawHeart extends JPanel {
 //                    Thread.sleep(100);
 //                }
                 for (int i = -2; i <= 2; i += 0.01){
+                    System.out.println("i : " + i);
+
                     addValue(i);
                     repaint();
                     Thread.sleep(100);
@@ -52,13 +56,15 @@ public class DrawHeart extends JPanel {
         int h = getHeight();
         int xDelta = w / values.size();
         int length = values.size();
+        System.out.println("++++++++++++++++++");
         for (int i = 0; i < length - 1; ++i) {
             int x1 = normalizeValueForXAxis(values.get(i), w);
+            int y1 = caculateValueForYAxis(values.get(i));
             int x2 = normalizeValueForXAxis(values.get(i+1), w);
-            System.out.println("x1: "+xDelta * i+ " y1: " + normalizeValueForYAxis(values.get(i), h));
-            System.out.println("x2: "+xDelta * (i + 1) + " y2: " + normalizeValueForYAxis(values.get(i + 1), h));
-            g2d.drawLine(xDelta * i, normalizeValueForYAxis(values.get(i), h),
-                    xDelta * (i + 1), normalizeValueForYAxis(values.get(i + 1), h));
+            int y2 = caculateValueForYAxis(values.get(i+1));
+            System.out.println(length);
+            System.out.println("x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2: " + y2);
+            g2d.drawLine(xDelta * i + x1, y1, xDelta * (i + 1) + x2, y2);
         }
     }
 
@@ -70,10 +76,10 @@ public class DrawHeart extends JPanel {
     }
 
     private int caculateValueForYAxis(int value){
-        return value;
+        return (int)(Math.pow(Math.abs(value), 2/3) + (0.9 * Math.sqrt(pi - value * value)) * Math.sin(20 * pi * value));
     }
     private int normalizeValueForXAxis(int value, int width){
-        return value;
+        return width / 4 * (value + 2);
     }
 
     private int normalizeValueForYAxis(int value, int height) {

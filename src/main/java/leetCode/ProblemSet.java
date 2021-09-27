@@ -121,6 +121,46 @@ public class ProblemSet {
         return last;
     }
 
+    //639. 解码方法 II
+    public int numDecodings(String s) {
+        int MOD = 1000000007;
+        int n = s.length();
+        long[] dp = new long[n+1];
+        dp[0] = 1;
+        for(int i = 1; i <= n; i++){
+            dp[i] = (dp[i-1] * oneChar(s.charAt(i-1)))%MOD;
+            if(i > 1){
+                dp[i] = (dp[i] + dp[i-2] * twoChar(s.charAt(i-2), s.charAt(i-1)))%MOD;
+            }
+        }
+        return (int)dp[n];
+    }
+    public int oneChar(char ch){
+        return ch == '0' ? 0 : (ch == '*' ? 9 : 1);
+    }
+    public int twoChar(char ch1, char ch2){
+        if(ch1 == '*' && ch2 == '*'){
+            return 15;
+        }
+        if(ch1 == '*'){
+            return ch2 <= '6' ? 2 : 1;
+        }
+        if(ch2 == '*'){
+            if(ch1 == '1'){
+                return 9;
+            }
+            if(ch1 == '2'){
+                return 6;
+            }
+            return 0;
+        }
+
+        int twoSum = (ch1 - '0') * 10 + (ch2 - '0');
+        if(twoSum >=10 && twoSum <= 26){
+            return 1;
+        }
+        return 0;
+    }
     //371. 两整数之和
     //给你两个整数 a 和 b ，不使用 运算符 + 和 - ​​​​​​​，计算并返回两整数之和。
     public static int getSum(int a, int b) {
