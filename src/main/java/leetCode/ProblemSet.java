@@ -67,7 +67,7 @@ public class ProblemSet {
 //        char[][] a = {{'o', 'a', 'a', 'n'}, {'e', 't', 'a', 'e'}, {'i', 'h', 'k', 'r'}, {'i', 'f', 'l', 'v'}};
 ////        String[] b = {"oath", "pea", "eat", "rain"};
 ////        System.out.println(findWords(a, b));
-        getSum(2,3);
+        getSum(2, 3);
     }
 
     public static class TreeNode {
@@ -88,28 +88,82 @@ public class ProblemSet {
             this.right = right;
         }
     }
+
     class Node {
         public int val;
         public Node prev;
         public Node next;
         public Node child;
     }
+
+    //437. 路径总和 III
+    //给定一个二叉树的根节点 root ，和一个整数 targetSum ，求该二叉树里节点值之和等于 targetSum 的 路径 的数目。
+    //路径 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。
+    public int pathSum(TreeNode root, int targetSum) {
+        //dfs
+//        if (root == null){
+//            return 0;
+//        }
+//        int result = dfs(root, targetSum);
+//        result += pathSum(root.left, targetSum);
+//        result += pathSum(root.right, targetSum);
+//        return result;
+
+        //前缀和
+        HashMap<Integer, Integer> preSum = new HashMap<>();
+        preSum.put(0, 1);
+        return dfs(root, preSum, targetSum, 0);
+    }
+
+    public int dfs(TreeNode root, Map<Integer, Integer> preSum, int targetSum, int currSum) {
+        if (root == null) {
+            return 0;
+        }
+        int ret = 0;
+        currSum += root.val;
+
+        ret = preSum.getOrDefault(currSum - targetSum, 0);
+        preSum.put(currSum, preSum.getOrDefault(currSum, 0) + 1);
+        ret += dfs(root.left, preSum, targetSum, currSum);
+        ret += dfs(root.right, preSum, targetSum, currSum);
+        preSum.put(currSum, preSum.getOrDefault(currSum, 0) - 1);
+        return ret;
+    }
+
+    public int dfs(TreeNode root, int targetSum) {
+        int ret = 0;
+        if (root == null) {
+            return 0;
+        }
+        int val = root.val;
+        if (targetSum == val) {
+            ret++;
+        }
+        ret += dfs(root.left, targetSum - val);
+        ret += dfs(root.right, targetSum - val);
+        return ret;
+    }
+
+    //430. 扁平化多级双向链表
+    //多级双向链表中，除了指向下一个节点和前一个节点指针之外，它还有一个子链表指针，可能指向单独的双向链表。这些子列表也可能会有一个或多个自己的子项，依此类推，生成多级数据结构，如下面的示例所示。
+    //给你位于列表第一级的头节点，请你扁平化列表，使所有结点出现在单级双链表中。
     public Node flatten(Node head) {
         dfs(head);
         return head;
     }
-    public Node dfs(Node head){
+
+    public Node dfs(Node head) {
         Node cur = head;
         Node last = null;
-        while (cur != null){
+        while (cur != null) {
             Node next = cur.next;
-            if(cur.child == null){
+            if (cur.child == null) {
                 last = cur;
-            }else {
+            } else {
                 Node childLast = dfs(cur.child);
                 cur.next = cur.child;
                 cur.child.prev = cur;
-                if(next != null){
+                if (next != null) {
                     childLast.next = next;
                     next.prev = childLast;
                 }
@@ -125,61 +179,66 @@ public class ProblemSet {
     public int numDecodings(String s) {
         int MOD = 1000000007;
         int n = s.length();
-        long[] dp = new long[n+1];
+        long[] dp = new long[n + 1];
         dp[0] = 1;
-        for(int i = 1; i <= n; i++){
-            dp[i] = (dp[i-1] * oneChar(s.charAt(i-1)))%MOD;
-            if(i > 1){
-                dp[i] = (dp[i] + dp[i-2] * twoChar(s.charAt(i-2), s.charAt(i-1)))%MOD;
+        for (int i = 1; i <= n; i++) {
+            dp[i] = (dp[i - 1] * oneChar(s.charAt(i - 1))) % MOD;
+            if (i > 1) {
+                dp[i] = (dp[i] + dp[i - 2] * twoChar(s.charAt(i - 2), s.charAt(i - 1))) % MOD;
             }
         }
-        return (int)dp[n];
+        return (int) dp[n];
     }
-    public int oneChar(char ch){
+
+    public int oneChar(char ch) {
         return ch == '0' ? 0 : (ch == '*' ? 9 : 1);
     }
-    public int twoChar(char ch1, char ch2){
-        if(ch1 == '*' && ch2 == '*'){
+
+    public int twoChar(char ch1, char ch2) {
+        if (ch1 == '*' && ch2 == '*') {
             return 15;
         }
-        if(ch1 == '*'){
+        if (ch1 == '*') {
             return ch2 <= '6' ? 2 : 1;
         }
-        if(ch2 == '*'){
-            if(ch1 == '1'){
+        if (ch2 == '*') {
+            if (ch1 == '1') {
                 return 9;
             }
-            if(ch1 == '2'){
+            if (ch1 == '2') {
                 return 6;
             }
             return 0;
         }
 
         int twoSum = (ch1 - '0') * 10 + (ch2 - '0');
-        if(twoSum >=10 && twoSum <= 26){
+        if (twoSum >= 10 && twoSum <= 26) {
             return 1;
         }
         return 0;
     }
+
     //371. 两整数之和
     //给你两个整数 a 和 b ，不使用 运算符 + 和 - ​​​​​​​，计算并返回两整数之和。
     public static int getSum(int a, int b) {
-        while (b != 0){
+        while (b != 0) {
             int carry = (a & b) << 1;
             a = a ^ b;
             b = carry;
         }
         return a;
     }
-//    326. 3的幂
+
+    //    326. 3的幂
     //给定一个整数，写一个函数来判断它是否是 3 的幂次方。如果是，返回 true ；否则，返回 false 。
     //整数 n 是 3 的幂次方需满足：存在整数 x 使得 n == 3x
     public boolean isPowerOfThree(int n) {
-        while(n != 0 && n % 3 == 0){
+        while (n != 0 && n % 3 == 0) {
             n /= 3;
         }
         return n == 1;
     }
+
     //725. 分隔链表
     //给你一个头结点为 head 的单链表和一个整数 k ，请你设计一个算法将链表分隔为 k 个连续的部分。
     //每部分的长度应该尽可能的相等：任意两部分的长度差距不能超过 1 。这可能会导致有些部分为 null 。
