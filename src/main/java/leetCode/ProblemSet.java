@@ -96,6 +96,30 @@ public class ProblemSet {
         public Node child;
     }
 
+
+    //517. 超级洗衣机
+    //假设有 n 台超级洗衣机放在同一排上。开始的时候，每台洗衣机内可能有一定量的衣服，也可能是空的。
+    //在每一步操作中，你可以选择任意 m (1 <= m <= n) 台洗衣机，与此同时将每台洗衣机的一件衣服送到相邻的一台洗衣机。
+    //给定一个整数数组 machines 代表从左至右每台洗衣机中的衣物数量，请给出能让所有洗衣机中剩下的衣物的数量相等的 最少的操作步数 。如果不能使每台洗衣机中衣物的数量相等，则返回 -1 。
+    public int findMinMoves(int[] machines) {
+        int n = machines.length;
+        int sum = Arrays.stream(machines).sum();
+        if(sum % n != 0){
+            return -1;
+        }
+        int avg = sum / n;
+        int result = 0;
+        int ls = 0;
+        int rs = sum;
+        for(int i = 0; i < n; i++){
+           rs -= machines[i];
+           int a = Math.max(avg * i - ls, 0);
+           int b = Math.max((n - i - 1) * avg - rs , 0);
+           result = Math.max(result, a + b);
+           ls += machines[i];
+        }
+        return result;
+    }
     //437. 路径总和 III
     //给定一个二叉树的根节点 root ，和一个整数 targetSum ，求该二叉树里节点值之和等于 targetSum 的 路径 的数目。
     //路径 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。
