@@ -96,6 +96,19 @@ public class ProblemSet {
         public Node child;
     }
 
+    //223. 矩形面积
+    //给你 二维 平面上两个 由直线构成的 矩形，请你计算并返回两个矩形覆盖的总面积。
+    //每个矩形由其 左下 顶点和 右上 顶点坐标表示：
+    //    第一个矩形由其左下顶点 (ax1, ay1) 和右上顶点 (ax2, ay2) 定义。
+    //    第二个矩形由其左下顶点 (bx1, by1) 和右上顶点 (bx2, by2) 定义。
+    public int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
+        int rectangle1 = (ax2 - ax1) * (ay2 - ay1);
+        int rectangle2 = (bx2 - bx1) * (by2 - by1);
+        int w = Math.min(ax2, bx2) - Math.max(ax1, bx1);
+        int h = Math.min(ay2, by2) - Math.max(ay1, by1);
+        int rectangle = Math.max(w, 0) * Math.max(h, 0);
+        return rectangle1 + rectangle2 - rectangle;
+    }
 
     //517. 超级洗衣机
     //假设有 n 台超级洗衣机放在同一排上。开始的时候，每台洗衣机内可能有一定量的衣服，也可能是空的。
@@ -104,22 +117,23 @@ public class ProblemSet {
     public int findMinMoves(int[] machines) {
         int n = machines.length;
         int sum = Arrays.stream(machines).sum();
-        if(sum % n != 0){
+        if (sum % n != 0) {
             return -1;
         }
         int avg = sum / n;
         int result = 0;
         int ls = 0;
         int rs = sum;
-        for(int i = 0; i < n; i++){
-           rs -= machines[i];
-           int a = Math.max(avg * i - ls, 0);
-           int b = Math.max((n - i - 1) * avg - rs , 0);
-           result = Math.max(result, a + b);
-           ls += machines[i];
+        for (int i = 0; i < n; i++) {
+            rs -= machines[i];
+            int a = Math.max(avg * i - ls, 0);
+            int b = Math.max((n - i - 1) * avg - rs, 0);
+            result = Math.max(result, a + b);
+            ls += machines[i];
         }
         return result;
     }
+
     //437. 路径总和 III
     //给定一个二叉树的根节点 root ，和一个整数 targetSum ，求该二叉树里节点值之和等于 targetSum 的 路径 的数目。
     //路径 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。
