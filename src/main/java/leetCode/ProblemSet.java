@@ -95,7 +95,35 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
-
+    //187. 重复的DNA序列
+    //所有 DNA 都由一系列缩写为 'A'，'C'，'G' 和 'T' 的核苷酸组成，例如："ACGAATTCCG"。在研究 DNA 时，识别 DNA 中的重复序列有时会对研究非常有帮助。
+    //编写一个函数来找出所有目标子串，目标子串的长度为 10，且在 DNA 字符串 s 中出现次数超过一次。
+    public List<String> findRepeatedDnaSequences(String s) {
+        List<String> res = new LinkedList<>();
+        int n = s.length();
+        if(n <= 10){
+            return res;
+        }
+        HashMap<String, Integer> hashMap = new HashMap<>();
+//        for(int i = 0; i + 10 <= n; i++){
+//            String sub = s.substring(i, i + 10);
+//            hashMap.put(sub, hashMap.getOrDefault(sub, 0) + 1);
+//        }
+//        for(Map.Entry<String, Integer> entry : hashMap.entrySet()){
+//            if(entry.getValue() > 1){
+//                res.add(entry.getKey());
+//            }
+//        }
+        for(int i = 0; i + 10 <= n; i++){
+            String sub = s.substring(i, i + 10);
+            int count = hashMap.getOrDefault(sub, 0);
+            if(count == 1){
+                res.add(sub);
+            }
+            hashMap.put(sub, count + 1);
+        }
+        return res;
+    }
     //223. 矩形面积
     //给你 二维 平面上两个 由直线构成的 矩形，请你计算并返回两个矩形覆盖的总面积。
     //每个矩形由其 左下 顶点和 右上 顶点坐标表示：
