@@ -95,6 +95,54 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+    //352. 将数据流变为多个不相交区间
+    // 给你一个由非负整数 a1, a2, ..., an 组成的数据流输入，请你将到目前为止看到的数字总结为不相交的区间列表。
+    //实现 SummaryRanges 类：
+    //    SummaryRanges() 使用一个空数据流初始化对象。
+    //    void addNum(int val) 向数据流中加入整数 val 。
+    //    int[][] getIntervals() 以不相交区间 [starti, endi] 的列表形式返回对数据流中整数的总结。
+    class SummaryRanges {
+        TreeMap<Integer, Integer> map;//有序集合维护区间
+        public SummaryRanges() {
+            map = new TreeMap<>();
+        }
+        public void addNum(int val) {
+            //查找val的左右边界区间
+            Map.Entry<Integer, Integer> r = map.ceilingEntry(val + 1);
+            Map.Entry<Integer, Integer> l = map.floorEntry(val);
+            if(l != null && val >= l.getKey() && val <= l.getValue()){//val在左边界区间内
+                return;
+            }else {
+                boolean la = (l != null && l.getValue() + 1 == val);
+                boolean ra = (r != null && r.getKey() - 1 == val);
+                if(la && ra){//val刚好大于左区间的上界限，小于右区间的下界限，合并左右区间
+                    map.remove(l.getKey());
+                    map.remove(r.getKey());
+                    map.put(l.getKey(), r.getValue());
+                }else if(la){//val刚好大于左区间的上界限，将val并入左区间
+                    map.put(l.getKey(), val);
+                }else  if(ra){//val刚好小于右区间的下界限，将val并入右区间
+                    map.remove(r.getKey());
+                    map.put(val, r.getValue());
+                }else {//val单独作为一个区间
+                    map.put(val, val);
+                }
+            }
+        }
+        public int[][] getIntervals() {
+            int size = map.size();
+            int[][] res = new int[size][2];
+            int index = 0;
+            for (Map.Entry<Integer, Integer> entry : map.entrySet()){
+                res[index][0] = entry.getKey();
+                res[index][1] = entry.getValue();
+                index++;
+            }
+            return res;
+        }
+    }
+
     //187. 重复的DNA序列
     //所有 DNA 都由一系列缩写为 'A'，'C'，'G' 和 'T' 的核苷酸组成，例如："ACGAATTCCG"。在研究 DNA 时，识别 DNA 中的重复序列有时会对研究非常有帮助。
     //编写一个函数来找出所有目标子串，目标子串的长度为 10，且在 DNA 字符串 s 中出现次数超过一次。
