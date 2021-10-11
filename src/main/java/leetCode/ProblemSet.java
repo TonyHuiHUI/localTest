@@ -95,7 +95,45 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
-
+    //273. 整数转换英文表示
+    //将非负整数 num 转换为其对应的英文表示。
+    String[] singles= {"One","Two","Three","Four","Five","Six","Seven","Eight","Nine"};
+    String[] teen = {"Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen", "Eighteen", "Nineteen"};
+    String[] teenty = {"Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"};
+    String[] thous = {"","Thousand","Million","Billion"};
+    public String numberToWords(int num) {
+        if(num == 0){
+            return "Zero";
+        }
+        StringBuilder res = new StringBuilder();
+        for(int i = 3, mod = 1000000000; i >= 0; i--, mod /= 1000){
+            int tmpNum = num / mod;
+            if(tmpNum != 0){
+                num -= tmpNum * mod;
+                res.append(num2Eng(tmpNum)).append(thous[i]).append(" ");
+            }
+        }
+        return res.toString().trim();
+    }
+    public String num2Eng(int num){
+        StringBuilder res = new StringBuilder();
+        int hundred = num / 100;
+        num %= 100;
+        if(hundred != 0){
+            res.append(singles[hundred - 1]).append(" hundred ");
+        }
+        int ten = num / 10;
+        if(ten >= 2){
+            res.append(teenty[ten - 2]).append(" ");
+            num %= 10;
+        }
+        if(num > 0 && num < 10){
+            res.append(singles[num - 1]).append(" ");
+        }else if(num >= 10){
+            res.append(teen[num - 10]).append(" ");
+        }
+        return res.toString();
+    }
     //352. 将数据流变为多个不相交区间
     // 给你一个由非负整数 a1, a2, ..., an 组成的数据流输入，请你将到目前为止看到的数字总结为不相交的区间列表。
     //实现 SummaryRanges 类：
