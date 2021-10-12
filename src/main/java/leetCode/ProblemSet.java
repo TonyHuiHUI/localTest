@@ -67,7 +67,8 @@ public class ProblemSet {
 //        char[][] a = {{'o', 'a', 'a', 'n'}, {'e', 't', 'a', 'e'}, {'i', 'h', 'k', 'r'}, {'i', 'f', 'l', 'v'}};
 ////        String[] b = {"oath", "pea", "eat", "rain"};
 ////        System.out.println(findWords(a, b));
-        getSum(2, 3);
+//        getSum(2, 3);
+        System.out.println(quickMul(4 , 5));
     }
 
     public static class TreeNode {
@@ -95,45 +96,97 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+
+    //适用范围：快速计算a*b % mod的结果（主要目的是换乘法为加法，防止爆数据），或者快速计算a^b % mod 的结果，时间复杂度大大降低。
+    //算法描述：首先你可能会问a*b不是直接乘就出来了么，为什么需要快速算法？但是乘法在计算机中处理的时间并不是这么快的，也要拆分为加法来做的。所以快速乘法会更快的计算a*b的结果，而且a*b%mod可能还没取模就已经爆long long，但快速乘法却不会。快速幂也是同样的道理。
+    //实现的原理都是基于按照二进制位一步一步乘来避免重复的操作，利用前面的中间结果，从而实现快速的目的。
+    //对于乘数b来说，势必可以拆成2进制，比如110101。有一些位为0，有一些位为1。根据乘法分配律：a*b=a*（b1+b2+b3+…… ）
+    //那么对于a*53 = a*110101（二进制）= a*（100000+10000+100+1）=a*（100000*1+10000*1+1000*0+100*1+10*0+1*1）。
+    //那么设立一个ans=0用于保存答案，每一位让a*=2，在根据b的对应为1看是不是加上此时的a，即可完成快速运算。比如刚才的例子让a=5，运转流程如下。
+
+    //快速乘
+    public static int quickMul(int x, int y) {
+        int ans = 0;
+        while (y != 0) {
+            if ((y & 1) == 1) {
+                ans += x;
+            }
+            y = y >> 1;
+            x += x;
+        }
+        return ans;
+    }
+
+    //快速幂
+    public static int quickPow(int x, int y){
+        int ans = 0;
+        while (y != 0) {
+            if ((y & 1) == 1) {
+                ans = quickMul(ans, x); //ans *= x;
+            }
+            y = y >> 1;
+            x = quickMul(x, x);//x *= x;
+        }
+        return ans;
+    }
+    //29. 两数相除
+    //给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
+    //返回被除数 dividend 除以除数 divisor 得到的商。
+    //整数除法的结果应当截去（truncate）其小数部分，例如：truncate(8.345) = 8 以及 truncate(-2.7335) = -2
+    //被除数和除数均为 32 位有符号整数。
+    //除数不为 0。
+    //假设我们的环境只能存储 32 位有符号整数，其数值范围是 [−2^31,  2^ 31 − 1]。本题中，如果除法结果溢出，则返回 231 − 1。
+    int MIN = Integer.MIN_VALUE;
+    int MAX = Integer.MAX_VALUE;
+
+    public int divide(int dividend, int divisor) {
+
+        return 0;
+    }
+
     //273. 整数转换英文表示
     //将非负整数 num 转换为其对应的英文表示。
-    String[] singles= {"One","Two","Three","Four","Five","Six","Seven","Eight","Nine"};
-    String[] teen = {"Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen", "Eighteen", "Nineteen"};
-    String[] teenty = {"Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"};
-    String[] thous = {"","Thousand","Million","Billion"};
+    String[] singles = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
+    String[] teen = {"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+    String[] teenty = {"Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+    String[] thous = {"", "Thousand", "Million", "Billion"};
+
     public String numberToWords(int num) {
-        if(num == 0){
+        if (num == 0) {
             return "Zero";
         }
         StringBuilder res = new StringBuilder();
-        for(int i = 3, mod = 1000000000; i >= 0; i--, mod /= 1000){
+        for (int i = 3, mod = 1000000000; i >= 0; i--, mod /= 1000) {
             int tmpNum = num / mod;
-            if(tmpNum != 0){
+            if (tmpNum != 0) {
                 num -= tmpNum * mod;
                 res.append(num2Eng(tmpNum)).append(thous[i]).append(" ");
             }
         }
         return res.toString().trim();
     }
-    public String num2Eng(int num){
+
+    public String num2Eng(int num) {
         StringBuilder res = new StringBuilder();
         int hundred = num / 100;
         num %= 100;
-        if(hundred != 0){
+        if (hundred != 0) {
             res.append(singles[hundred - 1]).append(" hundred ");
         }
         int ten = num / 10;
-        if(ten >= 2){
+        if (ten >= 2) {
             res.append(teenty[ten - 2]).append(" ");
             num %= 10;
         }
-        if(num > 0 && num < 10){
+        if (num > 0 && num < 10) {
             res.append(singles[num - 1]).append(" ");
-        }else if(num >= 10){
+        } else if (num >= 10) {
             res.append(teen[num - 10]).append(" ");
         }
         return res.toString();
     }
+
     //352. 将数据流变为多个不相交区间
     // 给你一个由非负整数 a1, a2, ..., an 组成的数据流输入，请你将到目前为止看到的数字总结为不相交的区间列表。
     //实现 SummaryRanges 类：
@@ -142,37 +195,40 @@ public class ProblemSet {
     //    int[][] getIntervals() 以不相交区间 [starti, endi] 的列表形式返回对数据流中整数的总结。
     class SummaryRanges {
         TreeMap<Integer, Integer> map;//有序集合维护区间
+
         public SummaryRanges() {
             map = new TreeMap<>();
         }
+
         public void addNum(int val) {
             //查找val的左右边界区间
             Map.Entry<Integer, Integer> r = map.ceilingEntry(val + 1);
             Map.Entry<Integer, Integer> l = map.floorEntry(val);
-            if(l != null && val >= l.getKey() && val <= l.getValue()){//val在左边界区间内
+            if (l != null && val >= l.getKey() && val <= l.getValue()) {//val在左边界区间内
                 return;
-            }else {
+            } else {
                 boolean la = (l != null && l.getValue() + 1 == val);
                 boolean ra = (r != null && r.getKey() - 1 == val);
-                if(la && ra){//val刚好大于左区间的上界限，小于右区间的下界限，合并左右区间
+                if (la && ra) {//val刚好大于左区间的上界限，小于右区间的下界限，合并左右区间
                     map.remove(l.getKey());
                     map.remove(r.getKey());
                     map.put(l.getKey(), r.getValue());
-                }else if(la){//val刚好大于左区间的上界限，将val并入左区间
+                } else if (la) {//val刚好大于左区间的上界限，将val并入左区间
                     map.put(l.getKey(), val);
-                }else  if(ra){//val刚好小于右区间的下界限，将val并入右区间
+                } else if (ra) {//val刚好小于右区间的下界限，将val并入右区间
                     map.remove(r.getKey());
                     map.put(val, r.getValue());
-                }else {//val单独作为一个区间
+                } else {//val单独作为一个区间
                     map.put(val, val);
                 }
             }
         }
+
         public int[][] getIntervals() {
             int size = map.size();
             int[][] res = new int[size][2];
             int index = 0;
-            for (Map.Entry<Integer, Integer> entry : map.entrySet()){
+            for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
                 res[index][0] = entry.getKey();
                 res[index][1] = entry.getValue();
                 index++;
@@ -187,7 +243,7 @@ public class ProblemSet {
     public List<String> findRepeatedDnaSequences(String s) {
         List<String> res = new LinkedList<>();
         int n = s.length();
-        if(n <= 10){
+        if (n <= 10) {
             return res;
         }
         HashMap<String, Integer> hashMap = new HashMap<>();
@@ -200,16 +256,17 @@ public class ProblemSet {
 //                res.add(entry.getKey());
 //            }
 //        }
-        for(int i = 0; i + 10 <= n; i++){
+        for (int i = 0; i + 10 <= n; i++) {
             String sub = s.substring(i, i + 10);
             int count = hashMap.getOrDefault(sub, 0);
-            if(count == 1){
+            if (count == 1) {
                 res.add(sub);
             }
             hashMap.put(sub, count + 1);
         }
         return res;
     }
+
     //223. 矩形面积
     //给你 二维 平面上两个 由直线构成的 矩形，请你计算并返回两个矩形覆盖的总面积。
     //每个矩形由其 左下 顶点和 右上 顶点坐标表示：
