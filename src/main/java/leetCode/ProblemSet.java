@@ -99,6 +99,28 @@ public class ProblemSet {
         public Node child;
     }
 
+    //412. Fizz Buzz
+//    写一个程序，输出从 1 到 n 数字的字符串表示。
+//            1. 如果 n 是3的倍数，输出“Fizz”；
+//            2. 如果 n 是5的倍数，输出“Buzz”；
+//            3.如果 n 同时是3和5的倍数，输出 “FizzBuzz”。
+    public List<String> fizzBuzz(int n) {
+        List<String> ans = new LinkedList<>();
+        for (int i = 1; i <= n; i++) {
+            StringBuilder sb = new StringBuilder();
+            if (i % 3 == 0) {
+                sb.append("Fizz");
+            }
+            if (i % 5 == 0) {
+                sb.append("Buzz");
+            }
+            if (sb.length() == 0) {
+                sb.append(i);
+            }
+            ans.add(sb.toString());
+        }
+        return ans;
+    }
 
     //适用范围：快速计算a*b % mod的结果（主要目的是换乘法为加法，防止爆数据），或者快速计算a^b % mod 的结果，时间复杂度大大降低。
     //算法描述：首先你可能会问a*b不是直接乘就出来了么，为什么需要快速算法？但是乘法在计算机中处理的时间并不是这么快的，也要拆分为加法来做的。所以快速乘法会更快的计算a*b的结果，而且a*b%mod可能还没取模就已经爆long long，但快速乘法却不会。快速幂也是同样的道理。
@@ -173,32 +195,32 @@ public class ProblemSet {
             int mid = left + (right - left) >> 1;
             //使用快速乘判断mid * divisor >= dividend是否成立
             boolean check = quickAdd(dividend, mid, divisor);
-            if(check){
+            if (check) {
                 ans = mid;
-                if(mid == MAX){
+                if (mid == MAX) {
                     break;
                 }
                 left = mid + 1;
-            }else {
-                right = mid  - 1;
+            } else {
+                right = mid - 1;
             }
         }
         return revers ? -ans : ans;
     }
 
-    public boolean quickAdd(int dividend, int x, int divisor){
+    public boolean quickAdd(int dividend, int x, int divisor) {
         //dividend , divisor 为负数， x为正数
         //判断 x * divisor >= dividend 是否成立
         int result = 0;
-        while (x >=0 ){
-            if ((x & 1) != 0){
-                if(result < dividend - divisor){
+        while (x >= 0) {
+            if ((x & 1) != 0) {
+                if (result < dividend - divisor) {
                     return false;
                 }
                 result += divisor;
             }
-            if(x != 1){
-                if(divisor < x - divisor){
+            if (x != 1) {
+                if (divisor < x - divisor) {
                     return false;
                 }
                 divisor += divisor;
