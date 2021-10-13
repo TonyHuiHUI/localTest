@@ -1,6 +1,8 @@
 package leetCode;
 
 
+import sun.applet.resources.MsgAppletViewer_zh_CN;
+
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -68,7 +70,7 @@ public class ProblemSet {
 ////        String[] b = {"oath", "pea", "eat", "rain"};
 ////        System.out.println(findWords(a, b));
 //        getSum(2, 3);
-        System.out.println(quickMul(4 , 5));
+        System.out.println(quickMul(4, 5));
     }
 
     public static class TreeNode {
@@ -119,7 +121,7 @@ public class ProblemSet {
     }
 
     //快速幂
-    public static int quickPow(int x, int y){
+    public static int quickPow(int x, int y) {
         int ans = 0;
         while (y != 0) {
             if ((y & 1) == 1) {
@@ -130,6 +132,7 @@ public class ProblemSet {
         }
         return ans;
     }
+
     //29. 两数相除
     //给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
     //返回被除数 dividend 除以除数 divisor 得到的商。
@@ -141,9 +144,70 @@ public class ProblemSet {
     int MAX = Integer.MAX_VALUE;
 
     public int divide(int dividend, int divisor) {
-
-        return 0;
+        if (dividend == MIN) {
+            if (divisor == 1) {
+                return MIN;
+            }
+            if (divisor == -1) {
+                return MAX;
+            }
+        }
+        if (divisor == MIN) {
+            return dividend == MIN ? 1 : 0;
+        }
+        if (dividend == 0) {
+            return 0;
+        }
+        boolean revers = false;
+        if (dividend > 0) {
+            dividend = -dividend;
+            revers = !revers;
+        }
+        if (divisor > 0) {
+            divisor = -divisor;
+            revers = !revers;
+        }
+        //通过二分查找，找到mid,使得 mid * divisor >= dividend
+        int left = 1, right = MAX, ans = 0;
+        while (left <= right) {
+            int mid = left + (right - left) >> 1;
+            //使用快速乘判断mid * divisor >= dividend是否成立
+            boolean check = quickAdd(dividend, mid, divisor);
+            if(check){
+                ans = mid;
+                if(mid == MAX){
+                    break;
+                }
+                left = mid + 1;
+            }else {
+                right = mid  - 1;
+            }
+        }
+        return revers ? -ans : ans;
     }
+
+    public boolean quickAdd(int dividend, int x, int divisor){
+        //dividend , divisor 为负数， x为正数
+        //判断 x * divisor >= dividend 是否成立
+        int result = 0;
+        while (x >=0 ){
+            if ((x & 1) != 0){
+                if(result < dividend - divisor){
+                    return false;
+                }
+                result += divisor;
+            }
+            if(x != 1){
+                if(divisor < x - divisor){
+                    return false;
+                }
+                divisor += divisor;
+            }
+            x >>= 1;
+        }
+        return true;
+    }
+
 
     //273. 整数转换英文表示
     //将非负整数 num 转换为其对应的英文表示。
