@@ -99,6 +99,40 @@ public class ProblemSet {
         public Node child;
     }
 
+    //剑指 Offer II 069. 山峰数组的顶部
+    //符合下列属性的数组 arr 称为 山峰数组（山脉数组） ：
+    //    arr.length >= 3
+    //    存在 i（0 < i < arr.length - 1）使得：
+    //        arr[0] < arr[1] < ... arr[i-1] < arr[i]
+    //        arr[i] > arr[i+1] > ... > arr[arr.length - 1]
+    //给定由整数组成的山峰数组 arr ，返回任何满足 arr[0] < arr[1] < ... arr[i - 1] < arr[i] > arr[i + 1] > ... > arr[arr.length - 1] 的下标 i ，即山峰顶部。
+    public int peakIndexInMountainArray(int[] arr) {
+        //顺序一次遍历
+//        int n = arr.length;
+//        int result = -1;
+//        for (int i = 0; i < n - 1; i++) {
+//            if(arr[i] > arr[i + 1]){
+//                result = i;
+//                break;
+//            }
+//        }
+//        return result;
+        //二分
+        int n = arr.length;
+        int result = -1;
+        int left = 1, right = n - 2;
+        while (left <= right){
+            int mid = left + (right - left) / 2;
+            if(arr[mid] > arr[mid + 1]){
+                result = mid;
+                right = mid - 1;
+            }else {
+                left = mid + 1;
+            }
+        }
+        return result;
+    }
+
     //412. Fizz Buzz
 //    写一个程序，输出从 1 到 n 数字的字符串表示。
 //            1. 如果 n 是3的倍数，输出“Fizz”；
