@@ -70,7 +70,8 @@ public class ProblemSet {
 ////        String[] b = {"oath", "pea", "eat", "rain"};
 ////        System.out.println(findWords(a, b));
 //        getSum(2, 3);
-        System.out.println(quickMul(4, 5));
+//        System.out.println(quickMul(4, 5));
+        findComplement(5);
     }
 
     public static class TreeNode {
@@ -99,6 +100,32 @@ public class ProblemSet {
         public Node child;
     }
 
+    //476. 数字的补数
+    //给你一个 正 整数 num ，输出它的补数。补数是对该数的二进制表示取反。
+    public static int findComplement(int num) {
+//        int highestBit = 0;//没有前导零位，找出最高位的1，然后依次取反
+//        for(int i = 1; i < 31; i++){
+//            if(num >= 1 << i){
+//                highestBit = i;
+//            }else {
+//                break;
+//            }
+//        }
+//        //2^(highest+1)-1,表示每一位都为1的highest+1位的二进制数，将num与其异或即可讲num从highest位开始每一位取反
+//        //如果highest==30,会产生溢出，取掩码为0x7FFFFFFF
+//        int mask = highestBit == 30 ? 0x7FFFFFFF:((1 <<(highestBit + 1)) - 1);
+//        return num ^ mask;
+
+//        int n = num;
+//        n |= n >>> 1;
+//        n |= n >>> 2;
+//        n |= n >>> 4;
+//        n |= n >>> 8;
+//        n |= n >>> 16;
+//        return n ^ num;
+        int n = -1 >>> Integer.numberOfLeadingZeros(num);
+        return n ^ num;
+    }
     //38. 外观数列
     //给定一个正整数 n ，输出外观数列的第 n 项。
     //「外观数列」是一个整数序列，从数字 1 开始，序列中的每一项都是对前一项的描述。
