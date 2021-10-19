@@ -1,6 +1,8 @@
 package leetCode;
 
 
+import scala.Char;
+import scala.io.BytePickle;
 import sun.applet.resources.MsgAppletViewer_zh_CN;
 
 import java.util.*;
@@ -100,6 +102,73 @@ public class ProblemSet {
         public Node child;
     }
 
+    //字典树
+    class TrieD {
+        TrieD[] next;
+        Boolean isEnd;
+
+        TrieD() {
+            next = new TrieD[26];
+            isEnd = false;
+        }
+
+        public void insert(String s) {
+            TrieD curPos = this;
+            for (int i = 0; i < s.length(); i++) {
+                int ch = s.charAt(i) - 'a';
+                if (curPos.next[ch] == null) {
+                    curPos.next[ch] = new TrieD();
+                }
+                curPos = curPos.next[ch];
+            }
+            curPos.isEnd = true;
+        }
+    }
+
+    //211. 添加与搜索单词 - 数据结构设计
+    //请你设计一个数据结构，支持 添加新单词 和 查找字符串是否与任何先前添加的字符串匹配 。
+//实现词典类 WordDictionary ：
+//    WordDictionary() 初始化词典对象
+//    void addWord(word) 将 word 添加到数据结构中，之后可以对它进行匹配
+//    bool search(word) 如果数据结构中存在字符串与 word 匹配，则返回 true ；否则，返回  false 。word 中可能包含一些 '.' ，每个 . 都可以表示任何一个字母。
+    class WordDictionary {
+        TrieD root;
+
+        public WordDictionary() {
+            root = new TrieD();
+        }
+
+        public void addWord(String word) {
+            root.insert(word);
+        }
+
+        public boolean search(String word) {
+            return dfs(0, word, root);
+        }
+
+        public boolean dfs(int index, String word, TrieD node) {
+            if(index == word.length()){
+                return node.isEnd;
+            }
+            char ch = word.charAt(index);
+            if(Character.isLetter(ch)){
+                int chInt = ch - 'a';
+                TrieD next = node.next[chInt];
+                if(next != null && dfs(index + 1, word, next)){
+                    return true;
+                }
+            }else {
+                for (int i = 0; i< 26; i++){
+                    TrieD next = node.next[i];
+                    if(next != null && dfs(index + 1, word, next)){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    }
+
     //476. 数字的补数
     //给你一个 正 整数 num ，输出它的补数。补数是对该数的二进制表示取反。
     public static int findComplement(int num) {
@@ -126,6 +195,7 @@ public class ProblemSet {
         int n = -1 >>> Integer.numberOfLeadingZeros(num);
         return n ^ num;
     }
+
     //38. 外观数列
     //给定一个正整数 n ，输出外观数列的第 n 项。
     //「外观数列」是一个整数序列，从数字 1 开始，序列中的每一项都是对前一项的描述。
