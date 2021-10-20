@@ -125,6 +125,17 @@ public class ProblemSet {
         }
     }
 
+//    453. 最小操作次数使数组元素相等
+//给你一个长度为 n 的整数数组，每次操作将会使 n - 1 个元素增加 1 。返回让数组所有元素相等的最小操作次数。
+        public int minMoves(int[] nums) {
+        //每次操作会使n-1个元素+1，相当于使1个元素-1，每次减一，因此只需要计算每个元素与最小元素间的差值和
+            int min = Arrays.stream(nums).min().getAsInt();
+            int sum = 0;
+            for(int num : nums){
+                sum += num - min;
+            }
+            return sum;
+        }
     //211. 添加与搜索单词 - 数据结构设计
     //请你设计一个数据结构，支持 添加新单词 和 查找字符串是否与任何先前添加的字符串匹配 。
 //实现词典类 WordDictionary ：
