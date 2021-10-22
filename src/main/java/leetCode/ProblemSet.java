@@ -73,7 +73,8 @@ public class ProblemSet {
 ////        System.out.println(findWords(a, b));
 //        getSum(2, 3);
 //        System.out.println(quickMul(4, 5));
-        findComplement(5);
+//        findComplement(5);
+        System.out.println(majorityElement(new int[]{6, 5, 5}));
     }
 
     public static class TreeNode {
@@ -124,15 +125,56 @@ public class ProblemSet {
             curPos.isEnd = true;
         }
     }
+
+    //229. 求众数 II
+    //给定一个大小为 n 的整数数组，找出其中所有出现超过 ⌊ n/3 ⌋ 次的元素。
+    public static List<Integer> majorityElement(int[] nums) {
+        int num1 = 0, num2 = 0;
+        int count1 = 0, count2 = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (count1 > 0 && num1 == nums[i]) {
+                count1++;
+            } else if (count2 > 0 && num2 == nums[i]) {
+                count2++;
+            } else if (count1 == 0) {
+                num1 = nums[i];
+                count1++;
+            } else if (count2 == 0) {
+                num2 = nums[i];
+                count2++;
+            } else {
+                count1--;
+                count2--;
+            }
+        }
+        int cnt1 = 0, cnt2 = 0;
+        for (int num : nums) {
+            if (count1 > 0 && num == num1) {
+                cnt1++;
+            }
+            if (count2 > 0 && num == num2) {
+                cnt2++;
+            }
+        }
+        List<Integer> res = new ArrayList<>();
+        if (cnt1 > nums.length / 3) {
+            res.add(num1);
+        }
+        if (cnt2 > nums.length / 3) {
+            res.add(num2);
+        }
+        return res;
+    }
+
     //66. 加一
     //给定一个由 整数 组成的 非空 数组所表示的非负整数，在该数的基础上加一。
     //最高位数字存放在数组的首位， 数组中每个元素只存储单个数字。
     //你可以假设除了整数 0 之外，这个整数不会以零开头。
     public int[] plusOne(int[] digits) {
-        for(int i = digits.length - 1; i >=0; i--){
+        for (int i = digits.length - 1; i >= 0; i--) {
             digits[i]++;
             digits[i] = digits[i] % 10;
-            if(digits[i] != 0){
+            if (digits[i] != 0) {
                 return digits;
             }
         }
@@ -140,17 +182,19 @@ public class ProblemSet {
         digits[0] = 1;
         return digits;
     }
-//    453. 最小操作次数使数组元素相等
+
+    //    453. 最小操作次数使数组元素相等
 //给你一个长度为 n 的整数数组，每次操作将会使 n - 1 个元素增加 1 。返回让数组所有元素相等的最小操作次数。
-        public int minMoves(int[] nums) {
+    public int minMoves(int[] nums) {
         //每次操作会使n-1个元素+1，相当于使1个元素-1，每次减一，因此只需要计算每个元素与最小元素间的差值和
-            int min = Arrays.stream(nums).min().getAsInt();
-            int sum = 0;
-            for(int num : nums){
-                sum += num - min;
-            }
-            return sum;
+        int min = Arrays.stream(nums).min().getAsInt();
+        int sum = 0;
+        for (int num : nums) {
+            sum += num - min;
         }
+        return sum;
+    }
+
     //211. 添加与搜索单词 - 数据结构设计
     //请你设计一个数据结构，支持 添加新单词 和 查找字符串是否与任何先前添加的字符串匹配 。
 //实现词典类 WordDictionary ：
@@ -173,20 +217,20 @@ public class ProblemSet {
         }
 
         public boolean dfs(int index, String word, TrieD node) {
-            if(index == word.length()){
+            if (index == word.length()) {
                 return node.isEnd;
             }
             char ch = word.charAt(index);
-            if(Character.isLetter(ch)){
+            if (Character.isLetter(ch)) {
                 int chInt = ch - 'a';
                 TrieD next = node.next[chInt];
-                if(next != null && dfs(index + 1, word, next)){
+                if (next != null && dfs(index + 1, word, next)) {
                     return true;
                 }
-            }else {
-                for (int i = 0; i< 26; i++){
+            } else {
+                for (int i = 0; i < 26; i++) {
                     TrieD next = node.next[i];
-                    if(next != null && dfs(index + 1, word, next)){
+                    if (next != null && dfs(index + 1, word, next)) {
                         return true;
                     }
                 }
