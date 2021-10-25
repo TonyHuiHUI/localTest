@@ -126,6 +126,42 @@ public class ProblemSet {
         }
     }
 
+    //240. 搜索二维矩阵 II
+    //编写一个高效的算法来搜索 m x n 矩阵 matrix 中的一个目标值 target 。该矩阵具有以下特性：
+    //    每行的元素从左到右升序排列。
+    //    每列的元素从上到下升序排列。
+    public boolean searchMatrix(int[][] matrix, int target) {
+        //按行二分
+//        for(int[] row : matrix){
+//            int low = 0, high = row.length - 1;
+//            while (low <= high){
+//                int mid = low + (high - low) / 2;
+//                if(row[mid] > target){
+//                    high = mid - 1;
+//                }else if(row[mid] < target){
+//                    low = mid + 1;
+//                }else {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+
+        //Z字查找
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int x = 0, y = col - 1;
+        while ( x < row && y >= 0){
+            if(matrix[x][y] == target){
+                return true;
+            }else if(matrix[x][y] > target) {
+                y--;
+            }else {
+                x++;
+            }
+        }
+        return false;
+    }
     //229. 求众数 II
     //给定一个大小为 n 的整数数组，找出其中所有出现超过 ⌊ n/3 ⌋ 次的元素。
     public static List<Integer> majorityElement(int[] nums) {
