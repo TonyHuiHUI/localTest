@@ -126,6 +126,30 @@ public class ProblemSet {
         }
     }
 
+    //496. 下一个更大元素 I
+    //给你两个 没有重复元素 的数组 nums1 和 nums2 ，其中nums1 是 nums2 的子集。
+    //请你找出 nums1 中每个元素在 nums2 中的下一个比其大的值。
+    //nums1 中数字 x 的下一个更大元素是指 x 在 nums2 中对应位置的右边的第一个比 x 大的元素。如果不存在，对应位置输出 -1 。
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Map<Integer, Integer> hashMap = new HashMap<>();
+        Stack<Integer> stack = new Stack<>();
+        for (int i = nums2.length - 1; i >= 0; i--) {
+            int num = nums2[i];
+            while (!stack.isEmpty() && num >= stack.peek()) {
+                stack.pop();
+            }
+            hashMap.put(num, stack.isEmpty() ? -1 : stack.peek());
+            stack.push(num);
+        }
+
+        int[] res = new int[nums1.length];
+        for (int i = 0; i < nums1.length; i++) {
+            res[i] = hashMap.get(nums1[i]);
+        }
+        return res;
+    }
+
+
     //240. 搜索二维矩阵 II
     //编写一个高效的算法来搜索 m x n 矩阵 matrix 中的一个目标值 target 。该矩阵具有以下特性：
     //    每行的元素从左到右升序排列。
@@ -151,17 +175,18 @@ public class ProblemSet {
         int row = matrix.length;
         int col = matrix[0].length;
         int x = 0, y = col - 1;
-        while ( x < row && y >= 0){
-            if(matrix[x][y] == target){
+        while (x < row && y >= 0) {
+            if (matrix[x][y] == target) {
                 return true;
-            }else if(matrix[x][y] > target) {
+            } else if (matrix[x][y] > target) {
                 y--;
-            }else {
+            } else {
                 x++;
             }
         }
         return false;
     }
+
     //229. 求众数 II
     //给定一个大小为 n 的整数数组，找出其中所有出现超过 ⌊ n/3 ⌋ 次的元素。
     public static List<Integer> majorityElement(int[] nums) {
