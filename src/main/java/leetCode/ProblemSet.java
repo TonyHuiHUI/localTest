@@ -74,7 +74,8 @@ public class ProblemSet {
 //        getSum(2, 3);
 //        System.out.println(quickMul(4, 5));
 //        findComplement(5);
-        System.out.println(majorityElement(new int[]{6, 5, 5}));
+//        System.out.println(majorityElement(new int[]{6, 5, 5}));
+        removeInvalidParentheses("(((k()((");
     }
 
     public static class TreeNode {
@@ -124,6 +125,86 @@ public class ProblemSet {
             }
             curPos.isEnd = true;
         }
+    }
+
+    //301. 删除无效的括号
+//    给你一个由若干括号和字母组成的字符串 s ，删除最小数量的无效括号，使得输入的字符串有效。
+//    返回所有可能的结果。答案可以按 任意顺序 返回。
+    public static List<String> removeInvalidParentheses(String s) {
+        List<String> res = new LinkedList<>();
+        int lremove = 0;
+        int rremove = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                lremove++;
+            } else if (s.charAt(i) == ')') {
+                if (lremove == 0) {
+                    rremove++;
+                } else {
+                    lremove--;
+                }
+            }
+        }
+        dfs(res, s, 0, 0, 0, lremove, rremove);
+        return res;
+    }
+
+    public static void dfs(List<String> res, String str, int start, int lcount, int rcount, int lremove, int rremove) {
+        if (lremove == 0 && rremove == 0) {
+            if (isValidStr(str)) {
+                res.add(str);
+            }
+            return;
+        }
+        for (int i = start; i < str.length(); i++) {
+            if (i != start && str.charAt(i) == str.charAt(i - 1)) {
+                if(str.charAt(i) == '('){
+                    lcount++;
+                }else if(str.charAt(i) == ')'){
+                    rcount++;
+                }
+                if(rcount > lcount){
+                    break;
+                }
+                continue;
+            }
+            if(lremove + rremove > str.length() - i){
+                return;
+            }
+            if(lremove > 0 && str.charAt(i) == '('){
+                dfs(res, str.substring(0 , i) + str.substring( i + 1), i, lcount, rcount, lremove - 1, rremove);
+            }
+
+            if(rremove > 0 && str.charAt(i) == ')'){
+                dfs(res, str.substring(0 , i) + str.substring( i + 1), i, lcount, rcount, lremove, rremove - 1);
+            }
+
+            if(str.charAt(i) == '('){
+                lcount++;
+            }else if(str.charAt(i) == ')'){
+                rcount++;
+            }
+            if(rcount > lcount){
+                break;
+            }
+        }
+
+    }
+
+    public static boolean isValidStr(String str) {
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '(') {
+                count++;
+            } else if (str.charAt(i) == ')') {
+                if (count == 0) {
+                    return false;
+                } else {
+                    count--;
+                }
+            }
+        }
+        return count == 0;
     }
 
     //496. 下一个更大元素 I
