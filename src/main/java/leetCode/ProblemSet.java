@@ -75,7 +75,9 @@ public class ProblemSet {
 //        System.out.println(quickMul(4, 5));
 //        findComplement(5);
 //        System.out.println(majorityElement(new int[]{6, 5, 5}));
-        removeInvalidParentheses("(((k()((");
+//        removeInvalidParentheses("(((k()((");
+
+        reorderedPowerOf2(1);
     }
 
     public static class TreeNode {
@@ -125,6 +127,21 @@ public class ProblemSet {
             }
             curPos.isEnd = true;
         }
+    }
+
+    //869. 重新排序得到 2 的幂
+//    给定正整数 N ，我们按任何顺序（包括原始顺序）将数字重新排序，注意其前导数字不能为零。
+//    如果我们可以通过上述方式得到 2 的幂，返回 true；否则，返回 false。
+    public static boolean reorderedPowerOf2(int n) {
+        Set<String> setOfPowerOf2 = new HashSet<>();
+        for(int i = 1; i < 1e9; i *= 2){
+           char[]  nchar = String.valueOf(i).toCharArray();
+           Arrays.sort(nchar);
+           setOfPowerOf2.add(new String(nchar));
+        }
+        char[] chars = String.valueOf(n).toCharArray();
+        Arrays.sort(chars);
+        return setOfPowerOf2.contains(new String(chars));
     }
 
     //301. 删除无效的括号
