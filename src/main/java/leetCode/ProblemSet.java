@@ -129,15 +129,38 @@ public class ProblemSet {
         }
     }
 
+    //    335. 路径交叉
+//    给你一个整数数组 distance 。
+//    从 X-Y 平面上的点 (0,0) 开始，先向北移动 distance[0] 米，然后向西移动 distance[1] 米，向南移动 distance[2] 米，向东移动 distance[3] 米，持续移动。也就是说，每次移动后你的方位会发生逆时针变化。
+//    判断你所经过的路径是否相交。如果相交，返回 true ；否则，返回 false 。
+    public boolean isSelfCrossing(int[] distance) {
+        int n = distance.length;
+        for (int i = 3; i < n; i++) {
+            if (distance[i] >= distance[i - 2] && distance[i - 1] <= distance[i - 3]) {
+                return true;
+            }
+            if (i == 4 && (distance[3] == distance[1] && distance[4] + distance[0] >= distance[2])) {
+                return true;
+            }
+            if (i >= 5 && (distance[i - 3] - distance[i - 5] <= distance[i - 1])
+                    && distance[i - 3] >= distance[i - 1]
+                    && distance[i] >= distance[i - 2] - distance[i - 4]
+                    && distance[i - 2] >= distance[i - 4]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     //869. 重新排序得到 2 的幂
 //    给定正整数 N ，我们按任何顺序（包括原始顺序）将数字重新排序，注意其前导数字不能为零。
 //    如果我们可以通过上述方式得到 2 的幂，返回 true；否则，返回 false。
     public static boolean reorderedPowerOf2(int n) {
         Set<String> setOfPowerOf2 = new HashSet<>();
-        for(int i = 1; i < 1e9; i *= 2){
-           char[]  nchar = String.valueOf(i).toCharArray();
-           Arrays.sort(nchar);
-           setOfPowerOf2.add(new String(nchar));
+        for (int i = 1; i < 1e9; i *= 2) {
+            char[] nchar = String.valueOf(i).toCharArray();
+            Arrays.sort(nchar);
+            setOfPowerOf2.add(new String(nchar));
         }
         char[] chars = String.valueOf(n).toCharArray();
         Arrays.sort(chars);
@@ -175,33 +198,33 @@ public class ProblemSet {
         }
         for (int i = start; i < str.length(); i++) {
             if (i != start && str.charAt(i) == str.charAt(i - 1)) {
-                if(str.charAt(i) == '('){
+                if (str.charAt(i) == '(') {
                     lcount++;
-                }else if(str.charAt(i) == ')'){
+                } else if (str.charAt(i) == ')') {
                     rcount++;
                 }
-                if(rcount > lcount){
+                if (rcount > lcount) {
                     break;
                 }
                 continue;
             }
-            if(lremove + rremove > str.length() - i){
+            if (lremove + rremove > str.length() - i) {
                 return;
             }
-            if(lremove > 0 && str.charAt(i) == '('){
-                dfs(res, str.substring(0 , i) + str.substring( i + 1), i, lcount, rcount, lremove - 1, rremove);
+            if (lremove > 0 && str.charAt(i) == '(') {
+                dfs(res, str.substring(0, i) + str.substring(i + 1), i, lcount, rcount, lremove - 1, rremove);
             }
 
-            if(rremove > 0 && str.charAt(i) == ')'){
-                dfs(res, str.substring(0 , i) + str.substring( i + 1), i, lcount, rcount, lremove, rremove - 1);
+            if (rremove > 0 && str.charAt(i) == ')') {
+                dfs(res, str.substring(0, i) + str.substring(i + 1), i, lcount, rcount, lremove, rremove - 1);
             }
 
-            if(str.charAt(i) == '('){
+            if (str.charAt(i) == '(') {
                 lcount++;
-            }else if(str.charAt(i) == ')'){
+            } else if (str.charAt(i) == ')') {
                 rcount++;
             }
-            if(rcount > lcount){
+            if (rcount > lcount) {
                 break;
             }
         }
