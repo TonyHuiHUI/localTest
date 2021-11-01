@@ -129,6 +129,18 @@ public class ProblemSet {
         }
     }
 
+    //
+//575. 分糖果
+//    给定一个偶数长度的数组，其中不同的数字代表着不同种类的糖果，每一个数字代表一个糖果。你需要把这些糖果平均分给一个弟弟和一个妹妹。返回妹妹可以获得的最大糖果的种类数。
+    public int distributeCandies(int[] candyType) {
+        Map<Integer, Integer> map = new HashMap<>();
+        int n = candyType.length;
+        for (int type : candyType) {
+            map.put(type, map.getOrDefault(type, 0) + 1);
+        }
+        return Math.min(map.size(), n / 2 );
+    }
+
     //    335. 路径交叉
 //    给你一个整数数组 distance 。
 //    从 X-Y 平面上的点 (0,0) 开始，先向北移动 distance[0] 米，然后向西移动 distance[1] 米，向南移动 distance[2] 米，向东移动 distance[3] 米，持续移动。也就是说，每次移动后你的方位会发生逆时针变化。
