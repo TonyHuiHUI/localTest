@@ -129,7 +129,19 @@ public class ProblemSet {
         }
     }
 
-    //
+    //237. 删除链表中的节点
+//    请编写一个函数，用于 删除单链表中某个特定节点 。在设计函数时需要注意，你无法访问链表的头节点 head ，只能直接访问 要被删除的节点 。
+//    题目数据保证需要删除的节点 不是末尾节点 。
+    public void deleteNode(ListNode node) {
+//        while (node.next.next != null){
+//            node.val = node.next.val;
+//            node = node.next;
+//        }
+//        node.val= node.next.val;
+//        node.next = null;
+        node.val = node.next.val;
+        node.next = node.next.next;
+    }
 //575. 分糖果
 //    给定一个偶数长度的数组，其中不同的数字代表着不同种类的糖果，每一个数字代表一个糖果。你需要把这些糖果平均分给一个弟弟和一个妹妹。返回妹妹可以获得的最大糖果的种类数。
     public int distributeCandies(int[] candyType) {
