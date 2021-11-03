@@ -129,6 +129,43 @@ public class ProblemSet {
         }
     }
 
+    //407. 接雨水 II
+//    给你一个 m x n 的矩阵，其中的值均为非负整数，代表二维高度图每个单元的高度，请计算图中形状最多能接多少体积的雨水。
+    public int trapRainWater(int[][] heightMap) {
+        int m = heightMap.length;
+        int n = heightMap[0].length;
+        if (m <= 2 || n <= 2) {
+            return 0;
+        }
+        boolean[][] visited = new boolean[m][n];
+        PriorityQueue<int[]> queue = new PriorityQueue<>(Comparator.comparingInt(o -> o[1]));
+        int[][] dir = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == 0 || i == m - 1 || j == 0 || j == n - 1) {
+                    queue.offer(new int[]{i * n + j, heightMap[i][j]});
+                    visited[i][j] = true;
+                }
+            }
+        }
+        while (!queue.isEmpty()) {
+            int[] cur = queue.poll();
+            for (int i = 0; i < 4; i++) {
+                int x = cur[0] / n + dir[i][0];
+                int y = cur[0] % n + dir[i][1];
+                if (x >= 0 && x < m && y >= 0 && y < n && !visited[x][y]) {
+                    if (cur[1] > heightMap[x][y]) {
+                        res += cur[1] - heightMap[x][y];
+                    }
+                    queue.offer(new int[]{x * n + y, Math.max(heightMap[x][y], cur[1])});
+                    visited[x][y] = true;
+                }
+            }
+        }
+        return res;
+    }
+
     //237. 删除链表中的节点
 //    请编写一个函数，用于 删除单链表中某个特定节点 。在设计函数时需要注意，你无法访问链表的头节点 head ，只能直接访问 要被删除的节点 。
 //    题目数据保证需要删除的节点 不是末尾节点 。
@@ -142,7 +179,8 @@ public class ProblemSet {
         node.val = node.next.val;
         node.next = node.next.next;
     }
-//575. 分糖果
+
+    //575. 分糖果
 //    给定一个偶数长度的数组，其中不同的数字代表着不同种类的糖果，每一个数字代表一个糖果。你需要把这些糖果平均分给一个弟弟和一个妹妹。返回妹妹可以获得的最大糖果的种类数。
     public int distributeCandies(int[] candyType) {
         Map<Integer, Integer> map = new HashMap<>();
@@ -150,7 +188,7 @@ public class ProblemSet {
         for (int type : candyType) {
             map.put(type, map.getOrDefault(type, 0) + 1);
         }
-        return Math.min(map.size(), n / 2 );
+        return Math.min(map.size(), n / 2);
     }
 
     //    335. 路径交叉
