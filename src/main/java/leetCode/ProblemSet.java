@@ -129,6 +129,24 @@ public class ProblemSet {
         }
     }
 
+    //    367. 有效的完全平方数
+//    给定一个 正整数 num ，编写一个函数，如果 num 是一个完全平方数，则返回 true ，否则返回 false 。
+//    进阶：不要 使用任何内置的库函数，如  sqrt 。
+    public boolean isPerfectSquare(int num) {
+        int left = 0, right = num ;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if(mid * mid > num){
+                right = mid - 1;
+            }else if(mid * mid < num) {
+                left = mid + 1;
+            }else {
+                return true;
+            }
+        }
+        return false;
+    }
+
     //407. 接雨水 II
 //    给你一个 m x n 的矩阵，其中的值均为非负整数，代表二维高度图每个单元的高度，请计算图中形状最多能接多少体积的雨水。
     public int trapRainWater(int[][] heightMap) {
