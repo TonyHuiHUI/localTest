@@ -128,30 +128,80 @@ public class ProblemSet {
             curPos.isEnd = true;
         }
     }
+
+    //    299. 猜数字游戏
+//    你在和朋友一起玩 猜数字（Bulls and Cows）游戏，该游戏规则如下：
+//    写出一个秘密数字，并请朋友猜这个数字是多少。朋友每猜测一次，你就会给他一个包含下述信息的提示：
+//    猜测数字中有多少位属于数字和确切位置都猜对了（称为 "Bulls", 公牛），
+//    有多少位属于数字猜对了但是位置不对（称为 "Cows", 奶牛）。也就是说，这次猜测中有多少位非公牛数字可以通过重新排列转换成公牛数字。
+//    给你一个秘密数字 secret 和朋友猜测的数字 guess ，请你返回对朋友这次猜测的提示。
+//    提示的格式为 "xAyB" ，x 是公牛个数， y 是奶牛个数，A 表示公牛，B 表示奶牛。
+//    请注意秘密数字和朋友猜测的数字都可能含有重复数字。
+    public String getHint(String secret, String guess) {
+//        HashMap<Character, Integer> hashMap = new HashMap<>();
+//        int bulls = 0, cows = 0;
+//        boolean[] visited = new boolean[guess.length()];
+//        for (int i = 0; i < secret.length(); i++) {
+//            if (secret.charAt(i) == guess.charAt(i)) {
+//                bulls++;
+//                visited[i] = true;
+//                continue;
+//            }
+//            hashMap.put(secret.charAt(i), hashMap.getOrDefault(secret.charAt(i), 0) + 1);
+//        }
+//        for (int i = 0; i < guess.length(); i++) {
+//            if (!visited[i]) {
+//                Integer tmp = hashMap.getOrDefault(guess.charAt(i), 0);
+//                if (tmp != 0) {
+//                    cows++;
+//                    tmp--;
+//                    hashMap.put(guess.charAt(i), tmp);
+//                }
+//            }
+//        }
+//        return bulls + "A" + cows + "B";
+        int bulls = 0, cows = 0;
+        int[] s = new int[10];
+        int[] g = new int[10];
+        for(int i = 0; i < secret.length(); i++){
+            if(secret.charAt(i) == guess.charAt(i)){
+                bulls++;
+            }else {
+                ++s[secret.charAt(i) - '0'];
+                ++g[guess.charAt(i) - '0'];
+            }
+        }
+        for (int i = 0; i < 10; i ++){
+            cows += Math.min(s[i], g[i]);
+        }
+        return bulls + "A" + cows + "B";
+    }
+
     //1218. 最长定差子序列
 //    给你一个整数数组 arr 和一个整数 difference，请你找出并返回 arr 中最长等差子序列的长度，该子序列中相邻元素之间的差等于 difference 。
 //    子序列 是指在不改变其余元素顺序的情况下，通过删除一些元素或不删除任何元素而从 arr 派生出来的序列。
     public int longestSubsequence(int[] arr, int difference) {
         HashMap<Integer, Integer> hashMap = new HashMap<>();
         int res = 0;
-        for(int num : arr){
+        for (int num : arr) {
             hashMap.put(num, hashMap.getOrDefault(num - difference, 0) + 1);
             res = Math.max(res, hashMap.get(num));
         }
         return res;
     }
+
     //    367. 有效的完全平方数
 //    给定一个 正整数 num ，编写一个函数，如果 num 是一个完全平方数，则返回 true ，否则返回 false 。
 //    进阶：不要 使用任何内置的库函数，如  sqrt 。
     public boolean isPerfectSquare(int num) {
-        int left = 0, right = num ;
+        int left = 0, right = num;
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            if(mid * mid > num){
+            if (mid * mid > num) {
                 right = mid - 1;
-            }else if(mid * mid < num) {
+            } else if (mid * mid < num) {
                 left = mid + 1;
-            }else {
+            } else {
                 return true;
             }
         }
