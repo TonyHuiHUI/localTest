@@ -129,6 +129,22 @@ public class ProblemSet {
         }
     }
 
+    //495. 提莫攻击
+//    给你一个 非递减 的整数数组 timeSeries ，其中 timeSeries[i] 表示提莫在 timeSeries[i] 秒时对艾希发起攻击，以及一个表示中毒持续时间的整数 duration 。
+//    返回艾希处于中毒状态的 总 秒数。
+    public int findPoisonedDuration(int[] timeSeries, int duration) {
+        int end = 0;
+        int res = 0;
+        for(int time : timeSeries){
+            if(time >= end){
+                res += duration;
+            }else {
+                res += time + duration - end;
+            }
+            end = time + duration;
+        }
+        return res;
+    }
     //    299. 猜数字游戏
 //    你在和朋友一起玩 猜数字（Bulls and Cows）游戏，该游戏规则如下：
 //    写出一个秘密数字，并请朋友猜这个数字是多少。朋友每猜测一次，你就会给他一个包含下述信息的提示：
