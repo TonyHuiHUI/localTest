@@ -77,7 +77,9 @@ public class ProblemSet {
 //        System.out.println(majorityElement(new int[]{6, 5, 5}));
 //        removeInvalidParentheses("(((k()((");
 
-        reorderedPowerOf2(1);
+//        reorderedPowerOf2(1);
+        int[][] a = {{0, 0, 1, 1}, {0, 0, 2, 1}, {1, 0, 2, 1}, {0, 2, 2, 3}};
+        System.out.println(isRectangleCover(a));
     }
 
     public static class TreeNode {
@@ -129,6 +131,54 @@ public class ProblemSet {
         }
     }
 
+    //391. 完美矩形
+    //给你一个数组 rectangles ，其中 rectangles[i] = [xi, yi, ai, bi] 表示一个坐标轴平行的矩形。这个矩形的左下顶点是 (xi, yi) ，右上顶点是 (ai, bi) 。
+    //如果所有矩形一起精确覆盖了某个矩形区域，则返回 true ；否则，返回 false 。
+    public static boolean isRectangleCover(int[][] rectangles) {
+        int left = Integer.MAX_VALUE;
+        int right = Integer.MIN_VALUE;
+        int top = Integer.MIN_VALUE;
+        int bottom = Integer.MAX_VALUE;
+        int sumArea = 0;
+        Set<String> points = new HashSet<>();
+        for (int[] rec : rectangles) {
+            sumArea += (rec[2] - rec[0]) * (rec[3] - rec[1]);
+            left = Math.min(left, rec[0]);
+            right = Math.max(right, rec[2]);
+            top = Math.max(top, rec[3]);
+            bottom = Math.min(bottom, rec[1]);
+            String lb = rec[0] + "," + rec[1];
+            String lt = rec[0] + "," + rec[3];
+            String rb = rec[2] + "," + rec[1];
+            String rt = rec[2] + "," + rec[3];
+            if (!points.contains(lb)) {
+                points.add(lb);
+            } else {
+                points.remove(lb);
+            }
+            if (!points.contains(lt)) {
+                points.add(lt);
+            } else {
+                points.remove(lt);
+            }
+            if (!points.contains(rb)) {
+                points.add(rb);
+            } else {
+                points.remove(rb);
+            }
+            if (!points.contains(rt)) {
+                points.add(rt);
+            } else {
+                points.remove(rt);
+            }
+
+        }
+        if (points.size() == 4 && points.contains(left + "," + bottom) && points.contains(left + "," + top) && points.contains(right + "," + bottom) && points.contains(right + "," + top)) {
+            return sumArea == (right - left) * (top - bottom);
+        }
+        return false;
+    }
+
     //319. 灯泡开关
     //初始时有 n 个灯泡处于关闭状态。第一轮，你将会打开所有灯泡。接下来的第二轮，你将会每两个灯泡关闭一个。
     //第三轮，你每三个灯泡就切换一个灯泡的开关（即，打开变关闭，关闭变打开）。第 i 轮，你每 i 个灯泡就切换一个灯泡的开关。直到第 n 轮，你只需要切换最后一个灯泡的开关。
@@ -144,7 +194,7 @@ public class ProblemSet {
         //还能优化不？ 当然还可以！
         //求n开根号怎么求，有大量的论文可以参考，它们收敛速度能比语言自带的sqrt还快！
 
-        return (int)Math.sqrt(n);
+        return (int) Math.sqrt(n);
     }
 
     //    375. 猜数字大小 II
