@@ -130,7 +130,26 @@ public class ProblemSet {
             curPos.isEnd = true;
         }
     }
-
+    //318. 最大单词长度乘积
+    //给定一个字符串数组 words，找到 length(word[i]) * length(word[j]) 的最大值，并且这两个单词不含有公共字母。你可以认为每个单词只包含小写字母。如果不存在这样的两个单词，返回 0。
+    public int maxProduct(String[] words) {
+        int n = words.length;
+        int[] mask = new int[n];
+        int res = 0;
+        for(int i = 0; i < n; i++){
+            for(char c : words[i].toCharArray()){
+                mask[i] |= (1 << c - 'a');
+            }
+        }
+        for(int i = 0; i < n - 1; i++){
+            for (int j = i + 1; j < n; j++){
+                if((mask[i] & mask[j]) == 0){
+                    res = Math.max(res, words[i].length() * words[j].length());
+                }
+            }
+        }
+        return res;
+    }
     //391. 完美矩形
     //给你一个数组 rectangles ，其中 rectangles[i] = [xi, yi, ai, bi] 表示一个坐标轴平行的矩形。这个矩形的左下顶点是 (xi, yi) ，右上顶点是 (ai, bi) 。
     //如果所有矩形一起精确覆盖了某个矩形区域，则返回 true ；否则，返回 false 。
