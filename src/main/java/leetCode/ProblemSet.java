@@ -130,6 +130,26 @@ public class ProblemSet {
             curPos.isEnd = true;
         }
     }
+
+    //563. 二叉树的坡度
+    //给定一个二叉树，计算 整个树 的坡度 。
+    //一个树的 节点的坡度 定义即为，该节点左子树的节点之和和右子树节点之和的 差的绝对值 。如果没有左子树的话，左子树的节点之和为 0 ；没有右子树的话也是一样。空结点的坡度是 0 。
+    //整个树 的坡度就是其所有节点的坡度之和。
+    int res = 0;
+    public int findTilt(TreeNode root) {
+        dfs(root);
+        return res;
+    }
+
+    public int dfs(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+        int left = dfs(root.left);
+        int right = dfs(root.right);
+        res += Math.abs(left - right);
+        return left + right + root.val;
+    }
     //318. 最大单词长度乘积
     //给定一个字符串数组 words，找到 length(word[i]) * length(word[j]) 的最大值，并且这两个单词不含有公共字母。你可以认为每个单词只包含小写字母。如果不存在这样的两个单词，返回 0。
     public int maxProduct(String[] words) {
