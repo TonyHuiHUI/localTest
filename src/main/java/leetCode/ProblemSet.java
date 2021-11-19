@@ -131,17 +131,49 @@ public class ProblemSet {
         }
     }
 
+    //    397. 整数替换
+    //给定一个正整数 n ，你可以做如下操作：
+    //    如果 n 是偶数，则用 n / 2替换 n 。
+    //    如果 n 是奇数，则可以用 n + 1或n - 1替换 n 。
+    //n 变为 1 所需的最小替换次数是多少？
+    public int integerReplacement(int n) {
+        //位运算
+//        long temp = n;//防止越界
+//        int count = 0;
+//        while (temp != 1) {
+//            if ((temp & 3) == 3 && temp != 3) {
+//                temp++;
+//            } else if ((temp & 1) == 1) {
+//                temp--;
+//            } else {
+//                temp = temp >> 1;
+//            }
+//            count++;
+//        }
+//        return count;
+        if (n == 1) {
+            return 0;
+        }
+        if (n % 2 == 0) {
+            return 1 + integerReplacement(n / 2);
+        }
+        //当 n 为奇数时，我们可以选择将 n增加 111 或减少 111。由于这两种方法都会将n 变为偶数，那么下一步一定是除以 2，因此这里我们可以看成使用两次操作，将 n 变为 (n+1)/2​ 或 (n−1)/2,n可能会溢出，使用n/2 + 1 和 n / 2 计算(n+1)/2​ 或 (n−1)/2
+        return 2 + Math.min(integerReplacement(n / 2), integerReplacement(n / 2 + 1));
+    }
+
     //563. 二叉树的坡度
     //给定一个二叉树，计算 整个树 的坡度 。
     //一个树的 节点的坡度 定义即为，该节点左子树的节点之和和右子树节点之和的 差的绝对值 。如果没有左子树的话，左子树的节点之和为 0 ；没有右子树的话也是一样。空结点的坡度是 0 。
     //整个树 的坡度就是其所有节点的坡度之和。
     int res = 0;
+
     public int findTilt(TreeNode root) {
         dfs(root);
         return res;
     }
-    public int dfs(TreeNode root){
-        if(root == null){
+
+    public int dfs(TreeNode root) {
+        if (root == null) {
             return 0;
         }
         int left = dfs(root.left);
@@ -149,26 +181,28 @@ public class ProblemSet {
         res += Math.abs(left - right);
         return left + right + root.val;
     }
+
     //318. 最大单词长度乘积
     //给定一个字符串数组 words，找到 length(word[i]) * length(word[j]) 的最大值，并且这两个单词不含有公共字母。你可以认为每个单词只包含小写字母。如果不存在这样的两个单词，返回 0。
     public int maxProduct(String[] words) {
         int n = words.length;
         int[] mask = new int[n];
         int res = 0;
-        for(int i = 0; i < n; i++){
-            for(char c : words[i].toCharArray()){
+        for (int i = 0; i < n; i++) {
+            for (char c : words[i].toCharArray()) {
                 mask[i] |= (1 << c - 'a');
             }
         }
-        for(int i = 0; i < n - 1; i++){
-            for (int j = i + 1; j < n; j++){
-                if((mask[i] & mask[j]) == 0){
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if ((mask[i] & mask[j]) == 0) {
                     res = Math.max(res, words[i].length() * words[j].length());
                 }
             }
         }
         return res;
     }
+
     //391. 完美矩形
     //给你一个数组 rectangles ，其中 rectangles[i] = [xi, yi, ai, bi] 表示一个坐标轴平行的矩形。这个矩形的左下顶点是 (xi, yi) ，右上顶点是 (ai, bi) 。
     //如果所有矩形一起精确覆盖了某个矩形区域，则返回 true ；否则，返回 false 。
