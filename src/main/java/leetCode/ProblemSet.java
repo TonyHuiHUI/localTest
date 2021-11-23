@@ -108,6 +108,37 @@ public class ProblemSet {
         public Node child;
     }
 
+    //859. 亲密字符串
+    //给你两个字符串 s 和 goal ，只要我们可以通过交换 s 中的两个字母得到与 goal 相等的结果，就返回 true ；否则返回 false 。
+    //交换字母的定义是：取两个下标 i 和 j （下标从 0 开始）且满足 i != j ，接着交换 s[i] 和 s[j] 处的字符。
+    public boolean buddyStrings(String s, String goal) {
+        if (s.length() != goal.length()) {
+            return false;
+        }
+        int[] scount = new int[26];
+        int[] gcount = new int[26];
+        int diffSum = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int a = s.charAt(i);
+            int b = goal.charAt(i);
+            scount[a]++;
+            gcount[b]++;
+            if (a != b) {
+                diffSum++;
+            }
+        }
+        boolean can = false;
+        for (int i = 0; i < 26; i++) {
+            if (scount[i] != gcount[i]) {
+                return false;
+            }
+            if (scount[i] >= 2) {
+                can = true;
+            }
+        }
+        return diffSum == 2 ||(diffSum == 0 && can);
+    }
+
     //384. 打乱数组
     //给你一个整数数组 nums ，设计算法来打乱一个没有重复元素的数组。
     //实现 Solution class:
