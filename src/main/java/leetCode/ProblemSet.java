@@ -107,7 +107,38 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+    //423. 从英文中重建数字
+    //给你一个字符串 s ，其中包含字母顺序打乱的用英文单词表示的若干数字（0-9）。按 升序 返回原始的数字.
+    public String originalDigits(String s) {
+        Map<Character, Integer> c = new HashMap<Character, Integer>();
+        for (int i = 0; i < s.length(); ++i) {
+            char ch = s.charAt(i);
+            c.put(ch, c.getOrDefault(ch, 0) + 1);
+        }
 
+        int[] cnt = new int[10];
+        cnt[0] = c.getOrDefault('z', 0);
+        cnt[2] = c.getOrDefault('w', 0);
+        cnt[4] = c.getOrDefault('u', 0);
+        cnt[6] = c.getOrDefault('x', 0);
+        cnt[8] = c.getOrDefault('g', 0);
+
+        cnt[3] = c.getOrDefault('h', 0) - cnt[8];
+        cnt[5] = c.getOrDefault('f', 0) - cnt[4];
+        cnt[7] = c.getOrDefault('s', 0) - cnt[6];
+
+        cnt[1] = c.getOrDefault('o', 0) - cnt[0] - cnt[2] - cnt[4];
+
+        cnt[9] = c.getOrDefault('i', 0) - cnt[5] - cnt[6] - cnt[8];
+
+        StringBuffer ans = new StringBuffer();
+        for (int i = 0; i < 10; ++i) {
+            for (int j = 0; j < cnt[i]; ++j) {
+                ans.append((char) (i + '0'));
+            }
+        }
+        return ans.toString();
+    }
     //859. 亲密字符串
     //给你两个字符串 s 和 goal ，只要我们可以通过交换 s 中的两个字母得到与 goal 相等的结果，就返回 true ；否则返回 false 。
     //交换字母的定义是：取两个下标 i 和 j （下标从 0 开始）且满足 i != j ，接着交换 s[i] 和 s[j] 处的字符。
