@@ -115,7 +115,6 @@ public class ProblemSet {
             char ch = s.charAt(i);
             c.put(ch, c.getOrDefault(ch, 0) + 1);
         }
-
         int[] cnt = new int[10];
         cnt[0] = c.getOrDefault('z', 0);
         cnt[2] = c.getOrDefault('w', 0);
