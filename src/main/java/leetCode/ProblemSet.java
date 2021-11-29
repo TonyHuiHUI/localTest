@@ -107,6 +107,26 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+    //786. 第 K 个最小的素数分数
+    //给你一个按递增顺序排序的数组 arr 和一个整数 k 。数组 arr 由 1 和若干 素数  组成，且其中所有整数互不相同。
+    //对于每对满足 0 < i < j < arr.length 的 i 和 j ，可以得到分数 arr[i] / arr[j] 。
+    //那么第 k 个最小的分数是多少呢?  以长度为 2 的整数数组返回你的答案, 这里 answer[0] == arr[i] 且 answer[1] == arr[j] 。
+    public int[] kthSmallestPrimeFraction(int[] arr, int k) {
+        PriorityQueue<int[]> priorityQueue = new PriorityQueue<>((x, y) -> arr[x[0]] * arr[y[1]] - arr[y[0]] * arr[x[1]]);
+        for (int i = 1; i < arr.length; i++) {
+            priorityQueue.offer(new int[]{0, i});
+        }
+        for (int i = 1; i < k; i++) {
+            int[] cur = priorityQueue.poll();
+            int x = cur[0], y = cur[1];
+            if (x + 1 < y) {
+                priorityQueue.offer(new int[]{x + 1, y});
+            }
+        }
+        return new int[]{arr[priorityQueue.peek()[0]], arr[priorityQueue.peek()[1]]};
+    }
+
     //423. 从英文中重建数字
     //给你一个字符串 s ，其中包含字母顺序打乱的用英文单词表示的若干数字（0-9）。按 升序 返回原始的数字.
     public String originalDigits(String s) {
@@ -138,6 +158,7 @@ public class ProblemSet {
         }
         return ans.toString();
     }
+
     //859. 亲密字符串
     //给你两个字符串 s 和 goal ，只要我们可以通过交换 s 中的两个字母得到与 goal 相等的结果，就返回 true ；否则返回 false 。
     //交换字母的定义是：取两个下标 i 和 j （下标从 0 开始）且满足 i != j ，接着交换 s[i] 和 s[j] 处的字符。
@@ -166,7 +187,7 @@ public class ProblemSet {
                 can = true;
             }
         }
-        return diffSum == 2 ||(diffSum == 0 && can);
+        return diffSum == 2 || (diffSum == 0 && can);
     }
 
     //384. 打乱数组
