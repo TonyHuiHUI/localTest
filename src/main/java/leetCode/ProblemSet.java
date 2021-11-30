@@ -78,8 +78,9 @@ public class ProblemSet {
 //        removeInvalidParentheses("(((k()((");
 
 //        reorderedPowerOf2(1);
-        int[][] a = {{0, 0, 1, 1}, {0, 0, 2, 1}, {1, 0, 2, 1}, {0, 2, 2, 3}};
-        System.out.println(isRectangleCover(a));
+//        int[][] a = {{0, 0, 1, 1}, {0, 0, 2, 1}, {1, 0, 2, 1}, {0, 2, 2, 3}};
+//        System.out.println(isRectangleCover(a));
+        System.out.println(findNthDigit(11));
     }
 
     public static class TreeNode {
@@ -106,6 +107,21 @@ public class ProblemSet {
         public Node prev;
         public Node next;
         public Node child;
+    }
+
+    //400. 第 N 位数字
+    //给你一个整数 n ，请你在无限的整数序列 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...] 中找出并返回第 n 位数字。
+    public static int findNthDigit(int n) {
+        int len = 1;
+        while (n > len * 9 * Math.pow(10, len - 1)) {
+            n -= len * 9 * Math.pow(10, len - 1);
+            len++;
+        }
+        int start = (int) Math.pow(10, len - 1);
+        int num = start + (n - 1) / len;
+        int digitIndex = (n - 1) % len;
+        int digit = (num / (int)(Math.pow(10, len - digitIndex - 1))) % 10;
+        return digit;
     }
 
     //786. 第 K 个最小的素数分数
