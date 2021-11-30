@@ -117,9 +117,9 @@ public class ProblemSet {
             n -= len * 9 * Math.pow(10, len - 1);
             len++;
         }
-        int start = (int) Math.pow(10, len - 1);
-        int num = start + (n - 1) / len;
-        int digitIndex = (n - 1) % len;
+        int start = (int) Math.pow(10, len - 1);//第一个len位数
+        int num = start + (n - 1) / len;//目标数所在整数
+        int digitIndex = (n - 1) % len;//目标数所在整数的下标（从左往右数）
         int digit = (num / (int)(Math.pow(10, len - digitIndex - 1))) % 10;
         return digit;
     }
