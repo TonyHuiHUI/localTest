@@ -109,6 +109,23 @@ public class ProblemSet {
         public Node child;
     }
 
+    //1446. 连续字符
+    //给你一个字符串 s ，字符串的「能量」定义为：只包含一种字符的最长非空子字符串的长度。
+    //请你返回字符串的能量。
+    public int maxPower(String s) {
+        int res = 1;
+        int count = 1;
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == s.charAt(i - 1)) {
+                count++;
+                res = Math.max(res, count);
+            } else {
+                count = 1;
+            }
+        }
+        return res;
+    }
+
     //400. 第 N 位数字
     //给你一个整数 n ，请你在无限的整数序列 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...] 中找出并返回第 n 位数字。
     public static int findNthDigit(int n) {
@@ -120,7 +137,7 @@ public class ProblemSet {
         int start = (int) Math.pow(10, len - 1);//第一个len位数
         int num = start + (n - 1) / len;//目标数所在整数
         int digitIndex = (n - 1) % len;//目标数所在整数的下标（从左往右数）
-        int digit = (num / (int)(Math.pow(10, len - digitIndex - 1))) % 10;
+        int digit = (num / (int) (Math.pow(10, len - digitIndex - 1))) % 10;
         return digit;
     }
 
