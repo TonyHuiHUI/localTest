@@ -108,14 +108,53 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+    //1034. 边界着色
+    //给你一个大小为 m x n 的整数矩阵 grid ，表示一个网格。另给你三个整数 row、col 和 color 。网格中的每个值表示该位置处的网格块的颜色。
+    //当两个网格块的颜色相同，而且在四个方向中任意一个方向上相邻时，它们属于同一 连通分量 。
+    //连通分量的边界 是指连通分量中的所有与不在分量中的网格块相邻（四个方向上）的所有网格块，或者在网格的边界上（第一行/列或最后一行/列）的所有网格块。
+    //请你使用指定颜色 color 为所有包含网格块 grid[row][col] 的 连通分量的边界 进行着色，并返回最终的网格 grid 。
+    public int[][] colorBorder(int[][] grid, int row, int col, int color) {
+        int m = grid.length, n = grid[0].length;
+        boolean[][] visited = new boolean[m][n];
+        Deque<int[]> deque = new ArrayDeque<>();
+        List<int[]> borders = new ArrayList<>();
+        int[][] direct = {{0, -1}, {0, 1}, {1, 0}, {-1, 0}};
+        int initColor = grid[row][col];
+        visited[row][col] = true;
+        deque.offer(new int[]{row, col});
+        while (!deque.isEmpty()) {
+            int[] chunk = deque.poll();
+            int x = chunk[0], y = chunk[1];
+            boolean isBorder = false;
+            for (int i = 0; i < 4; i++) {
+                int nx = x + direct[i][0], ny = y + direct[i][1];
+                if (!(nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx][ny] == initColor)) {
+                    isBorder = true;
+                } else if (!visited[nx][ny]) {
+                    visited[nx][ny] = true;
+                    deque.offer(new int[]{nx, ny});
+                }
+            }
+            if (isBorder) {
+                borders.add(new int[]{x, y});
+            }
+        }
+        for (int i = 0; i < borders.size(); i++) {
+            int x = borders.get(i)[0], y = borders.get(i)[1];
+            grid[x][y] = color;
+        }
+        return grid;
+    }
+
     //1816. 截断句子
     //句子 是一个单词列表，列表中的单词之间用单个空格隔开，且不存在前导或尾随空格。每个单词仅由大小写英文字母组成（不含标点符号）。
     //例如，"Hello World"、"HELLO" 和 "hello world hello world" 都是句子。
     //给你一个句子 s​​​​​​ 和一个整数 k​​​​​​ ，请你将 s​​ 截断 ​，​​​使截断后的句子仅含 前 k​​​​​​ 个单词。返回 截断 s​​​​​​ 后得到的句子。
     public String truncateSentence(String s, int k) {
         int index = 0;
-        for(int i  = 0, n = s.length(); i < n; i++){
-            if(s.charAt(i) == ' ' && --k == 0){
+        for (int i = 0, n = s.length(); i < n; i++) {
+            if (s.charAt(i) == ' ' && --k == 0) {
                 break;
             }
             index++;
@@ -131,17 +170,18 @@ public class ProblemSet {
     public int largestSumAfterKNegations(int[] nums, int k) {
         PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(a -> a));
         int sum = 0;
-        for (int num : nums){
+        for (int num : nums) {
             sum += num;
             priorityQueue.offer(num);
         }
-        while (k > 0){
+        while (k > 0) {
             int mini = priorityQueue.poll();
             sum -= 2 * mini;
             priorityQueue.offer(-mini);
         }
         return sum;
     }
+
     //506. 相对名次
     //给你一个长度为 n 的整数数组 score ，其中 score[i] 是第 i 位运动员在比赛中的得分。所有得分都 互不相同 。
     //运动员将根据得分 决定名次 ，其中名次第 1 的运动员得分最高，名次第 2 的运动员得分第 2 高，依此类推。运动员的名次决定了他们的获奖情况：
