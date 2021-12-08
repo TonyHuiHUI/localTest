@@ -80,7 +80,9 @@ public class ProblemSet {
 //        reorderedPowerOf2(1);
 //        int[][] a = {{0, 0, 1, 1}, {0, 0, 2, 1}, {1, 0, 2, 1}, {0, 2, 2, 3}};
 //        System.out.println(isRectangleCover(a));
-        System.out.println(findNthDigit(11));
+//        System.out.println(findNthDigit(11));
+        int[] a = {4,5,10,6,11,17,4,11,1,3};
+        System.out.println(maxSumOfThreeSubarrays(a, 1));
     }
 
     public static class TreeNode {
@@ -107,6 +109,85 @@ public class ProblemSet {
         public Node prev;
         public Node next;
         public Node child;
+    }
+    //689. 三个无重叠子数组的最大和
+    //给你一个整数数组 nums 和一个整数 k ，找出三个长度为 k 、互不重叠、且 3 * k 项的和最大的子数组，并返回这三个子数组。
+    //以下标的数组形式返回结果，数组中的每一项分别指示每个子数组的起始位置（下标从 0 开始）。如果有多个结果，返回字典序最小的一个。
+
+    //单个子数组的最大和
+    public int[] maxSumOfOneSubarray(int[] nums, int k) {
+        int[] ans = new int[1];
+        int sum1 = 0, maxSum1 = 0;
+        for (int i = 0; i < nums.length; ++i) {
+            sum1 += nums[i];
+            if (i >= k - 1) {
+                if (sum1 > maxSum1) {
+                    maxSum1 = sum1;
+                    ans[0] = i - k + 1;
+                }
+                sum1 -= nums[i - k + 1];
+            }
+        }
+        return ans;
+    }
+
+    //两个无重叠子数组的最大和
+    public static int[] maxSumOfTwoSubarrays(int[] nums, int k) {
+        int[] ans = new int[2];
+        int sum1 = 0, maxSum1 = 0, maxSum1Idx = 0;
+        int sum2 = 0, maxSum12 = 0;
+        for (int i = k; i < nums.length; ++i) {
+            sum1 += nums[i - k];
+            sum2 += nums[i];
+            if (i >= k * 2 - 1) {
+                if (sum1 > maxSum1) {
+                    maxSum1 = sum1;
+                    maxSum1Idx = i - k * 2 + 1;
+                }
+                if (maxSum1 + sum2 > maxSum12) {
+                    maxSum12 = maxSum1 + sum2;
+                    ans[0] = maxSum1Idx;
+                    ans[1] = i - k + 1;
+                }
+                sum1 -= nums[i - k * 2 + 1];
+                sum2 -= nums[i - k + 1];
+            }
+        }
+        return ans;
+    }
+
+    public static int[] maxSumOfThreeSubarrays(int[] nums, int k) {
+        //滑动窗口
+        int[] res = new int[3];
+        int sum1 = 0, maxSum1 = 0, index1 = 0;
+        int sum2 = 0, maxSum12 = 0, index12 = 0, index2 = 0;
+        int sum3 = 0, maxSum123 = 0;
+        for (int i = k * 2; i < nums.length; i++) {
+            sum1 += nums[i - k * 2];
+            sum2 += nums[i - k];
+            sum3 += nums[i];
+            if (i >= 3 * k - 1) {
+                if (sum1 > maxSum1) {
+                    maxSum1 = sum1;
+                    index1 = i - 3 * k + 1;
+                }
+                if (maxSum1 + sum2 > maxSum12) {
+                    maxSum12 = maxSum1 + sum2;
+                    index12 = index1;
+                    index2 = i - 2 * k + 1;
+                }
+                if (maxSum12 + sum3 > maxSum123) {
+                    maxSum123 = maxSum12 + sum3;
+                    res[0] = index12;
+                    res[1] = index2;
+                    res[2] = i - k + 1;
+                }
+                sum1 -= nums[i - 3 * k + 1];
+                sum2 -= nums[i - 2 * k + 1];
+                sum3 -= nums[i - k + 1];
+            }
+        }
+        return res;
     }
 
     //1034. 边界着色
