@@ -110,6 +110,56 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+    //794. 有效的井字游戏
+    //给你一个字符串数组 board 表示井字游戏的棋盘。当且仅当在井字游戏过程中，棋盘有可能达到 board 所显示的状态时，才返回 true 。
+    //井字游戏的棋盘是一个 3 x 3 数组，由字符 ' '，'X' 和 'O' 组成。字符 ' ' 代表一个空位。
+    //以下是井字游戏的规则：
+    //玩家轮流将字符放入空位（' '）中。
+    //玩家 1 总是放字符 'X' ，而玩家 2 总是放字符 'O' 。
+    //'X' 和 'O' 只允许放置在空位中，不允许对已放有字符的位置进行填充。
+    //当有 3 个相同（且非空）的字符填充任何行、列或对角线时，游戏结束。
+    //当所有位置非空时，也算为游戏结束。
+    //如果游戏结束，玩家不允许再放置字符。
+    public boolean validTicTacToe(String[] board) {
+        int xCount = 0, oCount = 0;
+        for (String row : board) {
+            for (char c : row.toCharArray()) {
+                if(c == 'X'){
+                    xCount++;
+                }else if(c == 'O'){
+                    oCount++;
+                }
+            }
+        }
+        if (oCount != xCount && oCount != xCount - 1){
+            return  false;
+        }
+        if(checkWinner(board, 'X') && oCount != xCount - 1){
+            return false;
+        }
+        if(checkWinner(board, 'O') && oCount != xCount){
+            return false;
+        }
+        return true;
+    }
+    public boolean checkWinner(String[] board, char c){
+        for(int i = 0; i < 3; i++){
+            if(c == board[0].charAt(i) && c == board[1].charAt(i) && c == board[2].charAt(i)){
+                return true;
+            }
+            if(c == board[i].charAt(0) && c == board[i].charAt(1) && c == board[i].charAt(2)){
+                return true;
+            }
+        }
+        if(c == board[0].charAt(0) && c == board[1].charAt(1) && c == board[2].charAt(2)){
+            return true;
+        }
+        if(c == board[0].charAt(2) && c == board[1].charAt(1) && c == board[2].charAt(0)){
+            return true;
+        }
+        return false;
+    }
     //689. 三个无重叠子数组的最大和
     //给你一个整数数组 nums 和一个整数 k ，找出三个长度为 k 、互不重叠、且 3 * k 项的和最大的子数组，并返回这三个子数组。
     //以下标的数组形式返回结果，数组中的每一项分别指示每个子数组的起始位置（下标从 0 开始）。如果有多个结果，返回字典序最小的一个。
