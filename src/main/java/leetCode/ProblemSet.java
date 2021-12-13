@@ -81,8 +81,10 @@ public class ProblemSet {
 //        int[][] a = {{0, 0, 1, 1}, {0, 0, 2, 1}, {1, 0, 2, 1}, {0, 2, 2, 3}};
 //        System.out.println(isRectangleCover(a));
 //        System.out.println(findNthDigit(11));
-        int[] a = {4,5,10,6,11,17,4,11,1,3};
-        System.out.println(maxSumOfThreeSubarrays(a, 1));
+//        int[] a = {4, 5, 10, 6, 11, 17, 4, 11, 1, 3};
+//        System.out.println(maxSumOfThreeSubarrays(a, 1));
+        int[][] a = {{3, 0, 8, 4}, {2, 4, 5, 7}, {9, 2, 6, 3}, {0, 3, 1, 0}};
+        System.out.println(maxIncreaseKeepingSkyline(a));
     }
 
     public static class TreeNode {
@@ -110,7 +112,32 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
-//    748. 最短补全词
+
+    //    807. 保持城市天际线
+    //在二维数组grid中，grid[i][j]代表位于某处的建筑物的高度。 我们被允许增加任何数量（不同建筑物的数量可能不同）的建筑物的高度。 高度 0 也被认为是建筑物。
+    //最后，从新数组的所有四个方向（即顶部，底部，左侧和右侧）观看的“天际线”必须与原始数组的天际线相同。 城市的天际线是从远处观看时，由所有建筑物形成的矩形的外部轮廓。 请看下面的例子。
+    //建筑物高度可以增加的最大总和是多少？
+    public static int maxIncreaseKeepingSkyline(int[][] grid) {
+        int row = grid.length;
+        int col = grid[0].length;
+        int[] topBottom = new int[col];
+        int[] leftRight = new int[row];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                leftRight[i] = Math.max(leftRight[i], grid[i][j]);
+                topBottom[j] = Math.max(topBottom[j], grid[i][j]);
+            }
+        }
+        int sum = 0;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                sum += Math.min(leftRight[i], topBottom[j]) - grid[i][j];
+            }
+        }
+        return sum;
+    }
+
+    //    748. 最短补全词
     //给你一个字符串 licensePlate 和一个字符串数组 words ，请你找出并返回 words 中的 最短补全词 。
     //补全词 是一个包含 licensePlate 中所有的字母的单词。在所有补全词中，最短的那个就是 最短补全词 。
     //在匹配 licensePlate 中的字母时：
@@ -121,33 +148,34 @@ public class ProblemSet {
     //请你找出并返回 words 中的 最短补全词 。题目数据保证一定存在一个最短补全词。当有多个单词都符合最短补全词的匹配条件时取 words 中 最靠前的 那个
     public String shortestCompletingWord(String licensePlate, String[] words) {
         int[] charCount = new int[26];
-        for(int i = 0; i < licensePlate.length(); i++){
+        for (int i = 0; i < licensePlate.length(); i++) {
             char ch = licensePlate.charAt(i);
-            if(Character.isLetter(ch)){
+            if (Character.isLetter(ch)) {
                 charCount[Character.toLowerCase(ch) - 'a']++;
             }
         }
         int index = -1;
-        for (int i = 0; i < words.length; i++){
+        for (int i = 0; i < words.length; i++) {
             int[] chs = new int[26];
             String word = words[i];
-            for (int j = 0; j < word.length(); j++){
+            for (int j = 0; j < word.length(); j++) {
                 char ch = word.charAt(j);
                 chs[ch - 'a']++;
             }
             boolean is = true;
-            for(int j = 0; j < 26; j++){
-                if(chs[j] < charCount[j]){
+            for (int j = 0; j < 26; j++) {
+                if (chs[j] < charCount[j]) {
                     is = false;
                     break;
                 }
             }
-            if(is && (index < 0 || word.length() < words[index].length())){
+            if (is && (index < 0 || word.length() < words[index].length())) {
                 index = i;
             }
         }
         return words[index];
     }
+
     //794. 有效的井字游戏
     //给你一个字符串数组 board 表示井字游戏的棋盘。当且仅当在井字游戏过程中，棋盘有可能达到 board 所显示的状态时，才返回 true 。
     //井字游戏的棋盘是一个 3 x 3 数组，由字符 ' '，'X' 和 'O' 组成。字符 ' ' 代表一个空位。
@@ -162,37 +190,38 @@ public class ProblemSet {
         int xCount = 0, oCount = 0;
         for (String row : board) {
             for (char c : row.toCharArray()) {
-                if(c == 'X'){
+                if (c == 'X') {
                     xCount++;
-                }else if(c == 'O'){
+                } else if (c == 'O') {
                     oCount++;
                 }
             }
         }
-        if (oCount != xCount && oCount != xCount - 1){
-            return  false;
-        }
-        if(checkWinner(board, 'X') && oCount != xCount - 1){
+        if (oCount != xCount && oCount != xCount - 1) {
             return false;
         }
-        if(checkWinner(board, 'O') && oCount != xCount){
+        if (checkWinner(board, 'X') && oCount != xCount - 1) {
+            return false;
+        }
+        if (checkWinner(board, 'O') && oCount != xCount) {
             return false;
         }
         return true;
     }
-    public boolean checkWinner(String[] board, char c){
-        for(int i = 0; i < 3; i++){
-            if(c == board[0].charAt(i) && c == board[1].charAt(i) && c == board[2].charAt(i)){
+
+    public boolean checkWinner(String[] board, char c) {
+        for (int i = 0; i < 3; i++) {
+            if (c == board[0].charAt(i) && c == board[1].charAt(i) && c == board[2].charAt(i)) {
                 return true;
             }
-            if(c == board[i].charAt(0) && c == board[i].charAt(1) && c == board[i].charAt(2)){
+            if (c == board[i].charAt(0) && c == board[i].charAt(1) && c == board[i].charAt(2)) {
                 return true;
             }
         }
-        if(c == board[0].charAt(0) && c == board[1].charAt(1) && c == board[2].charAt(2)){
+        if (c == board[0].charAt(0) && c == board[1].charAt(1) && c == board[2].charAt(2)) {
             return true;
         }
-        if(c == board[0].charAt(2) && c == board[1].charAt(1) && c == board[2].charAt(0)){
+        if (c == board[0].charAt(2) && c == board[1].charAt(1) && c == board[2].charAt(0)) {
             return true;
         }
         return false;
