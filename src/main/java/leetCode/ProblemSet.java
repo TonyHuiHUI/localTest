@@ -112,7 +112,26 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
-
+    //630. 课程表 III
+    //    这里有 n 门不同的在线课程，按从 1 到 n 编号。给你一个数组 courses ，其中 courses[i] = [durationi, lastDayi] 表示第 i 门课将会 持续 上 durationi 天课，并且必须在不晚于 lastDayi 的时候完成。
+    //    你的学期从第 1 天开始。且不能同时修读两门及两门以上的课程。
+    //    返回你最多可以修读的课程数目。
+    public int scheduleCourse(int[][] courses) {
+        Arrays.sort(courses, (a, b) -> a[1] - b[1]);
+        PriorityQueue<Integer> q = new PriorityQueue<Integer>((a, b) -> b - a);
+        int total = 0;
+        for (int[] course : courses) {
+            int duration = course[0], lastDay = course[1];
+            if (total + duration <= lastDay) {
+                total += duration;
+                q.offer(duration);
+            } else if (!q.isEmpty() && q.peek() > duration) {
+                total -= q.poll() - duration;
+                q.offer(duration);
+            }
+        }
+        return q.size();
+    }
     //    807. 保持城市天际线
     //在二维数组grid中，grid[i][j]代表位于某处的建筑物的高度。 我们被允许增加任何数量（不同建筑物的数量可能不同）的建筑物的高度。 高度 0 也被认为是建筑物。
     //最后，从新数组的所有四个方向（即顶部，底部，左侧和右侧）观看的“天际线”必须与原始数组的天际线相同。 城市的天际线是从远处观看时，由所有建筑物形成的矩形的外部轮廓。 请看下面的例子。
