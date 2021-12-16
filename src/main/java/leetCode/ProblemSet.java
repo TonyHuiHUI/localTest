@@ -116,6 +116,38 @@ public class ProblemSet {
         public Node child;
     }
 
+    //1610. 可见点的最大数目
+    //给你一个点数组 points 和一个表示角度的整数 angle ，你的位置是 location ，其中 location = [posx, posy] 且 points[i] = [xi, yi] 都表示 X-Y 平面上的整数坐标。
+    //最开始，你面向东方进行观测。你 不能 进行移动改变位置，但可以通过 自转 调整观测角度。换句话说，posx 和 posy 不能改变。你的视野范围的角度用 angle 表示， 这决定了你观测任意方向时可以多宽。设 d 为你逆时针自转旋转的度数，那么你的视野就是角度范围 [d - angle/2, d + angle/2] 所指示的那片区域。
+    //对于每个点，如果由该点、你的位置以及从你的位置直接向东的方向形成的角度 位于你的视野中 ，那么你就可以看到它。
+    //同一个坐标上可以有多个点。你所在的位置也可能存在一些点，但不管你的怎么旋转，总是可以看到这些点。同时，点不会阻碍你看到其他点。
+    //返回你能看到的点的最大数目。
+    public int visiblePoints(List<List<Integer>> points, int angle, List<Integer> location) {
+        int x = location.get(0), y = location.get(1);
+        List<Double> list = new ArrayList<>();
+        int cnt = 0;
+        double pi = Math.PI, t = angle * pi / 180;
+        for (List<Integer> p : points) {
+            int a = p.get(0), b = p.get(1);
+            if (a == x && b == y && ++cnt >= 0) {
+                continue;
+            }
+            list.add(Math.atan2(b - y, a - x) + pi);
+        }
+        Collections.sort(list);//将极角排序
+        int n = list.size(), max = 0;
+        for (int i = 0; i < n; i++) {
+            list.add(list.get(i) + 2 * pi);
+        }
+        for (int i = 0, j = 0; j < 2 * n; j++) {
+            while (i < j && list.get(j) - list.get(i) > t) {
+                i++;
+            }
+            max = Math.max(max, j - i + 1);
+        }
+        return cnt + max;
+    }
+
     //851. 喧闹和富有
     //有一组 n 个人作为实验对象，从 0 到 n - 1 编号，其中每个人都有不同数目的钱，以及不同程度的安静值（quietness）。为了方便起见，我们将编号为 x 的人简称为 "person x "。
     //给你一个数组 richer ，其中 richer[i] = [ai, bi] 表示 person ai 比 person bi 更有钱。另给你一个整数数组 quiet ，其中 quiet[i] 是 person i 的安静值。richer 中所给出的数据 逻辑自恰（也就是说，在 person x 比 person y 更有钱的同时，不会出现 person y 比 person x 更有钱的情况 ）。
