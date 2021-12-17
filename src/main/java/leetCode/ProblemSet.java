@@ -85,9 +85,10 @@ public class ProblemSet {
 //        System.out.println(maxSumOfThreeSubarrays(a, 1));
 //        int[][] a = {{3, 0, 8, 4}, {2, 4, 5, 7}, {9, 2, 6, 3}, {0, 3, 1, 0}};
 //        System.out.println(maxIncreaseKeepingSkyline(a));
-        int[][] richer = {{1, 0}, {2, 1}, {3, 1}, {3, 7}, {4, 3}, {5, 3}, {6, 3}};
-        int[] quiet = {3, 2, 5, 4, 6, 1, 7, 0};
-        System.out.println(loudAndRich(richer, quiet));
+//        int[][] richer = {{1, 0}, {2, 1}, {3, 1}, {3, 7}, {4, 3}, {5, 3}, {6, 3}};
+//        int[] quiet = {3, 2, 5, 4, 6, 1, 7, 0};
+//        System.out.println(loudAndRich(richer, quiet));
+        System.out.println(numWaterBottles(9, 3));
     }
 
     public static class TreeNode {
@@ -114,6 +115,24 @@ public class ProblemSet {
         public Node prev;
         public Node next;
         public Node child;
+    }
+
+    //1518. 换酒问题
+    //小区便利店正在促销，用 numExchange 个空酒瓶可以兑换一瓶新酒。你购入了 numBottles 瓶酒。
+    //如果喝掉了酒瓶中的酒，那么酒瓶就会变成空的。
+    //请你计算 最多 能喝到多少瓶酒。
+    public static int numWaterBottles(int numBottles, int numExchange) {
+        //模拟
+//        int sum = numBottles;
+//        int emptyBottles = numBottles;
+//        while (emptyBottles >= numExchange){
+//            int bottle = emptyBottles / numExchange;
+//            sum += bottle;
+//            emptyBottles = emptyBottles % numExchange + bottle;
+//        }
+//        return  sum;
+        //数学
+        return numBottles >= numExchange ? (numBottles - numExchange) / (numExchange - 1) + 1 + numBottles : numBottles;
     }
 
     //1610. 可见点的最大数目
@@ -173,31 +192,31 @@ public class ProblemSet {
         //拓扑排序
         int n = quiet.length;
         List<Integer>[] g = new List[n];
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             g[i] = new ArrayList<>();
         }
         int[] inDeg = new int[n];//节点的入度
-        for(int[] rich : richer){
+        for (int[] rich : richer) {
             g[rich[0]].add(rich[1]);
             inDeg[rich[1]]++;
         }
         int[] ans = new int[n];//初始化
-        for (int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             ans[i] = i;
         }
         Queue<Integer> queue = new ArrayDeque<>();//入度为0的节点入队列
-        for(int i = 0; i < n; i++){
-            if(inDeg[i] == 0){
+        for (int i = 0; i < n; i++) {
+            if (inDeg[i] == 0) {
                 queue.offer(i);
             }
         }
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int x = queue.poll();
-            for(int y : g[x]){
-                if(quiet[ans[x]] < quiet[ans[y]]){//更新节点x的相邻节点
+            for (int y : g[x]) {
+                if (quiet[ans[x]] < quiet[ans[y]]) {//更新节点x的相邻节点
                     ans[y] = ans[x];
                 }
-                if(--inDeg[y] == 0){
+                if (--inDeg[y] == 0) {
                     queue.offer(y);
                 }
             }
