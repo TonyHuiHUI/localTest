@@ -136,6 +136,25 @@ public class ProblemSet {
         }
         return sum + day;
     }
+
+    //686. 重复叠加字符串匹配
+    //给定两个字符串 a 和 b，寻找重复叠加字符串 a 的最小次数，使得字符串 b 成为叠加后的字符串 a 的子串，如果不存在则返回 -1。
+    //注意：字符串 "abc" 重复叠加 0 次是 ""，重复叠加 1 次是 "abc"，重复叠加 2 次是 "abcabc"。
+    public int repeatedStringMatch(String a, String b) {
+        int bn = b.length();
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        while (sb.length() < bn){
+            sb.append(a);
+            count++;
+        }
+        sb.append(a);
+        int index = sb.indexOf(b);//KMP算法
+        if(index == -1){
+            return -1;
+        }
+        return index + b.length() > a.length() * count ? count + 1: count;
+    }
     //1518. 换酒问题
     //小区便利店正在促销，用 numExchange 个空酒瓶可以兑换一瓶新酒。你购入了 numBottles 瓶酒。
     //如果喝掉了酒瓶中的酒，那么酒瓶就会变成空的。
