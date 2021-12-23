@@ -88,7 +88,8 @@ public class ProblemSet {
 //        int[][] richer = {{1, 0}, {2, 1}, {3, 1}, {3, 7}, {4, 3}, {5, 3}, {6, 3}};
 //        int[] quiet = {3, 2, 5, 4, 6, 1, 7, 0};
 //        System.out.println(loudAndRich(richer, quiet));
-        System.out.println(numWaterBottles(9, 3));
+//        System.out.println(numWaterBottles(9, 3));
+        System.out.println(RK("zdfefrrrdddd", "rrrd"));
     }
 
     public static class TreeNode {
@@ -127,14 +128,41 @@ public class ProblemSet {
         int month = Integer.valueOf(times[1]);
         int day = Integer.valueOf(times[2]);
         int count[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        if(year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)){
+        if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) {
             count[1]++;
         }
         int sum = 0;
-        for (int i = 0; i < month - 1; i++){
+        for (int i = 0; i < month - 1; i++) {
             sum += count[i];
         }
         return sum + day;
+    }
+
+    //    Rabin-Karp算法(用于在字符串匹配和查重)
+    //判断target 是否是dic子串
+    public static boolean RK(String dic, String target) {
+        int dicn = dic.length();
+        int tarn = target.length();
+        long targetHash = 0;
+        long dicHash = 0;
+        //字符串只包含小写字母，所以是以26为底,计算字符串hash值
+        for (int i = 0; i < tarn; i++) {
+            targetHash += (target.charAt(i) - 'a') * Math.pow(26, tarn - i - 1);
+            dicHash += (dic.charAt(i) - 'a') * Math.pow(26, tarn - i - 1);
+        }
+        int index = 0;
+        while (index <= dicn - tarn) {
+            if (dicHash == targetHash) {
+                return true;
+            }else if(index  < dicn - tarn){
+                //以tarn为窗口，更新子串hash值
+                index++;
+                dicHash = (long) (26 * dicHash - Math.pow(26, tarn) * (dic.charAt(index - 1)- 'a') + dic.charAt(tarn + index - 1) - 'a');
+            }else {
+                return false;
+            }
+        }
+        return false;
     }
 
     //686. 重复叠加字符串匹配
@@ -144,17 +172,18 @@ public class ProblemSet {
         int bn = b.length();
         StringBuilder sb = new StringBuilder();
         int count = 0;
-        while (sb.length() < bn){
+        while (sb.length() < bn) {
             sb.append(a);
             count++;
         }
         sb.append(a);
         int index = sb.indexOf(b);//KMP算法
-        if(index == -1){
+        if (index == -1) {
             return -1;
         }
-        return index + b.length() > a.length() * count ? count + 1: count;
+        return index + b.length() > a.length() * count ? count + 1 : count;
     }
+
     //1518. 换酒问题
     //小区便利店正在促销，用 numExchange 个空酒瓶可以兑换一瓶新酒。你购入了 numBottles 瓶酒。
     //如果喝掉了酒瓶中的酒，那么酒瓶就会变成空的。
