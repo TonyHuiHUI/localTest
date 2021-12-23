@@ -138,7 +138,7 @@ public class ProblemSet {
         return sum + day;
     }
 
-    //    Rabin-Karp算法(用于在字符串匹配和查重)
+    //    Rabin-Karp算法(用于在字符串匹配和查重)（可能需要考虑hash碰撞，和值越界问题）
     //判断target 是否是dic子串
     public static boolean RK(String dic, String target) {
         int dicn = dic.length();
@@ -152,7 +152,7 @@ public class ProblemSet {
         }
         int index = 0;
         while (index <= dicn - tarn) {
-            if (dicHash == targetHash) {
+            if (dicHash == targetHash) {//子串hash值与target串hash值相等，则两个子串相等
                 return true;
             }else if(index  < dicn - tarn){
                 //以tarn为窗口，更新子串hash值
