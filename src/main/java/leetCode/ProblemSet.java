@@ -89,7 +89,8 @@ public class ProblemSet {
 //        int[] quiet = {3, 2, 5, 4, 6, 1, 7, 0};
 //        System.out.println(loudAndRich(richer, quiet));
 //        System.out.println(numWaterBottles(9, 3));
-        System.out.println(RK("zdfefrrrdddd", "rrrd"));
+//        System.out.println(RK("zdfefrrrdddd", "rrrd"));
+        System.out.println(longestDupSubstring("nnpxouomcofdjuujloanjimymadkuepightrfodmauhrsy"));
     }
 
     public static class TreeNode {
@@ -138,6 +139,97 @@ public class ProblemSet {
         return sum + day;
     }
 
+    //    1044. 最长重复子串
+    //给你一个字符串 s ，考虑其所有 重复子串 ：即，s 的连续子串，在 s 中出现 2 次或更多次。这些出现之间可能存在重叠。
+    //返回 任意一个 可能具有最长长度的重复子串。如果 s 不含重复子串，那么答案为 "" 。
+    public  static String longestDupSubstring(String s) {
+        int n = s.length();
+        Random random = new Random();
+        //两套进制和两套摸用来防止溢出和hash碰撞
+        // 生成两个进制
+        int a1 = random.nextInt(75) + 26;
+        int a2 = random.nextInt(75) + 26;
+        // 生成两个模
+        int mod1 = random.nextInt(Integer.MAX_VALUE - 1000000007 + 1) + 1000000007;
+        int mod2 = random.nextInt(Integer.MAX_VALUE - 1000000007 + 1) + 1000000007;
+
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = s.charAt(i) - 'a';
+        }
+        int left = 1, right = n - 1;
+        int length = 0, start = -1;
+        while (left <= right) {
+            int mid = (right - left + 1) / 2 + left;
+            //Rabin-Karp算法
+            int index = check(arr, mid, a1, a2, mod1, mod2);
+            if (index != -1) {
+                left = mid + 1;
+                start = index;
+                length = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return start != -1 ? s.substring(start, start + length) : "";
+    }
+    public static int check(int[] arr, int m, int a1, int a2, int mod1, int mod2) {
+        int n = arr.length;
+        long aL1 = pow(a1, m, mod1);
+        long aL2 = pow(a2, m, mod2);
+        long h1 = 0, h2 = 0;
+        for (int i = 0; i < m; ++i) {
+            h1 = (h1 * a1 % mod1 + arr[i]) % mod1;
+            h2 = (h2 * a2 % mod2 + arr[i]) % mod2;
+            if (h1 < 0) {
+                h1 += mod1;
+            }
+            if (h2 < 0) {
+                h2 += mod2;
+            }
+        }
+        // 存储一个编码组合是否出现过
+        Set<Long> seen = new HashSet<Long>();
+        seen.add(h1 * mod2 + h2);
+        for (int start = 1; start <= n - m; ++start) {
+            h1 = (h1 * a1 % mod1 - arr[start - 1] * aL1 % mod1 + arr[start + m - 1]) % mod1;
+            h2 = (h2 * a2 % mod2 - arr[start - 1] * aL2 % mod2 + arr[start + m - 1]) % mod2;
+            if (h1 < 0) {
+                h1 += mod1;
+            }
+            if (h2 < 0) {
+                h2 += mod2;
+            }
+
+            long num = h1 * mod2 + h2;
+            // 如果重复，则返回重复串的起点
+            if (!seen.add(num)) {
+                return start;
+            }
+        }
+        // 没有重复，则返回-1
+        return -1;
+    }
+
+    public static long pow(int a, int m, int mod) {
+        long ans = 1;
+        long contribute = a;
+        while (m > 0) {
+            if (m % 2 == 1) {
+                ans = ans * contribute % mod;
+                if (ans < 0) {
+                    ans += mod;
+                }
+            }
+            contribute = contribute * contribute % mod;
+            if (contribute < 0) {
+                contribute += mod;
+            }
+            m /= 2;
+        }
+        return ans;
+    }
+
     //    Rabin-Karp算法(用于在字符串匹配和查重)（可能需要考虑hash碰撞，和值越界问题）
     //判断target 是否是dic子串
     public static boolean RK(String dic, String target) {
@@ -154,11 +246,11 @@ public class ProblemSet {
         while (index <= dicn - tarn) {
             if (dicHash == targetHash) {//子串hash值与target串hash值相等，则两个子串相等
                 return true;
-            }else if(index  < dicn - tarn){
+            } else if (index < dicn - tarn) {
                 //以tarn为窗口，更新子串hash值
                 index++;
-                dicHash = (long) (26 * dicHash - Math.pow(26, tarn) * (dic.charAt(index - 1)- 'a') + dic.charAt(tarn + index - 1) - 'a');
-            }else {
+                dicHash = (long) (26 * dicHash - Math.pow(26, tarn) * (dic.charAt(index - 1) - 'a') + dic.charAt(tarn + index - 1) - 'a');
+            } else {
                 return false;
             }
         }
