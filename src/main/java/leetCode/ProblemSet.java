@@ -90,7 +90,10 @@ public class ProblemSet {
 //        System.out.println(loudAndRich(richer, quiet));
 //        System.out.println(numWaterBottles(9, 3));
 //        System.out.println(RK("zdfefrrrdddd", "rrrd"));
-        System.out.println(longestDupSubstring("nnpxouomcofdjuujloanjimymadkuepightrfodmauhrsy"));
+//        System.out.println(longestDupSubstring("nnpxouomcofdjuujloanjimymadkuepightrfodmauhrsy"));
+        int[] apples  = {1,2,3,5,2};
+        int[] days = {3,2,1,4,2};
+        System.out.println(eatenApples(apples, days));
     }
 
     public static class TreeNode {
@@ -117,6 +120,47 @@ public class ProblemSet {
         public Node prev;
         public Node next;
         public Node child;
+    }
+
+    //1705. 吃苹果的最大数目
+    //有一棵特殊的苹果树，一连 n 天，每天都可以长出若干个苹果。在第 i 天，树上会长出 apples[i] 个苹果，这些苹果将会在 days[i] 天后（也就是说，第 i + days[i] 天时）腐烂，变得无法食用。也可能有那么几天，树上不会长出新的苹果，此时用 apples[i] == 0 且 days[i] == 0 表示。
+    //你打算每天 最多 吃一个苹果来保证营养均衡。注意，你可以在这 n 天之后继续吃苹果。
+    //给你两个长度为 n 的整数数组 days 和 apples ，返回你可以吃掉的苹果的最大数目。
+    public static int eatenApples(int[] apples, int[] days) {
+        PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
+        int n = apples.length;
+        int sum = 0, index = 0;
+        while (index < n){
+            while (!priorityQueue.isEmpty() && priorityQueue.peek()[1] <= index){
+                priorityQueue.poll();
+            }
+            int rotDay  = index + days[index];
+            int count = apples[index];
+            if(count > 0){
+                priorityQueue.add(new int[]{count, rotDay});
+            }
+            if(!priorityQueue.isEmpty()){
+                int[] arr = priorityQueue.peek();
+                if(--arr[0] == 0 ){
+                    priorityQueue.poll();
+                }
+                sum++;
+            }
+            index++;
+        }
+        while (!priorityQueue.isEmpty()){
+            while (!priorityQueue.isEmpty() && priorityQueue.peek()[1] <= index){
+                priorityQueue.poll();
+            }
+            if(priorityQueue.isEmpty()){
+                break;
+            }
+            int[] arr = priorityQueue.poll();
+            int count = Math.min(arr[1] - index, arr[0]);
+            sum += count;
+            index += count;
+        }
+        return sum;
     }
 
     //1154. 一年中的第几天
