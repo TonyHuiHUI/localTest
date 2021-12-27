@@ -91,9 +91,10 @@ public class ProblemSet {
 //        System.out.println(numWaterBottles(9, 3));
 //        System.out.println(RK("zdfefrrrdddd", "rrrd"));
 //        System.out.println(longestDupSubstring("nnpxouomcofdjuujloanjimymadkuepightrfodmauhrsy"));
-        int[] apples  = {1,2,3,5,2};
-        int[] days = {3,2,1,4,2};
-        System.out.println(eatenApples(apples, days));
+//        int[] apples = {1, 2, 3, 5, 2};
+//        int[] days = {3, 2, 1, 4, 2};
+//        System.out.println(eatenApples(apples, days));
+        System.out.println(numFriendRequests(new int[]{16,17,18}));
     }
 
     public static class TreeNode {
@@ -122,6 +123,53 @@ public class ProblemSet {
         public Node child;
     }
 
+    //825. 适龄的朋友
+    //在社交媒体网站上有 n 个用户。给你一个整数数组 ages ，其中 ages[i] 是第 i 个用户的年龄。
+    //如果下述任意一个条件为真，那么用户 x 将不会向用户 y（x != y）发送好友请求：
+    //age[y] <= 0.5 * age[x] + 7
+    //age[y] > age[x]
+    //age[y] > 100 && age[x] < 100
+    //否则，x 将会向 y 发送一条好友请求。
+    //注意，如果 x 向 y 发送一条好友请求，y 不必也向 x 发送一条好友请求。另外，用户不会向自己发送好友请求。
+    //返回在该社交媒体网站上产生的好友请求总数。
+    public static int numFriendRequests(int[] ages) {
+        //排序+双指针
+//        int n = ages.length;
+//        int sum = 0, left = 0, right = 0;
+//        Arrays.sort(ages);
+//        for (int age : ages) {
+//            if (age < 15) {
+//                continue;
+//            }
+//            while (ages[left] <= 0.5 * age + 7) {
+//                left++;
+//            }
+//            while (right + 1 < n && ages[right + 1] <= age) {
+//                right++;
+//            }
+//            sum += right - left;
+//        }
+//        return sum;
+
+        //计数排序+前缀和
+        int[] count = new int[121];
+        int[] pre = new int[121];
+        for (int age : ages){
+            count[age]++;
+        }
+        for (int i = 1; i <= 120; i++){
+            pre[i] = pre[i-1] + count[i];
+        }
+        int sum = 0;
+        for (int i = 15; i <= 120; i++){
+            if(count[i] > 0){
+                int bound = (int)(i * 0.5 + 8);
+                sum += count[i] * (pre[i] - pre[bound - 1] - 1);
+            }
+        }
+        return sum;
+    }
+
     //1705. 吃苹果的最大数目
     //有一棵特殊的苹果树，一连 n 天，每天都可以长出若干个苹果。在第 i 天，树上会长出 apples[i] 个苹果，这些苹果将会在 days[i] 天后（也就是说，第 i + days[i] 天时）腐烂，变得无法食用。也可能有那么几天，树上不会长出新的苹果，此时用 apples[i] == 0 且 days[i] == 0 表示。
     //你打算每天 最多 吃一个苹果来保证营养均衡。注意，你可以在这 n 天之后继续吃苹果。
@@ -130,29 +178,29 @@ public class ProblemSet {
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
         int n = apples.length;
         int sum = 0, index = 0;
-        while (index < n){
-            while (!priorityQueue.isEmpty() && priorityQueue.peek()[1] <= index){
+        while (index < n) {
+            while (!priorityQueue.isEmpty() && priorityQueue.peek()[1] <= index) {
                 priorityQueue.poll();
             }
-            int rotDay  = index + days[index];
+            int rotDay = index + days[index];
             int count = apples[index];
-            if(count > 0){
+            if (count > 0) {
                 priorityQueue.add(new int[]{count, rotDay});
             }
-            if(!priorityQueue.isEmpty()){
+            if (!priorityQueue.isEmpty()) {
                 int[] arr = priorityQueue.peek();
-                if(--arr[0] == 0 ){
+                if (--arr[0] == 0) {
                     priorityQueue.poll();
                 }
                 sum++;
             }
             index++;
         }
-        while (!priorityQueue.isEmpty()){
-            while (!priorityQueue.isEmpty() && priorityQueue.peek()[1] <= index){
+        while (!priorityQueue.isEmpty()) {
+            while (!priorityQueue.isEmpty() && priorityQueue.peek()[1] <= index) {
                 priorityQueue.poll();
             }
-            if(priorityQueue.isEmpty()){
+            if (priorityQueue.isEmpty()) {
                 break;
             }
             int[] arr = priorityQueue.poll();
@@ -186,7 +234,7 @@ public class ProblemSet {
     //    1044. 最长重复子串
     //给你一个字符串 s ，考虑其所有 重复子串 ：即，s 的连续子串，在 s 中出现 2 次或更多次。这些出现之间可能存在重叠。
     //返回 任意一个 可能具有最长长度的重复子串。如果 s 不含重复子串，那么答案为 "" 。
-    public  static String longestDupSubstring(String s) {
+    public static String longestDupSubstring(String s) {
         int n = s.length();
         Random random = new Random();
         //两套进制和两套摸用来防止溢出和hash碰撞
@@ -217,6 +265,7 @@ public class ProblemSet {
         }
         return start != -1 ? s.substring(start, start + length) : "";
     }
+
     public static int check(int[] arr, int m, int a1, int a2, int mod1, int mod2) {
         int n = arr.length;
         long aL1 = pow(a1, m, mod1);
