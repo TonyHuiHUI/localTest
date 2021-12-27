@@ -150,7 +150,6 @@ public class ProblemSet {
 //            sum += right - left;
 //        }
 //        return sum;
-
         //计数排序+前缀和
         int[] count = new int[121];
         int[] pre = new int[121];
