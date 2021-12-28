@@ -94,7 +94,8 @@ public class ProblemSet {
 //        int[] apples = {1, 2, 3, 5, 2};
 //        int[] days = {3, 2, 1, 4, 2};
 //        System.out.println(eatenApples(apples, days));
-        System.out.println(numFriendRequests(new int[]{16,17,18}));
+//        System.out.println(numFriendRequests(new int[]{16,17,18}));
+        System.out.println(findAllConcatenatedWordsInADict(new String[]{"cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"}));
     }
 
     public static class TreeNode {
@@ -123,6 +124,44 @@ public class ProblemSet {
         public Node child;
     }
 
+    //472. 连接词
+//    给你一个 不含重复 单词的字符串数组 words ，请你找出并返回 words 中的所有 连接词 。
+//    连接词 定义为：一个完全由给定数组中的至少两个较短单词组成的字符串
+    public static List<String> findAllConcatenatedWordsInADict(String[] words) {
+        List<String> result = new LinkedList<>();
+        TrieD trieD = new TrieD();
+        Arrays.sort(words, Comparator.comparingInt(String::length));
+        for (int i = 0; i < words.length; i++){
+            if (words[i].length() == 0){
+                continue;
+            }
+            if(checkTrieD(trieD, words[i], 0)){
+                result.add(words[i]);
+            }else {
+                trieD.insert(words[i]);
+            }
+        }
+        return result;
+    }
+    public static boolean checkTrieD(TrieD trieD, String word, int index){
+        if(word.length() == index){
+            return true;
+        }
+        TrieD node = trieD;
+        for (int i = index; i < word.length(); i++){
+            char ch = word.charAt(i);
+            node = node.next[ch - 'a'];
+            if(node == null){
+                return false;
+            }
+            if(node.isEnd){
+                if(checkTrieD(trieD, word, i + 1)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     //825. 适龄的朋友
     //在社交媒体网站上有 n 个用户。给你一个整数数组 ages ，其中 ages[i] 是第 i 个用户的年龄。
     //如果下述任意一个条件为真，那么用户 x 将不会向用户 y（x != y）发送好友请求：
@@ -951,7 +990,7 @@ public class ProblemSet {
     }
 
     //字典树
-    class TrieD {
+   static class TrieD {
         TrieD[] next;
         Boolean isEnd;
 
