@@ -95,7 +95,8 @@ public class ProblemSet {
 //        int[] days = {3, 2, 1, 4, 2};
 //        System.out.println(eatenApples(apples, days));
 //        System.out.println(numFriendRequests(new int[]{16,17,18}));
-        System.out.println(findAllConcatenatedWordsInADict(new String[]{"cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"}));
+//        System.out.println(findAllConcatenatedWordsInADict(new String[]{"cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"}));
+        System.out.println(simplifyPath("/a/./b/../../c/"));
     }
 
     public static class TreeNode {
@@ -123,6 +124,36 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+    //71. 简化路径
+    //给你一个字符串 path ，表示指向某一文件或目录的 Unix 风格 绝对路径 （以 '/' 开头），请你将其转化为更加简洁的规范路径。
+    //在 Unix 风格的文件系统中，一个点（.）表示当前目录本身；此外，两个点 （..） 表示将目录切换到上一级（指向父目录）；两者都可以是复杂相对路径的组成部分。任意多个连续的斜杠（即，'//'）都被视为单个斜杠 '/' 。 对于此问题，任何其他格式的点（例如，'...'）均被视为文件/目录名称。
+    //请注意，返回的 规范路径 必须遵循下述格式：
+    //始终以斜杠 '/' 开头。
+    //两个目录名之间必须只有一个斜杠 '/' 。
+    //最后一个目录名（如果存在）不能 以 '/' 结尾。
+    //此外，路径仅包含从根目录到目标文件或目录的路径上的目录（即，不含 '.' 或 '..'）。
+    public static String simplifyPath(String path) {
+        String[] subPaths = path.split("/");
+        StringBuilder sb = new StringBuilder();
+        Deque<String> stack = new ArrayDeque<>();
+        for (String subPath : subPaths) {
+            if ("..".equals(subPath)) {
+                if (!stack.isEmpty()) {
+                    stack.pollLast();
+                }
+            } else if (!".".equals(subPath) && subPath.length() > 0) {
+                stack.offerLast(subPath);
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            sb.append("/");
+            sb.append(stack.pollFirst());
+        }
+        return sb.length() == 0 ? sb.append("/").toString() : sb.toString();
+    }
+
     //1995. 统计特殊四元组
     //给你一个 下标从 0 开始 的整数数组 nums ，返回满足下述条件的 不同 四元组 (a, b, c, d) 的 数目 ：
     //nums[a] + nums[b] + nums[c] == nums[d] ，且
@@ -154,6 +185,7 @@ public class ProblemSet {
         }
         return ans;
     }
+
     //472. 连接词
 //    给你一个 不含重复 单词的字符串数组 words ，请你找出并返回 words 中的所有 连接词 。
 //    连接词 定义为：一个完全由给定数组中的至少两个较短单词组成的字符串
@@ -161,37 +193,39 @@ public class ProblemSet {
         List<String> result = new LinkedList<>();
         TrieD trieD = new TrieD();
         Arrays.sort(words, Comparator.comparingInt(String::length));
-        for (int i = 0; i < words.length; i++){
-            if (words[i].length() == 0){
+        for (int i = 0; i < words.length; i++) {
+            if (words[i].length() == 0) {
                 continue;
             }
-            if(checkTrieD(trieD, words[i], 0)){
+            if (checkTrieD(trieD, words[i], 0)) {
                 result.add(words[i]);
-            }else {
+            } else {
                 trieD.insert(words[i]);
             }
         }
         return result;
     }
-    public static boolean checkTrieD(TrieD trieD, String word, int index){
-        if(word.length() == index){
+
+    public static boolean checkTrieD(TrieD trieD, String word, int index) {
+        if (word.length() == index) {
             return true;
         }
         TrieD node = trieD;
-        for (int i = index; i < word.length(); i++){
+        for (int i = index; i < word.length(); i++) {
             char ch = word.charAt(i);
             node = node.next[ch - 'a'];
-            if(node == null){
+            if (node == null) {
                 return false;
             }
-            if(node.isEnd){
-                if(checkTrieD(trieD, word, i + 1)){
+            if (node.isEnd) {
+                if (checkTrieD(trieD, word, i + 1)) {
                     return true;
                 }
             }
         }
         return false;
     }
+
     //825. 适龄的朋友
     //在社交媒体网站上有 n 个用户。给你一个整数数组 ages ，其中 ages[i] 是第 i 个用户的年龄。
     //如果下述任意一个条件为真，那么用户 x 将不会向用户 y（x != y）发送好友请求：
@@ -222,16 +256,16 @@ public class ProblemSet {
         //计数排序+前缀和
         int[] count = new int[121];
         int[] pre = new int[121];
-        for (int age : ages){
+        for (int age : ages) {
             count[age]++;
         }
-        for (int i = 1; i <= 120; i++){
-            pre[i] = pre[i-1] + count[i];
+        for (int i = 1; i <= 120; i++) {
+            pre[i] = pre[i - 1] + count[i];
         }
         int sum = 0;
-        for (int i = 15; i <= 120; i++){
-            if(count[i] > 0){
-                int bound = (int)(i * 0.5 + 8);
+        for (int i = 15; i <= 120; i++) {
+            if (count[i] > 0) {
+                int bound = (int) (i * 0.5 + 8);
                 sum += count[i] * (pre[i] - pre[bound - 1] - 1);
             }
         }
@@ -1020,7 +1054,7 @@ public class ProblemSet {
     }
 
     //字典树
-   static class TrieD {
+    static class TrieD {
         TrieD[] next;
         Boolean isEnd;
 
