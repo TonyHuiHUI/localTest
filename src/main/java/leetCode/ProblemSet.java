@@ -123,7 +123,37 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+    //1995. 统计特殊四元组
+    //给你一个 下标从 0 开始 的整数数组 nums ，返回满足下述条件的 不同 四元组 (a, b, c, d) 的 数目 ：
+    //nums[a] + nums[b] + nums[c] == nums[d] ，且
+    //a < b < c < d
+    public int countQuadruplets(int[] nums) {
+//        int n = nums.length;
+//        int ans = 0;
+//        Map<Integer, Integer> cnt = new HashMap<Integer, Integer>();
+//        for (int c = n - 2; c >= 2; --c) {
+//            cnt.put(nums[c + 1], cnt.getOrDefault(nums[c + 1], 0) + 1);
+//            for (int a = 0; a < c; ++a) {
+//                for (int b = a + 1; b < c; ++b) {
+//                    ans += cnt.getOrDefault(nums[a] + nums[b] + nums[c], 0);
+//                }
+//            }
+//        }
+//        return ans;
 
+        int n = nums.length;
+        int ans = 0;
+        Map<Integer, Integer> cnt = new HashMap<Integer, Integer>();
+        for (int b = n - 3; b >= 1; --b) {
+            for (int d = b + 2; d < n; ++d) {
+                cnt.put(nums[d] - nums[b + 1], cnt.getOrDefault(nums[d] - nums[b + 1], 0) + 1);
+            }
+            for (int a = 0; a < b; ++a) {
+                ans += cnt.getOrDefault(nums[a] + nums[b], 0);
+            }
+        }
+        return ans;
+    }
     //472. 连接词
 //    给你一个 不含重复 单词的字符串数组 words ，请你找出并返回 words 中的所有 连接词 。
 //    连接词 定义为：一个完全由给定数组中的至少两个较短单词组成的字符串
