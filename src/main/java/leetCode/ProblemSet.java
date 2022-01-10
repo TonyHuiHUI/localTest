@@ -96,7 +96,8 @@ public class ProblemSet {
 //        System.out.println(eatenApples(apples, days));
 //        System.out.println(numFriendRequests(new int[]{16,17,18}));
 //        System.out.println(findAllConcatenatedWordsInADict(new String[]{"cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"}));
-        System.out.println(simplifyPath("/a/./b/../../c/"));
+//        System.out.println(simplifyPath("/a/./b/../../c/"));
+        System.out.println(isAdditiveNumber("112358"));
     }
 
     public static class TreeNode {
@@ -124,7 +125,69 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+    //306. 累加数
+    //累加数 是一个字符串，组成它的数字可以形成累加序列。
+    //一个有效的 累加序列 必须 至少 包含 3 个数。除了最开始的两个数以外，字符串中的其他数都等于它之前两个数相加的和。
+    //给你一个只包含数字 '0'-'9' 的字符串，编写一个算法来判断给定输入是否是 累加数 。如果是，返回 true ；否则，返回 false 。
+    //说明：累加序列里的数 不会 以 0 开头，所以不会出现 1, 2, 03 或者 1, 02, 3 的情况。
+    public static boolean isAdditiveNumber(String num) {
+        int n = num.length();
+        for (int secondStart = 1; secondStart < n - 1; secondStart++){
+            if(num.charAt(0) == '0' && secondStart != 1){
+                break;
+            }
+            for (int secondEnd = secondStart; secondEnd < n - 1; secondEnd++){
+                if(num.charAt(secondStart) == '0' && secondEnd != secondStart){
+                    break;
+                }
+                if(isValid(num, secondStart, secondEnd)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public static boolean isValid(String num, int secondStart, int secondEnd){
+        int n = num.length();
+        int firstStart = 0, firstEnd = secondStart - 1;
+        while (secondEnd <= n - 1) {
+            String thirdString = addString(num, firstStart, firstEnd, secondStart, secondEnd);
+            int thirdStart = secondEnd + 1;
+            int thirdEnd = secondEnd + thirdString.length();
 
+            if (thirdEnd >= n || !num.substring(thirdStart, thirdEnd + 1).equals(thirdString)) {
+                break;
+            }
+            if (thirdEnd == n - 1) {
+                return true;
+            }
+            firstStart = secondStart;
+            firstEnd = secondEnd;
+            secondStart = thirdStart;
+            secondEnd = thirdEnd;
+        }
+        return false;
+    }
+    public static String addString(String num, int firstStart, int firstEnd, int secondStart, int secondEnd){
+        StringBuilder sb = new StringBuilder();
+        int carry = 0, cur = 0;
+        while (firstStart <= firstEnd || secondStart <= secondEnd || carry != 0){
+            cur = carry;
+            if(firstStart <= firstEnd){
+                cur += num.charAt(firstEnd) - '0';
+                firstEnd--;
+            }
+            if(secondStart <= secondEnd){
+                cur += num.charAt(secondEnd) - '0';
+                secondEnd--;
+            }
+            carry = cur / 10;
+            cur = cur % 10;
+            sb.append((char)(cur + '0'));
+        }
+        sb.reverse();
+        return sb.toString();
+    }
     //71. 简化路径
     //给你一个字符串 path ，表示指向某一文件或目录的 Unix 风格 绝对路径 （以 '/' 开头），请你将其转化为更加简洁的规范路径。
     //在 Unix 风格的文件系统中，一个点（.）表示当前目录本身；此外，两个点 （..） 表示将目录切换到上一级（指向父目录）；两者都可以是复杂相对路径的组成部分。任意多个连续的斜杠（即，'//'）都被视为单个斜杠 '/' 。 对于此问题，任何其他格式的点（例如，'...'）均被视为文件/目录名称。
