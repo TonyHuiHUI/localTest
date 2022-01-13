@@ -97,8 +97,9 @@ public class ProblemSet {
 //        System.out.println(numFriendRequests(new int[]{16,17,18}));
 //        System.out.println(findAllConcatenatedWordsInADict(new String[]{"cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"}));
 //        System.out.println(simplifyPath("/a/./b/../../c/"));
-        System.out.println(isAdditiveNumber("112358"));
-        System.out.println(increasingTriplet(new int[]{2, 1, 5, 0, 4, 6}));
+//        System.out.println(isAdditiveNumber("112358"));
+//        System.out.println(increasingTriplet(new int[]{2, 1, 5, 0, 4, 6}));
+        System.out.println(dominantIndex(new int[]{3,6,1,0}));
     }
 
     public static class TreeNode {
@@ -125,6 +126,45 @@ public class ProblemSet {
         public Node prev;
         public Node next;
         public Node child;
+    }
+
+    public static int dominantIndex(int[] nums) {
+//        int[] first = new int[2];
+//        int[] second = new int[2];
+//        Arrays.fill(first, Integer.MIN_VALUE);
+//        Arrays.fill(second, Integer.MIN_VALUE);
+//        int n = nums.length;
+//        if(n == 1){
+//            return 0;
+//        }
+//        for (int i = 0; i < n; i++){
+//            if(nums[i] > first[0]){
+//                second[0] = first[0];
+//                second[1] = first[1];
+//                first[0] = nums[i];
+//                first[1] = i;
+//            }else if(nums[i] > second[0]){
+//                second[0] = nums[i];
+//                second[1] = i;
+//            }
+//        }
+//        if(first[0] >= second[0] * 2){
+//            return first[1];
+//        }
+//        return -1;
+
+        int m1 = -1, m2 = -1;
+        int index = -1;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > m1) {
+                m2 = m1;
+                m1 = nums[i];
+                index = i;
+            } else if (nums[i] > m2) {
+                m2 = nums[i];
+            }
+        }
+        return m1 >= m2 * 2 ? index : -1;
     }
 
     //334. 递增的三元子序列
