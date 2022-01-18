@@ -99,7 +99,9 @@ public class ProblemSet {
 //        System.out.println(simplifyPath("/a/./b/../../c/"));
 //        System.out.println(isAdditiveNumber("112358"));
 //        System.out.println(increasingTriplet(new int[]{2, 1, 5, 0, 4, 6}));
-        System.out.println(dominantIndex(new int[]{3,6,1,0}));
+//        System.out.println(dominantIndex(new int[]{3,6,1,0}));
+        List<String> a = new ArrayList<>(Arrays.asList("00:00","23:59","00:00"));
+        System.out.println(findMinDifference(a));
     }
 
     public static class TreeNode {
@@ -126,6 +128,29 @@ public class ProblemSet {
         public Node prev;
         public Node next;
         public Node child;
+    }
+    //539. 最小时间差
+    //给定一个 24 小时制（小时:分钟 "HH:MM"）的时间列表，找出列表中任意两个时间的最小时间差并以分钟数表示。
+    public static int findMinDifference(List<String> timePoints) {
+        int n = timePoints.size();
+        //鸽巢原理
+        if (n > 1440) {
+            return 0;
+        }
+        int result = Integer.MAX_VALUE;
+        Collections.sort(timePoints);
+        int minutes0 = string2minutes(timePoints.get(0));
+        int preMinutes = minutes0;
+        for (int i = 1; i < n; i++){
+            int minutes = string2minutes(timePoints.get(i));
+            result = Math.min(result, minutes - preMinutes);
+            preMinutes = minutes;
+        }
+        result = Math.min(result, minutes0 + 1440 - preMinutes);
+        return result;
+    }
+    public static int string2minutes(String str){
+        return ((str.charAt(0) - '0') * 10 + (str.charAt(1) - '0')) * 60 + ((str.charAt(3) - '0') * 10 + (str.charAt(4) - '0'));
     }
     //373. 查找和最小的K对数字
     //给定两个以升序排列的整数数组 nums1 和 nums2 , 以及一个整数 k 。
