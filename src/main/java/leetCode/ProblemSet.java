@@ -127,7 +127,30 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
-
+    //373. 查找和最小的K对数字
+    //给定两个以升序排列的整数数组 nums1 和 nums2 , 以及一个整数 k 。
+    //定义一对值 (u,v)，其中第一个元素来自 nums1，第二个元素来自 nums2 。
+    //请找到和最小的 k 个数对 (u1,v1),  (u2,v2)  ...  (uk,vk) 。
+    public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        List<List<Integer>> result = new ArrayList<>();
+        int n = nums1.length;
+        int m = nums2.length;
+        PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(a -> (nums1[a[0]] + nums2[a[1]])));
+        for(int i = 0; i < Math.min(n ,k); i++){
+            priorityQueue.offer(new int[]{i, 0});
+        }
+        while (k-- > 0 && !priorityQueue.isEmpty()){
+            int[] min = priorityQueue.poll();
+            List<Integer> list = new ArrayList<>();
+            list.add(nums1[min[0]]);
+            list.add(nums2[min[1]]);
+            result.add(list);
+            if(min[1] + 1 < m){
+                priorityQueue.offer(new int[]{min[0], min[1] + 1});
+            }
+        }
+        return result;
+    }
     public static int dominantIndex(int[] nums) {
 //        int[] first = new int[2];
 //        int[] second = new int[2];
