@@ -100,8 +100,10 @@ public class ProblemSet {
 //        System.out.println(isAdditiveNumber("112358"));
 //        System.out.println(increasingTriplet(new int[]{2, 1, 5, 0, 4, 6}));
 //        System.out.println(dominantIndex(new int[]{3,6,1,0}));
-        List<String> a = new ArrayList<>(Arrays.asList("00:00","23:59","00:00"));
-        System.out.println(findMinDifference(a));
+//        List<String> a = new ArrayList<>(Arrays.asList("00:00","23:59","00:00"));
+//        System.out.println(findMinDifference(a));
+
+        System.out.println(containsNearbyDuplicate(new int[]{1,0,1,1}, 1));
     }
 
     public static class TreeNode {
@@ -128,6 +130,51 @@ public class ProblemSet {
         public Node prev;
         public Node next;
         public Node child;
+    }
+    public static boolean containsNearbyDuplicate(int[] nums, int k) {
+//        int n = nums.length;
+//        HashMap<Integer, List<Integer>> hashMap = new HashMap<>();
+//        for (int i = 0; i < n; i++){
+//            List<Integer> list  = hashMap.getOrDefault(nums[i], new ArrayList<>());
+//            list.add(i);
+//            hashMap.put(nums[i], list);
+//        }
+//        for (Map.Entry<Integer, List<Integer>> entry : hashMap.entrySet()){
+//            List<Integer> value = entry.getValue();
+//            if(value.size() < 2){
+//                continue;
+//            }
+//            for (int i = 0; i < value.size() - 1; i++) {
+//                if (value.get(i+1) - value.get(i) <= k) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+        //哈希表
+//        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+//        int length = nums.length;
+//        for (int i = 0; i < length; i++) {
+//            int num = nums[i];
+//            if (map.containsKey(num) && i - map.get(num) <= k) {
+//                return true;
+//            }
+//            map.put(num, i);
+//        }
+//        return false;
+        //滑动窗口
+        Set<Integer> set = new HashSet<Integer>();
+        int length = nums.length;
+        for (int i = 0; i < length; i++) {
+            if (i > k) {
+                set.remove(nums[i - k - 1]);
+            }
+            if (!set.add(nums[i])) {
+                return true;
+            }
+        }
+        return false;
+
     }
     //539. 最小时间差
     //给定一个 24 小时制（小时:分钟 "HH:MM"）的时间列表，找出列表中任意两个时间的最小时间差并以分钟数表示。
