@@ -103,7 +103,8 @@ public class ProblemSet {
 //        List<String> a = new ArrayList<>(Arrays.asList("00:00","23:59","00:00"));
 //        System.out.println(findMinDifference(a));
 
-        System.out.println(containsNearbyDuplicate(new int[]{1,0,1,1}, 1));
+//        System.out.println(containsNearbyDuplicate(new int[]{1, 0, 1, 1}, 1));
+        System.out.println(countValidWords("alice and  bob are playing stone-game10"));
     }
 
     public static class TreeNode {
@@ -131,6 +132,60 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+    //    2047. 句子中的有效单词数
+//    句子仅由小写字母（'a' 到 'z'）、数字（'0' 到 '9'）、连字符（'-'）、标点符号（'!'、'.' 和 ','）以及空格（' '）组成。每个句子可以根据空格分解成 一个或者多个 token ，这些 token 之间由一个或者多个空格 ' ' 分隔。
+//    如果一个 token 同时满足下述条件，则认为这个 token 是一个有效单词：
+//    仅由小写字母、连字符和/或标点（不含数字）。
+//    至多一个 连字符 '-' 。如果存在，连字符两侧应当都存在小写字母（"a-b" 是一个有效单词，但 "-ab" 和 "ab-" 不是有效单词）。
+//    至多一个 标点符号。如果存在，标点符号应当位于 token 的 末尾 。
+//    这里给出几个有效单词的例子："a-b."、"afad"、"ba-c"、"a!" 和 "!" 。
+//    给你一个字符串 sentence ，请你找出并返回 sentence 中 有效单词的数目 。
+    public static int countValidWords(String sentence) {
+        //正则
+//        String str = "[a-z]+-?[a-z]+[!.,]?|[a-z]*[!.,]?";
+//        String[] words = sentence.split(" ");
+//        int count = 0;
+//        for (String word : words) {
+//            if (word.matches(str) && word.length() > 0) {
+//                count++;
+//            }
+//        }
+//        return count;
+        //模拟
+        int count = 0;
+        String[] words = sentence.split(" ");
+        for (String word : words){
+            if(check(word)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static boolean check(String word){
+        int connectCount = 0;
+        int n = word.length();
+        if (n == 0){
+            return false;
+        }
+        for (int i = 0; i < n; i++){
+            if (Character.isDigit(word.charAt(i))){
+                return false;
+            }else if(word.charAt(i) == '-'){
+                if(connectCount > 0 || i == 0 || i == n - 1 || !Character.isLetter(word.charAt(i - 1)) || !Character.isLetter(word.charAt( i + 1))){
+                    return false;
+                }
+                connectCount++;
+            }else if(word.charAt(i) == ',' || word.charAt(i) == '.' || word.charAt(i) == '!'){
+                if(i != n - 1){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public static boolean containsNearbyDuplicate(int[] nums, int k) {
 //        int n = nums.length;
 //        HashMap<Integer, List<Integer>> hashMap = new HashMap<>();
@@ -176,6 +231,7 @@ public class ProblemSet {
         return false;
 
     }
+
     //539. 最小时间差
     //给定一个 24 小时制（小时:分钟 "HH:MM"）的时间列表，找出列表中任意两个时间的最小时间差并以分钟数表示。
     public static int findMinDifference(List<String> timePoints) {
@@ -188,7 +244,7 @@ public class ProblemSet {
         Collections.sort(timePoints);
         int minutes0 = string2minutes(timePoints.get(0));
         int preMinutes = minutes0;
-        for (int i = 1; i < n; i++){
+        for (int i = 1; i < n; i++) {
             int minutes = string2minutes(timePoints.get(i));
             result = Math.min(result, minutes - preMinutes);
             preMinutes = minutes;
@@ -196,9 +252,11 @@ public class ProblemSet {
         result = Math.min(result, minutes0 + 1440 - preMinutes);
         return result;
     }
-    public static int string2minutes(String str){
+
+    public static int string2minutes(String str) {
         return ((str.charAt(0) - '0') * 10 + (str.charAt(1) - '0')) * 60 + ((str.charAt(3) - '0') * 10 + (str.charAt(4) - '0'));
     }
+
     //373. 查找和最小的K对数字
     //给定两个以升序排列的整数数组 nums1 和 nums2 , 以及一个整数 k 。
     //定义一对值 (u,v)，其中第一个元素来自 nums1，第二个元素来自 nums2 。
@@ -208,21 +266,22 @@ public class ProblemSet {
         int n = nums1.length;
         int m = nums2.length;
         PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(a -> (nums1[a[0]] + nums2[a[1]])));
-        for(int i = 0; i < Math.min(n ,k); i++){
+        for (int i = 0; i < Math.min(n, k); i++) {
             priorityQueue.offer(new int[]{i, 0});
         }
-        while (k-- > 0 && !priorityQueue.isEmpty()){
+        while (k-- > 0 && !priorityQueue.isEmpty()) {
             int[] min = priorityQueue.poll();
             List<Integer> list = new ArrayList<>();
             list.add(nums1[min[0]]);
             list.add(nums2[min[1]]);
             result.add(list);
-            if(min[1] + 1 < m){
+            if (min[1] + 1 < m) {
                 priorityQueue.offer(new int[]{min[0], min[1] + 1});
             }
         }
         return result;
     }
+
     public static int dominantIndex(int[] nums) {
 //        int[] first = new int[2];
 //        int[] second = new int[2];
@@ -295,8 +354,8 @@ public class ProblemSet {
         for (int i = n - 2; i >= 0; i++) {
             rightMin[i] = Math.min(rightMin[i + 1], nums[i]);
         }
-        for(int i = 1; i < n; i ++){
-            if(nums[i] > leftMin[i - 1] && nums[i] < rightMin[i + 1] ){
+        for (int i = 1; i < n; i++) {
+            if (nums[i] > leftMin[i - 1] && nums[i] < rightMin[i + 1]) {
                 return true;
             }
         }
