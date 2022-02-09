@@ -132,7 +132,20 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
-
+    //2006. 差的绝对值为 K 的数对数目
+    //给你一个整数数组 nums 和一个整数 k ，请你返回数对 (i, j) 的数目，满足 i < j 且 |nums[i] - nums[j]| == k 。
+    //|x| 的值定义为：
+    //如果 x >= 0 ，那么值为 x 。
+    //如果 x < 0 ，那么值为 -x 。
+    public int countKDifference(int[] nums, int k) {
+        int result = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i< nums.length; i++){
+            result += map.getOrDefault(nums[i] + k, 0) + map.getOrDefault(nums[i] - k, 0);
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        }
+        return result;
+    }
     //    2047. 句子中的有效单词数
 //    句子仅由小写字母（'a' 到 'z'）、数字（'0' 到 '9'）、连字符（'-'）、标点符号（'!'、'.' 和 ','）以及空格（' '）组成。每个句子可以根据空格分解成 一个或者多个 token ，这些 token 之间由一个或者多个空格 ' ' 分隔。
 //    如果一个 token 同时满足下述条件，则认为这个 token 是一个有效单词：
