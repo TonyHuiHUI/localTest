@@ -132,6 +132,22 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+    //1447. 最简分数
+    //给你一个整数 n ，请你返回所有 0 到 1 之间（不包括 0 和 1）满足分母小于等于  n 的 最简 分数 。分数可以以 任意 顺序返回。
+    public List<String> simplifiedFractions(int n) {
+        List<String> result = new ArrayList<>();
+        for(int i = 2; i <= n; i++){
+            for (int j = 1; j < i; j++){
+                if(gcd(i , j) == 1){
+                    result.add(j + "/" + i);
+                }
+            }
+        }
+        return result;
+    }
+    public int gcd(int a, int b){
+        return b == 0 ? a : gcd(b , a % b);
+    }
     //2006. 差的绝对值为 K 的数对数目
     //给你一个整数数组 nums 和一个整数 k ，请你返回数对 (i, j) 的数目，满足 i < j 且 |nums[i] - nums[j]| == k 。
     //|x| 的值定义为：
