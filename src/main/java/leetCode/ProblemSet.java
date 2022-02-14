@@ -132,22 +132,67 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+    //540. 有序数组中的单一元素
+    //给你一个仅由整数组成的有序数组，其中每个元素都会出现两次，唯有一个数只会出现一次。
+    //请你找出并返回只出现一次的那个数。
+    //你设计的解决方案必须满足 O(log n) 时间复杂度和 O(1) 空间复杂度。
+    public int singleNonDuplicate(int[] nums) {
+        //二分查找
+//        int n = nums.length;
+////        int left = 0, right = n - 1;
+////        while (left < right) {
+////            int mid = left + (right - left) / 2;
+////            if(mid % 2 == 0){
+////                if(mid + 1 < n && nums[mid] != nums[mid + 1]){
+////                    right = mid;
+////                }else {
+////                    left = mid + 1;
+////                }
+////            }else {
+////                if(mid + 1 < n && nums[mid] != nums[mid + 1]){
+////                    left = mid + 1;
+////                }else {
+////                    right = mid;
+////                }
+////            }
+////        }
+////        return nums[left];
+        //二分+异或
+        //当 mid 是偶数时，mid+1=mid^1；
+        //
+        //当 mid 是奇数时，mid−1=mid^1。
+
+        int low = 0, high = nums.length - 1;
+        while (low < high) {
+            int mid = (high - low) / 2 + low;
+            if (nums[mid] == nums[mid ^ 1]) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+        return nums[low];
+    }
+
     //1447. 最简分数
     //给你一个整数 n ，请你返回所有 0 到 1 之间（不包括 0 和 1）满足分母小于等于  n 的 最简 分数 。分数可以以 任意 顺序返回。
     public List<String> simplifiedFractions(int n) {
         List<String> result = new ArrayList<>();
-        for(int i = 2; i <= n; i++){
-            for (int j = 1; j < i; j++){
-                if(gcd(i , j) == 1){
+        for (int i = 2; i <= n; i++) {
+            for (int j = 1; j < i; j++) {
+                if (gcd(i, j) == 1) {
                     result.add(j + "/" + i);
                 }
             }
         }
         return result;
     }
-    public int gcd(int a, int b){
-        return b == 0 ? a : gcd(b , a % b);
+
+    public int gcd(int a, int b) {
+        return b == 0 ? a : gcd(b, a % b);
     }
+
     //2006. 差的绝对值为 K 的数对数目
     //给你一个整数数组 nums 和一个整数 k ，请你返回数对 (i, j) 的数目，满足 i < j 且 |nums[i] - nums[j]| == k 。
     //|x| 的值定义为：
@@ -156,12 +201,13 @@ public class ProblemSet {
     public int countKDifference(int[] nums, int k) {
         int result = 0;
         Map<Integer, Integer> map = new HashMap<>();
-        for(int i = 0; i< nums.length; i++){
+        for (int i = 0; i < nums.length; i++) {
             result += map.getOrDefault(nums[i] + k, 0) + map.getOrDefault(nums[i] - k, 0);
             map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
         }
         return result;
     }
+
     //    2047. 句子中的有效单词数
 //    句子仅由小写字母（'a' 到 'z'）、数字（'0' 到 '9'）、连字符（'-'）、标点符号（'!'、'.' 和 ','）以及空格（' '）组成。每个句子可以根据空格分解成 一个或者多个 token ，这些 token 之间由一个或者多个空格 ' ' 分隔。
 //    如果一个 token 同时满足下述条件，则认为这个 token 是一个有效单词：
@@ -184,30 +230,30 @@ public class ProblemSet {
         //模拟
         int count = 0;
         String[] words = sentence.split(" ");
-        for (String word : words){
-            if(check(word)){
+        for (String word : words) {
+            if (check(word)) {
                 count++;
             }
         }
         return count;
     }
 
-    public static boolean check(String word){
+    public static boolean check(String word) {
         int connectCount = 0;
         int n = word.length();
-        if (n == 0){
+        if (n == 0) {
             return false;
         }
-        for (int i = 0; i < n; i++){
-            if (Character.isDigit(word.charAt(i))){
+        for (int i = 0; i < n; i++) {
+            if (Character.isDigit(word.charAt(i))) {
                 return false;
-            }else if(word.charAt(i) == '-'){
-                if(connectCount > 0 || i == 0 || i == n - 1 || !Character.isLetter(word.charAt(i - 1)) || !Character.isLetter(word.charAt( i + 1))){
+            } else if (word.charAt(i) == '-') {
+                if (connectCount > 0 || i == 0 || i == n - 1 || !Character.isLetter(word.charAt(i - 1)) || !Character.isLetter(word.charAt(i + 1))) {
                     return false;
                 }
                 connectCount++;
-            }else if(word.charAt(i) == ',' || word.charAt(i) == '.' || word.charAt(i) == '!'){
-                if(i != n - 1){
+            } else if (word.charAt(i) == ',' || word.charAt(i) == '.' || word.charAt(i) == '!') {
+                if (i != n - 1) {
                     return false;
                 }
             }
