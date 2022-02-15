@@ -132,6 +132,33 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+    //1380. 矩阵中的幸运数
+    //给你一个 m * n 的矩阵，矩阵中的数字 各不相同 。请你按 任意 顺序返回矩阵中的所有幸运数。
+    //幸运数是指矩阵中满足同时下列两个条件的元素：
+    //在同一行的所有元素中最小
+    //在同一列的所有元素中最大
+    public List<Integer> luckyNumbers (int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int[] minRow = new int[n];
+        int[] maxCol = new int[m];
+        Arrays.fill(minRow, Integer.MAX_VALUE);
+        for (int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                minRow[i] = Math.min(minRow[i], matrix[i][j]);
+                maxCol[j] = Math.max(maxCol[j], matrix[i][j]);
+            }
+        }
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < m; j++){
+                if(minRow[i] == matrix[i][j] && maxCol[j] == matrix[i][j]){
+                    result.add(matrix[i][j]);
+                }
+            }
+        }
+        return result;
+    }
 
     //540. 有序数组中的单一元素
     //给你一个仅由整数组成的有序数组，其中每个元素都会出现两次，唯有一个数只会出现一次。
