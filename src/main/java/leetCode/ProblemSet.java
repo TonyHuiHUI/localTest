@@ -132,27 +132,57 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+    // 688. 骑士在棋盘上的概率
+    //在一个 n x n 的国际象棋棋盘上，一个骑士从单元格 (row, column) 开始，并尝试进行 k 次移动。行和列是 从 0 开始 的，所以左上单元格是 (0,0) ，右下单元格是 (n - 1, n - 1) 。
+    //象棋骑士有8种可能的走法，如下图所示。每次移动在基本方向上是两个单元格，然后在正交方向上是一个单元格。
+    //    每次骑士要移动时，它都会随机从8种可能的移动中选择一种(即使棋子会离开棋盘)，然后移动到那里。
+    //    骑士继续移动，直到它走了 k 步或离开了棋盘。
+    //    返回 骑士在棋盘停止移动后仍留在棋盘上的概率 。
+    public double knightProbability(int n, int k, int row, int column) {
+        int[][] dirs = new int[][]{{-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}, {1, 2}, {2, 1}, {2, -1}, {1, -2}};
+        double[][][] dp = new double[k + 1][n][n];//移动k步，仍留在棋盘上的概率
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++){
+                dp[0][i][j] = 1;
+            }
+        }
+        for (int step = 1; step <= k; step++){
+            for (int i = 0; i < n; i++){
+                for (int j  = 0; j < n; j++){
+                    for (int[] dir : dirs){
+                        int x = i + dir[0], y = j + dir[1];
+                        if(x >=0 && x < n && y >= 0 && y < n){
+                            dp[step][i][j] += dp[step - 1][x][y] / 8;
+                        }
+                    }
+                }
+            }
+        }
+        return dp[k][row][column];
+    }
+
     //1380. 矩阵中的幸运数
     //给你一个 m * n 的矩阵，矩阵中的数字 各不相同 。请你按 任意 顺序返回矩阵中的所有幸运数。
     //幸运数是指矩阵中满足同时下列两个条件的元素：
     //在同一行的所有元素中最小
     //在同一列的所有元素中最大
-    public List<Integer> luckyNumbers (int[][] matrix) {
+    public List<Integer> luckyNumbers(int[][] matrix) {
         int n = matrix.length;
         int m = matrix[0].length;
         int[] minRow = new int[n];
         int[] maxCol = new int[m];
         Arrays.fill(minRow, Integer.MAX_VALUE);
-        for (int i = 0; i < n; i++){
-            for(int j = 0; j < m; j++){
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
                 minRow[i] = Math.min(minRow[i], matrix[i][j]);
                 maxCol[j] = Math.max(maxCol[j], matrix[i][j]);
             }
         }
         List<Integer> result = new ArrayList<>();
-        for (int i = 0; i < n; i++){
-            for (int j = 0; j < m; j++){
-                if(minRow[i] == matrix[i][j] && maxCol[j] == matrix[i][j]){
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (minRow[i] == matrix[i][j] && maxCol[j] == matrix[i][j]) {
                     result.add(matrix[i][j]);
                 }
             }
