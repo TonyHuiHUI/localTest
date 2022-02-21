@@ -104,7 +104,9 @@ public class ProblemSet {
 //        System.out.println(findMinDifference(a));
 
 //        System.out.println(containsNearbyDuplicate(new int[]{1, 0, 1, 1}, 1));
-        System.out.println(countValidWords("alice and  bob are playing stone-game10"));
+//        System.out.println(countValidWords("alice and  bob are playing stone-game10"));
+
+        System.out.println(pushDominoes("R...L"));
     }
 
     public static class TreeNode {
@@ -132,7 +134,54 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
-
+//    838. 推多米诺
+    //n 张多米诺骨牌排成一行，将每张多米诺骨牌垂直竖立。在开始时，同时把一些多米诺骨牌向左或向右推。
+    //每过一秒，倒向左边的多米诺骨牌会推动其左侧相邻的多米诺骨牌。同样地，倒向右边的多米诺骨牌也会推动竖立在其右侧的相邻多米诺骨牌。
+    //如果一张垂直竖立的多米诺骨牌的两侧同时有多米诺骨牌倒下时，由于受力平衡， 该骨牌仍然保持不变。
+    //就这个问题而言，我们会认为一张正在倒下的多米诺骨牌不会对其它正在倒下或已经倒下的多米诺骨牌施加额外的力。
+    //给你一个字符串 dominoes 表示这一行多米诺骨牌的初始状态，其中：
+    //dominoes[i] = 'L'，表示第 i 张多米诺骨牌被推向左侧，
+    //dominoes[i] = 'R'，表示第 i 张多米诺骨牌被推向右侧，
+    //dominoes[i] = '.'，表示没有推动第 i 张多米诺骨牌。
+    //返回表示最终状态的字符串。
+    public static String pushDominoes(String dominoes) {
+//        while (!dominoes.equals(dominoes = dominoes
+//                .replace("R.L", "T")
+//                .replace(".L", "LL")
+//                .replace("R.", "RR")
+//                .replace("T", "R.L"))) ;
+//        return dominoes;
+    //BFS
+        char[] chars = dominoes.toCharArray();
+        int n = chars.length;
+        Queue<int[]> queue = new ArrayDeque<>();
+        int[] times = new int[n];
+        for (int i = 0; i < n; i++){
+            if(chars[i] == '.'){
+                continue;
+            }
+            int dir = chars[i] == 'L' ? -1 : 1;
+            queue.add(new int[]{i, 1, dir});
+            times[i] = 1;
+        }
+        while (!queue.isEmpty()){
+            int[] domino = queue.poll();
+            int location = domino[0], time = domino[1], dir = domino[2];
+            int next = location + dir;
+            if(next < 0 || next >= n){
+                continue;
+            }
+            if (times[next] == 0){
+                queue.add(new int[]{next, time + 1, dir});
+                times[next] = time + 1;
+                chars[next] = dir == -1 ? 'L' : 'R';
+            }else if(times[next] == time + 1){
+                chars[next] = '.';
+            }
+        }
+        return String.valueOf(chars);
+        // 双指针
+    }
     // 688. 骑士在棋盘上的概率
     //在一个 n x n 的国际象棋棋盘上，一个骑士从单元格 (row, column) 开始，并尝试进行 k 次移动。行和列是 从 0 开始 的，所以左上单元格是 (0,0) ，右下单元格是 (n - 1, n - 1) 。
     //象棋骑士有8种可能的走法，如下图所示。每次移动在基本方向上是两个单元格，然后在正交方向上是一个单元格。
