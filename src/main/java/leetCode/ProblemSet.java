@@ -134,6 +134,31 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+//    917. 仅仅反转字母
+    //给你一个字符串 s ，根据下述规则反转字符串：
+    //所有非英文字母保留在原有位置。
+    //所有英文字母（小写或大写）位置反转。
+    //返回反转后的 s 。
+    public String reverseOnlyLetters(String s) {
+        char[] chars = s.toCharArray();
+        int left = 0, right = chars.length - 1;
+        while (left <= right){
+            while (left < right && !Character.isLetter(chars[left])){
+                left++;
+            }
+            while (left < right && !Character.isLetter(chars[right])){
+                right--;
+            }
+            if(left < right){
+                char tmp = chars[left];
+                chars[left] = chars[right];
+                chars[right] = tmp;
+            }
+            left++;
+            right--;
+        }
+        return String.valueOf(chars);
+    }
 //    838. 推多米诺
     //n 张多米诺骨牌排成一行，将每张多米诺骨牌垂直竖立。在开始时，同时把一些多米诺骨牌向左或向右推。
     //每过一秒，倒向左边的多米诺骨牌会推动其左侧相邻的多米诺骨牌。同样地，倒向右边的多米诺骨牌也会推动竖立在其右侧的相邻多米诺骨牌。
