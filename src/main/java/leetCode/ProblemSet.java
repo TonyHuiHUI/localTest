@@ -106,7 +106,9 @@ public class ProblemSet {
 //        System.out.println(containsNearbyDuplicate(new int[]{1, 0, 1, 1}, 1));
 //        System.out.println(countValidWords("alice and  bob are playing stone-game10"));
 
-        System.out.println(pushDominoes("R...L"));
+//        System.out.println(pushDominoes("R...L"));
+        int[][] a = {{0,1},{1,0},{0,1},{1,2},{2,0},{3,4}};
+        System.out.println(maximumRequests(5, a));
     }
 
     public static class TreeNode {
@@ -134,7 +136,44 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
-//    917. 仅仅反转字母
+
+    //1601. 最多可达成的换楼请求数目
+    //我们有 n 栋楼，编号从 0 到 n - 1 。每栋楼有若干员工。由于现在是换楼的季节，部分员工想要换一栋楼居住。
+    //给你一个数组 requests ，其中 requests[i] = [fromi, toi] ，表示一个员工请求从编号为 fromi 的楼搬到编号为 toi 的楼。
+    //一开始 所有楼都是满的，所以从请求列表中选出的若干个请求是可行的需要满足 每栋楼员工净变化为 0 。意思是每栋楼 离开 的员工数目 等于 该楼 搬入 的员工数数目。比方说 n = 3 且两个员工要离开楼 0 ，一个员工要离开楼 1 ，一个员工要离开楼 2 ，如果该请求列表可行，应该要有两个员工搬入楼 0 ，一个员工搬入楼 1 ，一个员工搬入楼 2 。
+    //请你从原请求列表中选出若干个请求，使得它们是一个可行的请求列表，并返回所有可行列表中最大请求数目。
+    public static int maximumRequests(int n, int[][] requests) {
+        int result = 0, zeroCount = n, requestCount = 0;
+        int[] delta = new int[n];
+        return dfs(result, n, zeroCount, requestCount, delta, 0, requests);
+    }
+
+    public static int dfs(int result, int n, int zeroCount, int requestCount, int[] delta, int pos, int[][] requests) {
+        if (pos == requests.length) {
+            if (zeroCount == n) {
+                result = Math.max(result, requestCount);
+            }
+            return result;
+        }
+        int count1 = dfs(result, n, zeroCount, requestCount, delta, pos + 1, requests);
+        int[] posRequest = requests[pos];
+        int z = zeroCount;
+        requestCount++;
+        int x = posRequest[0], y = posRequest[1];
+        zeroCount -= delta[x] == 0 ? 1 : 0;
+        delta[x]--;
+        zeroCount += delta[x] == 0 ? 1 : 0;
+        zeroCount -= delta[y] == 0 ? 1 : 0;
+        delta[y]++;
+        zeroCount += delta[y] == 0 ? 1 : 0;
+        int count2 = dfs(result, n, zeroCount, requestCount, delta, pos + 1, requests);
+        delta[y]--;
+        delta[x]++;
+        zeroCount = z;
+        return Math.max(count1, count2);
+    }
+
+    //    917. 仅仅反转字母
     //给你一个字符串 s ，根据下述规则反转字符串：
     //所有非英文字母保留在原有位置。
     //所有英文字母（小写或大写）位置反转。
@@ -142,14 +181,14 @@ public class ProblemSet {
     public String reverseOnlyLetters(String s) {
         char[] chars = s.toCharArray();
         int left = 0, right = chars.length - 1;
-        while (left <= right){
-            while (left < right && !Character.isLetter(chars[left])){
+        while (left <= right) {
+            while (left < right && !Character.isLetter(chars[left])) {
                 left++;
             }
-            while (left < right && !Character.isLetter(chars[right])){
+            while (left < right && !Character.isLetter(chars[right])) {
                 right--;
             }
-            if(left < right){
+            if (left < right) {
                 char tmp = chars[left];
                 chars[left] = chars[right];
                 chars[right] = tmp;
@@ -159,7 +198,8 @@ public class ProblemSet {
         }
         return String.valueOf(chars);
     }
-//    838. 推多米诺
+
+    //    838. 推多米诺
     //n 张多米诺骨牌排成一行，将每张多米诺骨牌垂直竖立。在开始时，同时把一些多米诺骨牌向左或向右推。
     //每过一秒，倒向左边的多米诺骨牌会推动其左侧相邻的多米诺骨牌。同样地，倒向右边的多米诺骨牌也会推动竖立在其右侧的相邻多米诺骨牌。
     //如果一张垂直竖立的多米诺骨牌的两侧同时有多米诺骨牌倒下时，由于受力平衡， 该骨牌仍然保持不变。
@@ -176,37 +216,38 @@ public class ProblemSet {
 //                .replace("R.", "RR")
 //                .replace("T", "R.L"))) ;
 //        return dominoes;
-    //BFS
+        //BFS
         char[] chars = dominoes.toCharArray();
         int n = chars.length;
         Queue<int[]> queue = new ArrayDeque<>();
         int[] times = new int[n];
-        for (int i = 0; i < n; i++){
-            if(chars[i] == '.'){
+        for (int i = 0; i < n; i++) {
+            if (chars[i] == '.') {
                 continue;
             }
             int dir = chars[i] == 'L' ? -1 : 1;
             queue.add(new int[]{i, 1, dir});
             times[i] = 1;
         }
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int[] domino = queue.poll();
             int location = domino[0], time = domino[1], dir = domino[2];
             int next = location + dir;
-            if(next < 0 || next >= n){
+            if (next < 0 || next >= n) {
                 continue;
             }
-            if (times[next] == 0){
+            if (times[next] == 0) {
                 queue.add(new int[]{next, time + 1, dir});
                 times[next] = time + 1;
                 chars[next] = dir == -1 ? 'L' : 'R';
-            }else if(times[next] == time + 1){
+            } else if (times[next] == time + 1) {
                 chars[next] = '.';
             }
         }
         return String.valueOf(chars);
         // 双指针
     }
+
     // 688. 骑士在棋盘上的概率
     //在一个 n x n 的国际象棋棋盘上，一个骑士从单元格 (row, column) 开始，并尝试进行 k 次移动。行和列是 从 0 开始 的，所以左上单元格是 (0,0) ，右下单元格是 (n - 1, n - 1) 。
     //象棋骑士有8种可能的走法，如下图所示。每次移动在基本方向上是两个单元格，然后在正交方向上是一个单元格。
@@ -216,17 +257,17 @@ public class ProblemSet {
     public double knightProbability(int n, int k, int row, int column) {
         int[][] dirs = new int[][]{{-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}, {1, 2}, {2, 1}, {2, -1}, {1, -2}};
         double[][][] dp = new double[k + 1][n][n];//移动k步，仍留在棋盘上的概率
-        for (int i = 0; i < n; i++){
-            for (int j = 0; j < n; j++){
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
                 dp[0][i][j] = 1;
             }
         }
-        for (int step = 1; step <= k; step++){
-            for (int i = 0; i < n; i++){
-                for (int j  = 0; j < n; j++){
-                    for (int[] dir : dirs){
+        for (int step = 1; step <= k; step++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    for (int[] dir : dirs) {
                         int x = i + dir[0], y = j + dir[1];
-                        if(x >=0 && x < n && y >= 0 && y < n){
+                        if (x >= 0 && x < n && y >= 0 && y < n) {
                             dp[step][i][j] += dp[step - 1][x][y] / 8;
                         }
                     }
