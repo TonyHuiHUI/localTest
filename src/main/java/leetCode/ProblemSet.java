@@ -107,8 +107,9 @@ public class ProblemSet {
 //        System.out.println(countValidWords("alice and  bob are playing stone-game10"));
 
 //        System.out.println(pushDominoes("R...L"));
-        int[][] a = {{0,1},{1,0},{0,1},{1,2},{2,0},{3,4}};
-        System.out.println(maximumRequests(5, a));
+//        int[][] a = {{0,1},{1,0},{0,1},{1,2},{2,0},{3,4}};
+//        System.out.println(maximumRequests(5, a));
+        System.out.println(convert("PAYPALISHIRING", 3));
     }
 
     public static class TreeNode {
@@ -136,7 +137,42 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
-
+    //6. Z 字形变换
+    //将一个给定字符串 s 根据给定的行数 numRows ，以从上往下、从左到右进行 Z 字形排列。
+    //比如输入字符串为 "PAYPALISHIRING" 行数为 3 时，排列如下：
+    //P   A   H   N
+    //A P L S I I G
+    //Y   I   R
+    //之后，你的输出需要从左往右逐行读取，产生出一个新的字符串，比如："PAHNAPLSIIGYIR"。
+    //请你实现这个将字符串进行指定行数变换的函数：
+    //string convert(string s, int numRows);
+    public static String convert(String s, int numRows) {
+        int n = s.length();
+        if(numRows == 1 || numRows >= n){
+            return s;
+        }
+        int t = 2 * numRows - 2;
+        int col = (n + t - 1) / t * (numRows - 1);
+        char[][] tmp = new char[numRows][col];
+        for(int i = 0, x = 0, y = 0; i < n; i++){
+            tmp[x][y] = s.charAt(i);
+            if(i % t < numRows - 1){
+                x++;
+            }else {
+                x--;
+                y++;
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char[] row : tmp){
+            for (char ch : row){
+                if(ch != 0){
+                    sb.append(ch);
+                }
+            }
+        }
+        return sb.toString();
+    }
     //1601. 最多可达成的换楼请求数目
     //我们有 n 栋楼，编号从 0 到 n - 1 。每栋楼有若干员工。由于现在是换楼的季节，部分员工想要换一栋楼居住。
     //给你一个数组 requests ，其中 requests[i] = [fromi, toi] ，表示一个员工请求从编号为 fromi 的楼搬到编号为 toi 的楼。
