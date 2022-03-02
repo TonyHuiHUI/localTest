@@ -109,7 +109,8 @@ public class ProblemSet {
 //        System.out.println(pushDominoes("R...L"));
 //        int[][] a = {{0,1},{1,0},{0,1},{1,2},{2,0},{3,4}};
 //        System.out.println(maximumRequests(5, a));
-        System.out.println(convert("PAYPALISHIRING", 3));
+//        System.out.println(convert("PAYPALISHIRING", 3));
+        System.out.println(nearestPalindromic("12345"));
     }
 
     public static class TreeNode {
@@ -136,6 +137,43 @@ public class ProblemSet {
         public Node prev;
         public Node next;
         public Node child;
+    }
+   //564. 寻找最近的回文数
+    //给定一个表示整数的字符串 n ，返回与它最近的回文整数（不包括自身）。如果不止一个，返回较小的那个。
+    //“最近的”定义为两个整数差的绝对值最小。
+    //构造回文整数有一个直观的方法：用原数的较高位的数字替换其对应的较低位
+    //存在几种情况：构造的回整数 > 、< 、 = 原数时
+    public static String nearestPalindromic(String n) {
+        long selfNumber = Long.parseLong(n), ans = -1;
+        List<Long> candidates = getCandidates(n);
+        for (long candidate : candidates) {
+            if (candidate != selfNumber) {
+                if (ans == -1 ||
+                        Math.abs(candidate - selfNumber) < Math.abs(ans - selfNumber) ||
+                        Math.abs(candidate - selfNumber) == Math.abs(ans - selfNumber) && candidate < ans) {
+                    ans = candidate;
+                }
+            }
+        }
+        return Long.toString(ans);
+    }
+    public static List<Long> getCandidates(String n) {
+        int len = n.length();
+        List<Long> candidates = new ArrayList<Long>() {{
+            add((long) Math.pow(10, len - 1) - 1);
+            add((long) Math.pow(10, len) + 1);
+        }};
+        long selfPrefix = Long.parseLong(n.substring(0, (len + 1) / 2));
+        for (long i = selfPrefix - 1; i <= selfPrefix + 1; i++) {
+            StringBuffer sb = new StringBuffer();
+            String prefix = String.valueOf(i);
+            sb.append(prefix);
+            StringBuffer suffix = new StringBuffer(prefix).reverse();
+            sb.append(suffix.substring(len & 1));
+            String candidate = sb.toString();
+            candidates.add(Long.parseLong(candidate));
+        }
+        return candidates;
     }
     //6. Z 字形变换
     //将一个给定字符串 s 根据给定的行数 numRows ，以从上往下、从左到右进行 Z 字形排列。
