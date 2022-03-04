@@ -110,7 +110,8 @@ public class ProblemSet {
 //        int[][] a = {{0,1},{1,0},{0,1},{1,2},{2,0},{3,4}};
 //        System.out.println(maximumRequests(5, a));
 //        System.out.println(convert("PAYPALISHIRING", 3));
-        System.out.println(nearestPalindromic("12345"));
+//        System.out.println(nearestPalindromic("12345"));
+        System.out.println(subArrayRanges(new int[]{1,2,3}));
     }
 
     public static class TreeNode {
@@ -137,6 +138,71 @@ public class ProblemSet {
         public Node prev;
         public Node next;
         public Node child;
+    }
+    //2104. 子数组范围和
+    //给你一个整数数组 nums 。nums 中，子数组的 范围 是子数组中最大元素和最小元素的差值。
+    //返回 nums 中 所有 子数组范围的 和 。
+    //子数组是数组中一个连续 非空 的元素序列。
+    public static long subArrayRanges(int[] nums) {
+        //遍历子数组
+//        int n = nums.length;
+//        long result = 0;
+//        for (int i = 0; i < n; i++){
+//            int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+//            for (int j = i; j < n; j++){
+//                min = Math.min(min, nums[j]);
+//                max = Math.max(max, nums[j]);
+//                result += max - min;
+//            }
+//        }
+//        return result;
+        //单调栈
+        int n = nums.length;
+        int[] minLeft = new int[n];
+        int[] minRight = new int[n];
+        int[] maxLeft = new int[n];
+        int[] maxRight = new int[n];
+        Deque<Integer> minStack = new ArrayDeque<Integer>();
+        Deque<Integer> maxStack = new ArrayDeque<Integer>();
+        for (int i = 0; i < n; i++) {
+            while (!minStack.isEmpty() && nums[minStack.peek()] > nums[i]) {
+                minStack.pop();
+            }
+            minLeft[i] = minStack.isEmpty() ? -1 : minStack.peek();
+            minStack.push(i);
+
+            // 如果 nums[maxStack.peek()] == nums[i], 那么根据定义，
+            // nums[maxStack.peek()] 逻辑上小于 nums[i]，因为 maxStack.peek() < i
+            while (!maxStack.isEmpty() && nums[maxStack.peek()] <= nums[i]) {
+                maxStack.pop();
+            }
+            maxLeft[i] = maxStack.isEmpty() ? -1 : maxStack.peek();
+            maxStack.push(i);
+        }
+        minStack.clear();
+        maxStack.clear();
+        for (int i = n - 1; i >= 0; i--) {
+            // 如果 nums[minStack.peek()] == nums[i], 那么根据定义，
+            // nums[minStack.peek()] 逻辑上大于 nums[i]，因为 minStack.peek() > i
+            while (!minStack.isEmpty() && nums[minStack.peek()] >= nums[i]) {
+                minStack.pop();
+            }
+            minRight[i] = minStack.isEmpty() ? n : minStack.peek();
+            minStack.push(i);
+
+            while (!maxStack.isEmpty() && nums[maxStack.peek()] < nums[i]) {
+                maxStack.pop();
+            }
+            maxRight[i] = maxStack.isEmpty() ? n : maxStack.peek();
+            maxStack.push(i);
+        }
+
+        long sumMax = 0, sumMin = 0;
+        for (int i = 0; i < n; i++) {
+            sumMax += (long) (maxRight[i] - i) * (i - maxLeft[i]) * nums[i];
+            sumMin += (long) (minRight[i] - i) * (i - minLeft[i]) * nums[i];
+        }
+        return sumMax - sumMin;
     }
    //564. 寻找最近的回文数
     //给定一个表示整数的字符串 n ，返回与它最近的回文整数（不包括自身）。如果不止一个，返回较小的那个。
