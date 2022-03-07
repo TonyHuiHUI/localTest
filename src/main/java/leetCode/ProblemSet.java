@@ -139,6 +139,29 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+//    504. 七进制数
+    //给定一个整数 num，将其转化为 7 进制，并以字符串形式输出。
+    public String convertToBase7(int num) {
+//        Integer.toString(num, 7);
+        if(num == 0){
+            return "0";
+        }
+        StringBuilder sb = new StringBuilder();
+        boolean flag = false;
+        if(num < 0){
+            num = - num;
+            flag = true;
+        }
+        while (num != 0){
+            sb.append(num % 7);
+            num /= 7;
+        }
+        if(flag){
+            sb.append("-");
+        }
+        return sb.reverse().toString();
+    }
     //2104. 子数组范围和
     //给你一个整数数组 nums 。nums 中，子数组的 范围 是子数组中最大元素和最小元素的差值。
     //返回 nums 中 所有 子数组范围的 和 。
