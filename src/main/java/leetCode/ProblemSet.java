@@ -112,7 +112,8 @@ public class ProblemSet {
 //        System.out.println(convert("PAYPALISHIRING", 3));
 //        System.out.println(nearestPalindromic("12345"));
 //        System.out.println(subArrayRanges(new int[]{1,2,3}));
-        System.out.println(bestRotation(new int[]{2,3,1,4,0}));
+//        System.out.println(bestRotation(new int[]{2,3,1,4,0}));
+        System.out.println(countHighestScoreNodes(new int[]{-1, 2, 0, 2, 0}));
     }
 
     public static class TreeNode {
@@ -140,6 +141,52 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+    //2049. 统计最高分的节点数目
+    //给你一棵根节点为 0 的 二叉树 ，它总共有 n 个节点，节点编号为 0 到 n - 1 。同时给你一个下标从 0 开始的整数数组 parents 表示这棵树，其中 parents[i] 是节点 i 的父节点。由于节点 0 是根，所以 parents[0] == -1 。
+    //一个子树的 大小 为这个子树内节点的数目。每个节点都有一个与之关联的 分数 。求出某个节点分数的方法是，将这个节点和与它相连的边全部 删除 ，剩余部分是若干个 非空 子树，这个节点的 分数 为所有这些子树 大小的乘积 。
+    //请你返回有 最高得分 节点的 数目 
+    static int count = 0;
+    static long maxScore = 0;
+    static int n;
+    static List<Integer>[] children;
+
+    public static int countHighestScoreNodes(int[] parents) {
+        n = parents.length;
+        children = new List[n];
+        for (int i = 0; i < n; i++) {
+            children[i] = new ArrayList<Integer>();
+        }
+        for (int i = 0; i < n; i++) {
+            int p = parents[i];
+            if (p != -1) {
+                children[p].add(i);
+            }
+        }
+        dfs(0);
+        return count;
+    }
+
+    public static int dfs(int index) {
+        int score = 1;
+        int size = n - 1;
+        for (int child : children[index]) {
+            int t = dfs(child);
+            score *= t;
+            size -= t;
+        }
+        if (index != 0) {
+            score *= size;
+        }
+        if (score == maxScore) {
+            count++;
+        } else if (score > maxScore) {
+            maxScore = score;
+            count = 1;
+        }
+        return n - size;
+    }
+
     //798. 得分最高的最小轮调
     //给你一个数组 nums，我们可以将它按一个非负整数 k 进行轮调，这样可以使数组变为 [nums[k], nums[k + 1], ... nums[nums.length - 1], nums[0], nums[1], ..., nums[k-1]] 的形式。此后，任何值小于或等于其索引的项都可以记作一分。
     //例如，数组为 nums = [2,4,1,3,0]，我们按 k = 2 进行轮调后，它将变成 [1,3,0,2,4]。这将记为 3 分，因为 1 > 0 [不计分]、3 > 1 [不计分]、0 <= 2 [计 1 分]、2 <= 3 [计 1 分]，4 <= 4 [计 1 分]。
@@ -168,6 +215,7 @@ public class ProblemSet {
         }
         return bestIndex;
     }
+
     //2055. 蜡烛之间的盘子
     //给你一个长桌子，桌子上盘子和蜡烛排成一列。给你一个下标从 0 开始的字符串 s ，它只包含字符 '*' 和 '|' ，其中 '*' 表示一个 盘子 ，'|' 表示一支 蜡烛 。
     //同时给你一个下标从 0 开始的二维整数数组 queries ，其中 queries[i] = [lefti, righti] 表示 子字符串 s[lefti...righti] （包含左右端点的字符）。对于每个查询，你需要找到 子字符串中 在 两支蜡烛之间 的盘子的 数目 。如果一个盘子在 子字符串中 左边和右边 都 至少有一支蜡烛，那么这个盘子满足在 两支蜡烛之间 。
@@ -177,54 +225,56 @@ public class ProblemSet {
         int n = s.length();
         int[] preSum = new int[n];
         for (int i = 0, sum = 0; i < n; i++) {
-            if(s.charAt(i) == '*'){
+            if (s.charAt(i) == '*') {
                 sum++;
             }
             preSum[i] = sum;
         }
         int[] left = new int[n];
-        for (int i = 0, l = -1; i < n; i++){
-            if(s.charAt(i) == '|'){
+        for (int i = 0, l = -1; i < n; i++) {
+            if (s.charAt(i) == '|') {
                 l = i;
             }
             left[i] = l;
         }
         int[] right = new int[n];
-        for(int i = n - 1, r = -1; i >= 0; i--){
-            if(s.charAt(i) == '|'){
+        for (int i = n - 1, r = -1; i >= 0; i--) {
+            if (s.charAt(i) == '|') {
                 r = i;
             }
             right[i] = r;
         }
         int[] res = new int[queries.length];
-        for (int i = 0; i < queries.length; i++){
+        for (int i = 0; i < queries.length; i++) {
             int x = right[queries[i][0]], y = left[queries[i][1]];
             res[i] = x == -1 || y == -1 || x >= y ? 0 : preSum[y] - preSum[x];
         }
         return res;
     }
-//    504. 七进制数
+
+    //    504. 七进制数
     //给定一个整数 num，将其转化为 7 进制，并以字符串形式输出。
     public String convertToBase7(int num) {
 //        Integer.toString(num, 7);
-        if(num == 0){
+        if (num == 0) {
             return "0";
         }
         StringBuilder sb = new StringBuilder();
         boolean flag = false;
-        if(num < 0){
-            num = - num;
+        if (num < 0) {
+            num = -num;
             flag = true;
         }
-        while (num != 0){
+        while (num != 0) {
             sb.append(num % 7);
             num /= 7;
         }
-        if(flag){
+        if (flag) {
             sb.append("-");
         }
         return sb.reverse().toString();
     }
+
     //2104. 子数组范围和
     //给你一个整数数组 nums 。nums 中，子数组的 范围 是子数组中最大元素和最小元素的差值。
     //返回 nums 中 所有 子数组范围的 和 。
@@ -290,7 +340,8 @@ public class ProblemSet {
         }
         return sumMax - sumMin;
     }
-   //564. 寻找最近的回文数
+
+    //564. 寻找最近的回文数
     //给定一个表示整数的字符串 n ，返回与它最近的回文整数（不包括自身）。如果不止一个，返回较小的那个。
     //“最近的”定义为两个整数差的绝对值最小。
     //构造回文整数有一个直观的方法：用原数的较高位的数字替换其对应的较低位
@@ -309,6 +360,7 @@ public class ProblemSet {
         }
         return Long.toString(ans);
     }
+
     public static List<Long> getCandidates(String n) {
         int len = n.length();
         List<Long> candidates = new ArrayList<Long>() {{
@@ -327,6 +379,7 @@ public class ProblemSet {
         }
         return candidates;
     }
+
     //6. Z 字形变换
     //将一个给定字符串 s 根据给定的行数 numRows ，以从上往下、从左到右进行 Z 字形排列。
     //比如输入字符串为 "PAYPALISHIRING" 行数为 3 时，排列如下：
@@ -338,31 +391,32 @@ public class ProblemSet {
     //string convert(string s, int numRows);
     public static String convert(String s, int numRows) {
         int n = s.length();
-        if(numRows == 1 || numRows >= n){
+        if (numRows == 1 || numRows >= n) {
             return s;
         }
         int t = 2 * numRows - 2;
         int col = (n + t - 1) / t * (numRows - 1);
         char[][] tmp = new char[numRows][col];
-        for(int i = 0, x = 0, y = 0; i < n; i++){
+        for (int i = 0, x = 0, y = 0; i < n; i++) {
             tmp[x][y] = s.charAt(i);
-            if(i % t < numRows - 1){
+            if (i % t < numRows - 1) {
                 x++;
-            }else {
+            } else {
                 x--;
                 y++;
             }
         }
         StringBuilder sb = new StringBuilder();
-        for (char[] row : tmp){
-            for (char ch : row){
-                if(ch != 0){
+        for (char[] row : tmp) {
+            for (char ch : row) {
+                if (ch != 0) {
                     sb.append(ch);
                 }
             }
         }
         return sb.toString();
     }
+
     //1601. 最多可达成的换楼请求数目
     //我们有 n 栋楼，编号从 0 到 n - 1 。每栋楼有若干员工。由于现在是换楼的季节，部分员工想要换一栋楼居住。
     //给你一个数组 requests ，其中 requests[i] = [fromi, toi] ，表示一个员工请求从编号为 fromi 的楼搬到编号为 toi 的楼。
