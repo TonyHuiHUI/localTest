@@ -113,7 +113,8 @@ public class ProblemSet {
 //        System.out.println(nearestPalindromic("12345"));
 //        System.out.println(subArrayRanges(new int[]{1,2,3}));
 //        System.out.println(bestRotation(new int[]{2,3,1,4,0}));
-        System.out.println(countHighestScoreNodes(new int[]{-1, 2, 0, 2, 0}));
+//        System.out.println(countHighestScoreNodes(new int[]{-1, 2, 0, 2, 0}));
+        System.out.println("activityEventConsumer_member".hashCode() % 50);
     }
 
     public static class TreeNode {
@@ -141,7 +142,24 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
-
+    //713. 乘积小于 K 的子数组
+    //给你一个整数数组 nums 和一个整数 k ，请你返回子数组内所有元素的乘积严格小于 k 的连续子数组的数目。
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        if(k <=1 ){
+            return 0;
+        }
+        int count = 0;
+        int n = nums.length;
+        int sum = 1;
+        for (int start = 0, end = 0; end < n; end++){
+            sum *= nums[end];
+            while (sum >= k){
+                sum /= nums[start++];
+            }
+            count += end - start + 1;
+        }
+        return count;
+    }
     //2049. 统计最高分的节点数目
     //给你一棵根节点为 0 的 二叉树 ，它总共有 n 个节点，节点编号为 0 到 n - 1 。同时给你一个下标从 0 开始的整数数组 parents 表示这棵树，其中 parents[i] 是节点 i 的父节点。由于节点 0 是根，所以 parents[0] == -1 。
     //一个子树的 大小 为这个子树内节点的数目。每个节点都有一个与之关联的 分数 。求出某个节点分数的方法是，将这个节点和与它相连的边全部 删除 ，剩余部分是若干个 非空 子树，这个节点的 分数 为所有这些子树 大小的乘积 。
