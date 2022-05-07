@@ -1,6 +1,7 @@
 package leetCode;
 
 
+import jdk.management.resource.internal.inst.FileOutputStreamRMHooks;
 import scala.Char;
 import scala.io.BytePickle;
 import sun.applet.resources.MsgAppletViewer_zh_CN;
@@ -142,24 +143,76 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+    //433. 最小基因变化
+    //基因序列可以表示为一条由 8 个字符组成的字符串，其中每个字符都是 'A'、'C'、'G' 和 'T' 之一。
+    //假设我们需要调查从基因序列 start 变为 end 所发生的基因变化。一次基因变化就意味着这个基因序列中的一个字符发生了变化。
+    //    例如，"AACCGGTT" --> "AACCGGTA" 就是一次基因变化。
+    //另有一个基因库 bank 记录了所有有效的基因变化，只有基因库中的基因才是有效的基因序列。
+    //给你两个基因序列 start 和 end ，以及一个基因库 bank ，请你找出并返回能够使 start 变化为 end 所需的最少变化次数。如果无法完成此基因变化，返回 -1 。
+    //注意：起始基因序列 start 默认是有效的，但是它并不一定会出现在基因库中。
+    public int minMutation(String start, String end, String[] bank) {
+        Set<String> bankSet = new HashSet<>();
+        Set<String> visited = new HashSet<>();
+        char[] keys = {'A', 'C', 'G', 'T'};
+        for (String ban : bank) {
+            bankSet.add(ban);
+        }
+        if (start.equals(end)) {
+            return 0;
+        }
+        if (!bankSet.contains(end)) {
+            return -1;
+        }
+        Queue<String> queue = new ArrayDeque<>();
+        queue.offer(start);
+        visited.add(start);
+        int step = 1;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                String cur = queue.poll();
+                for (int j = 0; j < 8; j++) {
+                    for (int k = 0; k < 4; k++) {
+                        if (cur.charAt(j) != keys[k]) {
+                            StringBuilder sb = new StringBuilder(cur);
+                            sb.setCharAt(j, keys[k]);
+                            String next = sb.toString();
+                            if(!visited.contains(next) && bankSet.contains(next)){
+                                if (next.equals(end)){
+                                    return step;
+                                }
+                                queue.offer(next);
+                                visited.add(next);
+                            }
+                        }
+                    }
+                }
+            }
+            step++;
+        }
+        return -1;
+    }
+
     //713. 乘积小于 K 的子数组
     //给你一个整数数组 nums 和一个整数 k ，请你返回子数组内所有元素的乘积严格小于 k 的连续子数组的数目。
     public int numSubarrayProductLessThanK(int[] nums, int k) {
-        if(k <=1 ){
+        if (k <= 1) {
             return 0;
         }
         int count = 0;
         int n = nums.length;
         int sum = 1;
-        for (int start = 0, end = 0; end < n; end++){
+        for (int start = 0, end = 0; end < n; end++) {
             sum *= nums[end];
-            while (sum >= k){
+            while (sum >= k) {
                 sum /= nums[start++];
             }
             count += end - start + 1;
         }
         return count;
     }
+
     //2049. 统计最高分的节点数目
     //给你一棵根节点为 0 的 二叉树 ，它总共有 n 个节点，节点编号为 0 到 n - 1 。同时给你一个下标从 0 开始的整数数组 parents 表示这棵树，其中 parents[i] 是节点 i 的父节点。由于节点 0 是根，所以 parents[0] == -1 。
     //一个子树的 大小 为这个子树内节点的数目。每个节点都有一个与之关联的 分数 。求出某个节点分数的方法是，将这个节点和与它相连的边全部 删除 ，剩余部分是若干个 非空 子树，这个节点的 分数 为所有这些子树 大小的乘积 。
