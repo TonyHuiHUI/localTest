@@ -115,8 +115,34 @@ public class ProblemSet {
 //        System.out.println(subArrayRanges(new int[]{1,2,3}));
 //        System.out.println(bestRotation(new int[]{2,3,1,4,0}));
 //        System.out.println(countHighestScoreNodes(new int[]{-1, 2, 0, 2, 0}));
-        System.out.println("activityEventConsumer_member".hashCode() % 50);
+//        System.out.println("activityEventConsumer_member".hashCode() % 50);
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = null;
+        CBTInserter obj = new CBTInserter(root);
+        obj.insert(3);
+        obj.insert(4);
+        TreeNode node = obj.get_root();
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.offer(node);
+        while (!queue.isEmpty()){
+            TreeNode node1 = queue.poll();
+            System.out.println("node:" + node1.val);
+            if (node1.left != null){
+                System.out.println("node left:" + node1.left.val);
+                queue.offer(node1.left);
+            }else {
+                System.out.println("node left: null");
+            }
+            if(node1.right != null){
+                System.out.println("node right:" + node1.right.val);
+                queue.offer(node1.right);
+            }else {
+                System.out.println("node right: null");
+            }
+        }
     }
+
 
     public static class TreeNode {
         int val;
@@ -144,6 +170,54 @@ public class ProblemSet {
         public Node child;
     }
 
+
+    //919. 完全二叉树插入器
+//    完全二叉树 是每一层（除最后一层外）都是完全填充（即，节点数达到最大）的，并且所有的节点都尽可能地集中在左侧。
+//    设计一种算法，将一个新节点插入到一个完整的二叉树中，并在插入后保持其完整。
+//    实现 CBTInserter 类:
+//    CBTInserter(TreeNode root) 使用头节点为 root 的给定树初始化该数据结构；
+//            CBTInserter.insert(int v)  向树中插入一个值为 Node.val == val的新节点 TreeNode。使树保持完全二叉树的状态，并返回插入节点 TreeNode 的父节点的值；
+//            CBTInserter.get_root() 将返回树的头节点。
+       static class CBTInserter {
+            Queue<TreeNode> candidate;
+            TreeNode root;
+            public CBTInserter(TreeNode root) {
+                this.root = root;
+                this.candidate = new ArrayDeque<>();
+                Queue<TreeNode> queue = new ArrayDeque<>();
+                queue.offer(root);
+                while (!queue.isEmpty()) {
+                    TreeNode node = queue.poll();
+                    if (node.left != null) {
+                        queue.offer(node.left);
+                    }
+                    if (node.right != null) {
+                        queue.offer(node.right);
+                    }
+                    if (!(node.left != null && node.right != null)) {
+                        candidate.offer(node);
+                    }
+                }
+            }
+
+            public int insert(int val) {
+                TreeNode child = new TreeNode(val);
+                TreeNode node = candidate.peek();
+                int ret = node.val;
+                if (node.left == null) {
+                    node.left = child;
+                } else {
+                    node.right = child;
+                    candidate.poll();
+                }
+                candidate.offer(child);
+                return ret;
+            }
+
+            public TreeNode get_root() {
+                return root;
+            }
+        }
     //942. 增减字符串匹配
     //由范围 [0,n] 内所有整数组成的 n + 1 个整数的排列序列可以表示为长度为 n 的字符串 s ，其中:
     //    如果 perm[i] < perm[i + 1] ，那么 s[i] == 'I'
