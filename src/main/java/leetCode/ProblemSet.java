@@ -2,6 +2,7 @@ package leetCode;
 
 
 import jdk.management.resource.internal.inst.FileOutputStreamRMHooks;
+import org.springframework.security.core.parameters.P;
 import scala.Char;
 import scala.io.BytePickle;
 import sun.applet.resources.MsgAppletViewer_zh_CN;
@@ -116,31 +117,34 @@ public class ProblemSet {
 //        System.out.println(bestRotation(new int[]{2,3,1,4,0}));
 //        System.out.println(countHighestScoreNodes(new int[]{-1, 2, 0, 2, 0}));
 //        System.out.println("activityEventConsumer_member".hashCode() % 50);
-        TreeNode root = new TreeNode(1);
-        root.left = new TreeNode(2);
-        root.right = null;
-        CBTInserter obj = new CBTInserter(root);
-        obj.insert(3);
-        obj.insert(4);
-        TreeNode node = obj.get_root();
-        Queue<TreeNode> queue = new ArrayDeque<>();
-        queue.offer(node);
-        while (!queue.isEmpty()){
-            TreeNode node1 = queue.poll();
-            System.out.println("node:" + node1.val);
-            if (node1.left != null){
-                System.out.println("node left:" + node1.left.val);
-                queue.offer(node1.left);
-            }else {
-                System.out.println("node left: null");
-            }
-            if(node1.right != null){
-                System.out.println("node right:" + node1.right.val);
-                queue.offer(node1.right);
-            }else {
-                System.out.println("node right: null");
-            }
-        }
+//        TreeNode root = new TreeNode(1);
+//        root.left = new TreeNode(2);
+//        root.right = null;
+//        CBTInserter obj = new CBTInserter(root);
+//        obj.insert(3);
+//        obj.insert(4);
+//        TreeNode node = obj.get_root();
+//        Queue<TreeNode> queue = new ArrayDeque<>();
+//        queue.offer(node);
+//        while (!queue.isEmpty()){
+//            TreeNode node1 = queue.poll();
+//            System.out.println("node:" + node1.val);
+//            if (node1.left != null){
+//                System.out.println("node left:" + node1.left.val);
+//                queue.offer(node1.left);
+//            }else {
+//                System.out.println("node left: null");
+//            }
+//            if(node1.right != null){
+//                System.out.println("node right:" + node1.right.val);
+//                queue.offer(node1.right);
+//            }else {
+//                System.out.println("node right: null");
+//            }
+//        }
+
+
+        System.out.println("11700205".hashCode() % 12);
     }
 
 
@@ -170,6 +174,110 @@ public class ProblemSet {
         public Node child;
     }
 
+//    2319. 判断矩阵是否是一个 X 矩阵
+//    如果一个正方形矩阵满足下述 全部 条件，则称之为一个 X 矩阵 ：
+//
+//    矩阵对角线上的所有元素都 不是 0
+//    矩阵中所有其他元素都是 0
+//    给你一个大小为 n x n 的二维整数数组 grid ，表示一个正方形矩阵。如果 grid 是一个 X 矩阵 ，返回 true ；否则，返回 false 。
+    public boolean checkXMatrix(int[][] grid) {
+        int length = grid.length;
+        for (int i = 0; i < length; i++){
+            for (int j = 0; j < length; j++){
+                if (i == j || i == length - j - 1){
+                    if (grid[i][j] == 0){
+                        return false;
+                    }
+                }else if (grid[i][j] != 0){
+                        return false;
+                    }
+            }
+        }
+        return true;
+    }
+
+//    1669. 合并两个链表
+//    给你两个链表 list1 和 list2 ，它们包含的元素分别为 n 个和 m 个。
+//
+//    请你将 list1 中下标从 a 到 b 的全部节点都删除，并将list2 接在被删除节点的位置。
+    public ListNode mergeInBetween(ListNode list1, int a, int b, ListNode list2) {
+        ListNode node = list1, pre = null;
+        for (int i = 0; i < a; i++ ){
+            pre = node;
+            node = node.next;
+        }
+        pre.next = list2;
+        while (pre.next != null){
+            pre = pre.next;
+        }
+        for (int i = a; i <= b; i++){
+            node = node.next;
+        }
+        pre.next = node;
+        return list1;
+    }
+
+
+//    2315. 统计星号
+//    给你一个字符串 s ，每 两个 连续竖线 '|' 为 一对 。换言之，第一个和第二个 '|' 为一对，第三个和第四个 '|' 为一对，以此类推。
+//
+//    请你返回 不在 竖线对之间，s 中 '*' 的数目。
+//
+//    注意，每个竖线 '|' 都会 恰好 属于一个对。
+    public int countAsterisks(String s) {
+        int res = 0;
+        boolean flag = true;
+        for (int i = 0; i < s.length(); i++){
+            char c = s.charAt(i);
+            if(c == '|'){
+                flag = !flag;
+            }else if(c == '*' && flag) {
+                res++;
+            }
+        }
+        return  res;
+    }
+//    1664. 生成平衡数组的方案数
+//    给你一个整数数组 nums 。你需要选择 恰好 一个下标（下标从 0 开始）并删除对应的元素。请注意剩下元素的下标可能会因为删除操作而发生改变。
+//
+//    比方说，如果 nums = [6,1,7,4,1] ，那么：
+//
+//    选择删除下标 1 ，剩下的数组为 nums = [6,7,4,1] 。
+//    选择删除下标 2 ，剩下的数组为 nums = [6,1,4,1] 。
+//    选择删除下标 4 ，剩下的数组为 nums = [6,1,7,4] 。
+//    如果一个数组满足奇数下标元素的和与偶数下标元素的和相等，该数组就是一个 平衡数组 。
+//
+//    请你返回删除操作后，剩下的数组 nums 是 平衡数组 的 方案数 。
+
+    public int waysToMakeFair(int[] nums) {
+        int odd = 0, even = 0;
+        for (int i = 0; i < nums.length; i++){
+            if ((i & 1) == 0){
+                even += nums[i];
+            }else {
+                odd += nums[i];
+            }
+        }
+        int res = 0;
+        int odd1 = 0, even1 = 0;
+        for (int i =0; i < nums.length; i++){
+            if((i & 1) == 0) {
+                even -= nums[i];
+            }else {
+                odd -= nums[i];
+            }
+
+            if (even + odd1 == odd + even1) res++;
+
+            if((i & 1) == 0){
+                even1 += nums[i];
+            }else {
+                odd1 += nums[i];
+            }
+
+        }
+        return res;
+    }
 
     //919. 完全二叉树插入器
 //    完全二叉树 是每一层（除最后一层外）都是完全填充（即，节点数达到最大）的，并且所有的节点都尽可能地集中在左侧。
