@@ -144,7 +144,10 @@ public class ProblemSet {
 //        }
 
 
-        System.out.println("11700205".hashCode() % 12);
+        //System.out.println("11700205".hashCode() % 12);
+//        System.out.printf(decodeMessage("the quick brown fox jumps over the lazy dog", "vkbs bs t suepuv"));
+        int[] a = {9,9,6,0,1,6,9,9,9};
+        System.out.println(longestWPI(a));
     }
 
 
@@ -172,6 +175,74 @@ public class ProblemSet {
         public Node prev;
         public Node next;
         public Node child;
+    }
+//    1250. 检查「好数组」
+//    给你一个正整数数组 nums，你需要从中任选一些子集，然后将子集中每一个数乘以一个 任意整数，并求出他们的和。
+//
+//    假如该和结果为 1，那么原数组就是一个「好数组」，则返回 True；否则请返回 False。
+    public boolean isGoodArray(int[] nums) {
+        int divisor = nums[0];
+        for (int num : nums) {
+            divisor = gcd(divisor, num);
+            if (divisor == 1) {
+                break;
+            }
+        }
+        return divisor == 1;
+    }
+
+
+
+//    1124. 表现良好的最长时间段
+//    给你一份工作时间表 hours，上面记录着某一位员工每天的工作小时数。
+//
+//    我们认为当员工一天中的工作小时数大于 8 小时的时候，那么这一天就是「劳累的一天」。
+//
+//    所谓「表现良好的时间段」，意味在这段时间内，「劳累的天数」是严格 大于「不劳累的天数」。
+//
+//    请你返回「表现良好时间段」的最大长度。
+    public static int longestWPI(int[] hours) {
+        int n = hours.length;
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        int s = 0, res = 0;
+        for (int i = 0; i < n; i++) {
+            s += hours[i] > 8 ? 1 : -1;
+            if (s > 0) {
+                res = Math.max(res, i + 1);
+            } else {
+                if (map.containsKey(s - 1)) {
+                    res = Math.max(res, i - map.get(s - 1));
+                }
+            }
+            if (!map.containsKey(s)) {
+                map.put(s, i);
+            }
+        }
+        return res;
+    }
+//    2325. 解密消息
+//    给你字符串 key 和 message ，分别表示一个加密密钥和一段加密消息。解密 message 的步骤如下：
+//
+//    使用 key 中 26 个英文小写字母第一次出现的顺序作为替换表中的字母 顺序 。
+//    将替换表与普通英文字母表对齐，形成对照表。
+//    按照对照表 替换 message 中的每个字母。
+//    空格 ' ' 保持不变。
+//    例如，key = "happy boy"（实际的加密密钥会包含字母表中每个字母 至少一次），据此，可以得到部分对照表（'h' -> 'a'、'a' -> 'b'、'p' -> 'c'、'y' -> 'd'、'b' -> 'e'、'o' -> 'f'）。
+//    返回解密后的消息。
+    public static String decodeMessage(String key, String message) {
+        int initChar = 97;
+        HashMap<Character, Character> hashMap = new HashMap<>(16);
+        hashMap.put(' ', ' ');
+        for (int i = 0; i < key.length(); i++){
+            if (!hashMap.containsKey(key.charAt(i))) {
+                hashMap.put(key.charAt(i), (char) initChar++);
+            }
+        }
+        String res = "";
+        for (int i = 0; i < message.length(); i++){
+            res += hashMap.get(message.charAt(i));
+        }
+        return res;
     }
 
 //    2319. 判断矩阵是否是一个 X 矩阵
