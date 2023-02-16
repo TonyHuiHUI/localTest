@@ -176,6 +176,26 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+//    2341. 数组能形成多少数对
+//    给你一个下标从 0 开始的整数数组 nums 。在一步操作中，你可以执行以下步骤：
+//
+//    从 nums 选出 两个 相等的 整数
+//    从 nums 中移除这两个整数，形成一个 数对
+//    请你在 nums 上多次执行此操作直到无法继续执行。
+//
+//    返回一个下标从 0 开始、长度为 2 的整数数组 answer 作为答案，其中 answer[0] 是形成的数对数目，answer[1] 是对 nums 尽可能执行上述操作后剩下的整数数目。
+    public int[] numberOfPairs(int[] nums) {
+        Map<Integer, Boolean> cnt = new HashMap<Integer, Boolean>();
+        int res = 0;
+        for (int num : nums) {
+            cnt.put(num, !cnt.getOrDefault(num, false));
+            if (!cnt.get(num)) {
+                res++;
+            }
+        }
+        return new int[]{res, nums.length - 2 * res};
+    }
 //    1250. 检查「好数组」
 //    给你一个正整数数组 nums，你需要从中任选一些子集，然后将子集中每一个数乘以一个 任意整数，并求出他们的和。
 //
