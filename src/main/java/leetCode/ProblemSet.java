@@ -146,8 +146,10 @@ public class ProblemSet {
 
         //System.out.println("11700205".hashCode() % 12);
 //        System.out.printf(decodeMessage("the quick brown fox jumps over the lazy dog", "vkbs bs t suepuv"));
-        int[] a = {9,9,6,0,1,6,9,9,9};
-        System.out.println(longestWPI(a));
+//        int[] a = {9,9,6,0,1,6,9,9,9};
+//        System.out.println(longestWPI(a));
+        int[][] a = {{1,1,1},{1,0,1},{1,1,1}};
+        System.out.println(largest1BorderedSquare(a));
     }
 
 
@@ -177,6 +179,28 @@ public class ProblemSet {
         public Node child;
     }
 
+//    1139. 最大的以 1 为边界的正方形
+//    给你一个由若干 0 和 1 组成的二维网格 grid，请你找出边界全部由 1 组成的最大 正方形 子网格，并返回该子网格中的元素数量。如果不存在，则返回 0。
+    public static int largest1BorderedSquare(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        int[][] left = new int[m + 1][n + 1];
+        int[][] up = new int[m + 1][n + 1];
+        int maxLen = 0;
+        for (int i = 1; i <= m; i++){
+            for (int j = 1; j <= n; j++){
+                if (grid[i - 1][j - 1] == 1){
+                    left[i][j] = left[i][j - 1] + 1;
+                    up[i][j] = up[i - 1][j] + 1;
+                    int len = Math.min(left[i][j], up[i][j]);
+                    while (left[i - len + 1][j] < len || up[i][j - len + 1] <len){
+                        len--;
+                    }
+                    maxLen = Math.max(maxLen, len);
+                }
+            }
+        }
+        return  maxLen * maxLen;
+    }
 //    2341. 数组能形成多少数对
 //    给你一个下标从 0 开始的整数数组 nums 。在一步操作中，你可以执行以下步骤：
 //
