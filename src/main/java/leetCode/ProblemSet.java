@@ -179,6 +179,40 @@ public class ProblemSet {
         public Node child;
     }
 
+
+//    2347. 最好的扑克手牌
+//    给你一个整数数组 ranks 和一个字符数组 suit 。你有 5 张扑克牌，第 i 张牌大小为 ranks[i] ，花色为 suits[i] 。
+//
+//    下述是从好到坏你可能持有的 手牌类型 ：
+//
+//            "Flush"：同花，五张相同花色的扑克牌。
+//            "Three of a Kind"：三条，有 3 张大小相同的扑克牌。
+//            "Pair"：对子，两张大小一样的扑克牌。
+//            "High Card"：高牌，五张大小互不相同的扑克牌。
+//    请你返回一个字符串，表示给定的 5 张牌中，你能组成的 最好手牌类型 。
+    public String bestHand(int[] ranks, char[] suits) {
+        Set<Character> suitSet = new HashSet<>();
+        for (char c : suits){
+            suitSet.add(c);
+        }
+        if (suitSet.size() == 1){
+            return "Flush";
+        }
+        HashMap<Integer, Integer> rankMap =  new HashMap<>();
+        for (int rank : ranks){
+            rankMap.put(rank,rankMap.getOrDefault(rank,0) + 1);
+        }
+        if (rankMap.size() == 5){
+            return "High Card";
+        }
+        for (Map.Entry<Integer, Integer> entry : rankMap.entrySet()){
+            if (entry.getValue() > 2){
+                return "Three of a Kind";
+            }
+        }
+        return "Pair";
+    }
+
 //    1139. 最大的以 1 为边界的正方形
 //    给你一个由若干 0 和 1 组成的二维网格 grid，请你找出边界全部由 1 组成的最大 正方形 子网格，并返回该子网格中的元素数量。如果不存在，则返回 0。
     public static int largest1BorderedSquare(int[][] grid) {
