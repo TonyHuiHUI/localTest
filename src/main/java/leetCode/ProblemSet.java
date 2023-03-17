@@ -178,7 +178,34 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+    //2389. 和有限的最长子序列
+/*    给你一个长度为 n 的整数数组 nums ，和一个长度为 m 的整数数组 queries 。
 
+    返回一个长度为 m 的数组 answer ，其中 answer[i] 是 nums 中 元素之和小于等于 queries[i] 的 子序列 的 最大 长度  。
+
+    子序列 是由一个数组删除某些元素（也可以不删除）但不改变剩余元素顺序得到的一个数组。*/
+    public int[] answerQueries(int[] nums, int[] queries) {
+        int n = nums.length, m = queries.length;
+        Arrays.sort(nums);
+        int[] prefix = new int[n + 1];
+        for (int i = 0; i < n; i++){
+            prefix[i + 1] = prefix[i] + nums[i];
+        }
+        int[] res = new int[m];
+        for (int i = 0; i < m; i++){
+            int left = 1, right = prefix.length;
+            while(left < right){
+                int mid = left + (right - left) / 2;
+                if (prefix[mid] > queries[i]){
+                    right = mid;
+                }else {
+                    left = mid + 1;
+                }
+            }
+            res[i] = left - 1;
+        }
+        return  res;
+    }
     //1605. 给定行和列的和求可行矩阵
     //给你两个非负整数数组 rowSum 和 colSum ，其中 rowSum[i] 是二维矩阵中第 i 行元素的和， colSum[j] 是第 j 列元素的和。换言之你不知道矩阵里的每个元素，但是你知道每一行和每一列的和。
     //请找到大小为 rowSum.length x colSum.length 的任意 非负整数 矩阵，且该矩阵满足 rowSum 和 colSum 的要求。
