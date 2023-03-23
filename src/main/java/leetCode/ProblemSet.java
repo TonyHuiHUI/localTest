@@ -2,6 +2,7 @@ package leetCode;
 
 
 import jdk.management.resource.internal.inst.FileOutputStreamRMHooks;
+import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.security.core.parameters.P;
 import scala.Char;
 import scala.io.BytePickle;
@@ -178,8 +179,57 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
-
-
+//    1630. 等差子数组
+//    如果一个数列由至少两个元素组成，且每两个连续元素之间的差值都相同，那么这个序列就是 等差数列 。更正式地，数列 s 是等差数列，只需要满足：对于每个有效的 i ， s[i+1] - s[i] == s[1] - s[0] 都成立。
+//
+//    例如，下面这些都是 等差数列 ：
+//
+//            1, 3, 5, 7, 9
+//            7, 7, 7, 7
+//            3, -1, -5, -9
+//    下面的数列 不是等差数列 ：
+//
+//            1, 1, 2, 5, 7
+//    给你一个由 n 个整数组成的数组 nums，和两个由 m 个整数组成的数组 l 和 r，后两个数组表示 m 组范围查询，其中第 i 个查询对应范围 [l[i], r[i]] 。所有数组的下标都是 从 0 开始 的。
+//
+//    返回 boolean 元素构成的答案列表 answer 。如果子数组 nums[l[i]], nums[l[i]+1], ... , nums[r[i]] 可以 重新排列 形成 等差数列 ，answer[i] 的值就是 true；否则answer[i] 的值就是 false 。
+    public List<Boolean> checkArithmeticSubarrays(int[] nums, int[] l, int[] r) {
+        int n = l.length;
+        List<Boolean> res = new ArrayList<Boolean>();
+        for (int i = 0; i < n; i++){
+            int left = l[i], right = r[i];
+            int min = nums[left], max = nums[left];
+            for (int j = left + 1; j <= right; j++){
+                min = Math.min(min, nums[j]);
+                max = Math.max(max, nums[j]);
+            }
+            if (min == max){
+                res.add(true);
+                continue;
+            }
+            if ((max - min) % (right - left) != 0){
+                res.add(false);
+                continue;
+            }
+            int d = (max - min) / (right - left);
+            boolean flag = true;
+            boolean[] temp = new boolean[right - left + 1];
+            for (int j = left; j <= right; j++){
+                if((nums[j] - min) % d != 0){
+                    flag = false;
+                    break;
+                }
+                int t = (nums[j] - min) / d;
+                if (temp[t]){
+                    flag = false;
+                    break;
+                }
+                temp[t] = true;
+            }
+            res.add(flag);
+        }
+        return res;
+    }
 //    1626. 无矛盾的最佳球队
 //    假设你是球队的经理。对于即将到来的锦标赛，你想组合一支总体得分最高的球队。球队的得分是球队中所有球员的分数 总和 。
 //
