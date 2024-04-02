@@ -5,6 +5,7 @@ import jdk.management.resource.internal.inst.FileOutputStreamRMHooks;
 import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.security.core.parameters.P;
 import scala.Char;
+import scala.collection.mutable.StringBuilder;
 import scala.io.BytePickle;
 import sun.applet.resources.MsgAppletViewer_zh_CN;
 
@@ -149,8 +150,17 @@ public class ProblemSet {
 //        System.out.printf(decodeMessage("the quick brown fox jumps over the lazy dog", "vkbs bs t suepuv"));
 //        int[] a = {9,9,6,0,1,6,9,9,9};
 //        System.out.println(longestWPI(a));
-        int[][] a = {{1,1,1},{1,0,1},{1,1,1}};
-        System.out.println(largest1BorderedSquare(a));
+//        int[][] a = {{1,1,1},{1,0,1},{1,1,1}};
+//        System.out.println(largest1BorderedSquare(a));
+
+//        String str1 = new StringBuilder("计算机").append("软件").toString();
+//        System.out.println(str1.intern() == str1);
+//
+//        String str2 = new StringBuilder("ja").append("va").toString();
+//        System.out.println(str2.intern() == str2);
+
+//        System.out.println(queryString("0110", 3));
+        System.out.println(allPossibleFBT(7));
     }
 
 
@@ -179,6 +189,67 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+/*    894. 所有可能的真二叉树
+    给你一个整数 n ，请你找出所有可能含 n 个节点的 真二叉树 ，并以列表形式返回。答案中每棵树的每个节点都必须符合 Node.val == 0 。
+    答案的每个元素都是一棵真二叉树的根节点。你可以按 任意顺序 返回最终的真二叉树列表。
+    真二叉树 是一类二叉树，树中每个节点恰好有 0 或 2 个子节点。*/
+    public static List<TreeNode> allPossibleFBT(int n) {
+        List<TreeNode> result = new ArrayList<TreeNode>();
+        if( n % 2 == 0){
+            return result;
+        }
+        if (n == 1){
+            result.add(new TreeNode(0));
+            return result;
+        }
+
+        for(int i = 1; i < n; i+=2){
+            List<TreeNode> left = allPossibleFBT(i);
+            List<TreeNode> right = allPossibleFBT(n - 1 - i);
+            for(TreeNode leftNode : left){
+                for(TreeNode rightNode : right){
+                    TreeNode root = new TreeNode(0, leftNode, rightNode);
+                    result.add(root);
+                }
+            }
+        }
+        return result;
+    }
+
+    //1016. 子串能表示从 1 到 N 数字的二进制串
+    //给定一个二进制字符串 s 和一个正整数 n，如果对于 [1, n] 范围内的每个整数，其二进制表示都是 s 的 子字符串 ，就返回 true，否则返回 false 。
+    //
+    //子字符串 是字符串中连续的字符序列
+        public static  boolean queryString(String s, int n) {
+            if (n == 1) {
+                return s.indexOf('1') != -1;
+            }
+            int k = 30;
+            while ((1 << k) >= n) {
+                --k;
+            }
+            if (s.length() < (1 << (k - 1)) + k - 1 || s.length() < n - (1 << k) + k + 1) {
+                return false;
+            }
+            return help(s, k, 1 << (k - 1), (1 << k) - 1) && help(s, k + 1, 1 << k, n);
+        }
+
+        public static boolean help(String s, int k, int mi, int ma) {
+            Set<Integer> set = new HashSet<Integer>();
+            int t = 0;
+            for (int r = 0; r < s.length(); ++r) {
+                t = t * 2 + (s.charAt(r) - '0');
+                if (r >= k) {
+                    t -= (s.charAt(r - k) - '0') << k;
+                }
+                if (r >= k - 1 && t >= mi && t <= ma) {
+                    set.add(t);
+                }
+            }
+            return set.size() == ma - mi + 1;
+        }
+
 //    1630. 等差子数组
 //    如果一个数列由至少两个元素组成，且每两个连续元素之间的差值都相同，那么这个序列就是 等差数列 。更正式地，数列 s 是等差数列，只需要满足：对于每个有效的 i ， s[i+1] - s[i] == s[1] - s[0] 都成立。
 //
