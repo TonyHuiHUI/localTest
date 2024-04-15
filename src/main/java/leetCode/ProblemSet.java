@@ -12,6 +12,8 @@ import sun.applet.resources.MsgAppletViewer_zh_CN;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static java.util.Objects.hash;
+
 public class ProblemSet {
     public static void main(String[] args) {
 //        int[] a = {3, 0, 6, 1, 5};
@@ -161,6 +163,8 @@ public class ProblemSet {
 
 //        System.out.println(queryString("0110", 3));
         System.out.println(maximumBinaryString("000110"));
+        System.out.println(gcd(5,0));
+
     }
 
 
@@ -192,6 +196,95 @@ public class ProblemSet {
 
 
 
+/*
+    706. 设计哈希映射
+
+    不使用任何内建的哈希表库设计一个哈希映射（HashMap）。
+
+    实现 MyHashMap 类：
+
+    MyHashMap() 用空映射初始化对象
+    void put(int key, int value) 向 HashMap 插入一个键值对 (key, value) 。如果 key 已经存在于映射中，则更新其对应的值 value 。
+    int get(int key) 返回特定的 key 所映射的 value ；如果映射中不包含 key 的映射，返回 -1 。
+    void remove(key) 如果映射中存在 key 的映射，则移除 key 和它所对应的 value 。
+*/
+
+    static class MyHashMap {
+        private class Pair{
+            private int key;
+            private int value;
+
+            public Pair(int key, int value){
+                this.key = key;
+                this.value = value;
+            }
+
+            public int getKey() {
+                return key;
+            }
+
+            public int getValue() {
+                return value;
+            }
+
+            public void setValue(int value){
+                this.value = value;
+            }
+
+        }
+
+        private static final int BASE = 769;
+        private LinkedList[] data ;
+
+
+        public MyHashMap() {
+            data = new LinkedList[BASE];
+            for (int i = -0; i < BASE; i++){
+                data[i] = new LinkedList<Pair>();
+            }
+        }
+
+        public void put(int key, int value) {
+            int h = hash(key);
+            Iterator<Pair> iterator = data[h].iterator();
+            while (iterator.hasNext()){
+                Pair pair = iterator.next();
+                if (pair.getKey() == key){
+                    pair.setValue(value);
+                    return;
+                }
+            }
+            data[h].offerLast(new Pair(key, value));
+        }
+
+        public int get(int key) {
+            int h = hash(key);
+            Iterator<Pair> iterator = data[h].iterator();
+            while (iterator.hasNext()){
+                Pair pair = iterator.next();
+                if (pair.getKey() == key){
+                    return pair.getValue();
+                }
+            }
+            return  -1;
+        }
+
+        public void remove(int key) {
+            int h = hash(key);
+            Iterator<Pair> iterator = data[h].iterator();
+            while (iterator.hasNext()){
+                Pair pair = iterator.next();
+                if (pair.getKey() == key){
+                    data[h].remove(pair);
+                    return;
+                }
+            }
+        }
+        private static int hash(int key){
+            return key % BASE;
+        }
+    }
+
     /*
     1702. 修改后的最大二进制字符串
     给你一个二进制字符串 binary ，它仅有 0 或者 1 组成。你可以使用下面的操作任意次对它进行修改：
@@ -221,6 +314,90 @@ public class ProblemSet {
         }
         return  new String(b);
     }
+
+
+
+    /* 1766. 互质树
+        给你一个 n 个节点的树（也就是一个无环连通无向图），节点编号从 0 到 n - 1 ，且恰好有 n - 1 条边，每个节点有一个值。树的 根节点 为 0 号点。
+
+    给你一个整数数组 nums 和一个二维数组 edges 来表示这棵树。nums[i] 表示第 i 个点的值，edges[j] = [uj, vj] 表示节点 uj 和节点 vj 在树中有一条边。
+
+    当 gcd(x, y) == 1 ，我们称两个数 x 和 y 是 互质的 ，其中 gcd(x, y) 是 x 和 y 的 最大公约数 。
+
+    从节点 i 到 根 最短路径上的点都是节点 i 的祖先节点。一个节点 不是 它自己的祖先节点。
+
+    请你返回一个大小为 n 的数组 ans ，其中 ans[i]是离节点 i 最近的祖先节点且满足 nums[i] 和 nums[ans[i]] 是 互质的 ，如果不存在这样的祖先节点，ans[i] 为 -1 。
+     */
+//    public int[] getCoprimes(int[] nums, int[][] edges) {
+//
+//    }
+
+        List<Integer>[] gcds;
+        List<Integer>[] tmp;
+        List<Integer>[] g;
+        int[] dep;
+        int[] ans;
+
+        public int[] getCoprimes(int[] nums, int[][] edges) {
+            int n = nums.length;
+
+            // 初始化
+            gcds = new List[51];
+            tmp = new List[51];
+            for (int i = 0; i <= 50; i++) {
+                gcds[i] = new ArrayList<Integer>();
+                tmp[i] = new ArrayList<Integer>();
+            }
+            ans = new int[n];
+            dep = new int[n];
+            Arrays.fill(ans, -1);
+            Arrays.fill(dep, -1);
+            g = new List[n];
+            for (int i = 0; i < n; i++) {
+                g[i] = new ArrayList<Integer>();
+            }
+
+            for (int i = 1; i <= 50; i++) {
+                for (int j = 1; j <= 50; j++) {
+                    if (gcd(i, j) == 1) {
+                        gcds[i].add(j);
+                    }
+                }
+            }
+
+            for (int[] val : edges) {
+                g[val[0]].add(val[1]);
+                g[val[1]].add(val[0]);
+            }
+
+            dfs(nums, 0, 1);
+
+            return ans;
+        }
+
+
+        public void dfs(int[] nums, int x, int depth) {
+            dep[x] = depth;
+            for (int val : gcds[nums[x]]) {
+                if (tmp[val].isEmpty()) {
+                    continue;
+                }
+
+                int las = tmp[val].get(tmp[val].size() - 1);
+                if (ans[x] == -1 || dep[las] > dep[ans[x]]) {
+                    ans[x] = las;
+                }
+            }
+            tmp[nums[x]].add(x);
+
+            for (int val : g[x]) {
+                if (dep[val] == -1) { // 被访问过的点dep不为-1
+                    dfs(nums, val, depth + 1);
+                }
+            }
+
+            tmp[nums[x]].remove(tmp[nums[x]].size() - 1);
+        }
 
 
 
@@ -1353,7 +1530,7 @@ public class ProblemSet {
         return result;
     }
 
-    public int gcd(int a, int b) {
+    public static int gcd(int a, int b) {
         return b == 0 ? a : gcd(b, a % b);
     }
 
