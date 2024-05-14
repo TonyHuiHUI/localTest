@@ -165,9 +165,11 @@ public class ProblemSet {
 //        System.out.println(maximumBinaryString("000110"));
 //        System.out.println(gcd(5,0));
 
-        int[][] a = {{1,1,0},{1,1,0},{0,0,1}};
-        int[] b = {0,1};
-        System.out.println(minMalwareSpread(a,b));
+//        int[][] a = {{1,1,0},{1,1,0},{0,0,1}};
+//        int[] b = {0,1};
+//        System.out.println(minMalwareSpread(a,b));
+        int[] a = {69,65,62,64,70,68,69,67,60,65,69,62,65,65,61,66,68,61,65,63,60,66,68,66,67,65,63,65,70,69,70,62,68,70,60,68,65,61,64,65,63,62,62,62,67,62,62,61,66,69};
+        System.out.println(minimumRounds(a));
     }
 
 
@@ -195,6 +197,33 @@ public class ProblemSet {
         public Node prev;
         public Node next;
         public Node child;
+    }
+
+
+
+/*    2244. 完成所有任务需要的最少轮数
+    给你一个下标从 0 开始的整数数组 tasks ，其中 tasks[i] 表示任务的难度级别。在每一轮中，你可以完成 2 个或者 3 个 相同难度级别 的任务。
+
+    返回完成所有任务需要的 最少 轮数，如果无法完成所有任务，返回 -1 。*/
+    public static int minimumRounds(int[] tasks) {
+        HashMap<Integer, Integer> count = new HashMap<>(16);
+        int result = 0;
+        for (int i = 0; i < tasks.length; i++){
+            count.put(tasks[i],count.getOrDefault(tasks[i], 0) + 1);
+        }
+        for (int value : count.values()){
+            if(value < 2) {
+              result = -1;
+              break;
+            }
+            if (value % 3 == 0) {
+                result += value / 3;
+
+            }else {
+                result += (value / 3) + 1;
+            }
+        }
+        return result;
     }
 
 /*    2007. 从双倍数组中还原原数组
