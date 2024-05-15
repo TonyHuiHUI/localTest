@@ -13,6 +13,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static java.util.Objects.hash;
+import static java.util.Objects.requireNonNull;
 
 public class ProblemSet {
     public static void main(String[] args) {
@@ -168,8 +169,11 @@ public class ProblemSet {
 //        int[][] a = {{1,1,0},{1,1,0},{0,0,1}};
 //        int[] b = {0,1};
 //        System.out.println(minMalwareSpread(a,b));
-        int[] a = {69,65,62,64,70,68,69,67,60,65,69,62,65,65,61,66,68,61,65,63,60,66,68,66,67,65,63,65,70,69,70,62,68,70,60,68,65,61,64,65,63,62,62,62,67,62,62,61,66,69};
-        System.out.println(minimumRounds(a));
+//        int[] a = {69,65,62,64,70,68,69,67,60,65,69,62,65,65,61,66,68,61,65,63,60,66,68,66,67,65,63,65,70,69,70,62,68,70,60,68,65,61,64,65,63,62,62,62,67,62,62,61,66,69};
+//        System.out.println(minimumRounds(a));
+
+        int[][] a = {{2,3,1},{4,5,1},{1,5,2}};
+        System.out.println(findMinimumTime(a));
     }
 
 
@@ -199,7 +203,34 @@ public class ProblemSet {
         public Node child;
     }
 
+/*    2589. 完成所有任务的最少时间
+    你有一台电脑，它可以 同时 运行无数个任务。给你一个二维整数数组 tasks ，其中 tasks[i] = [starti, endi, durationi] 表示第 i 个任务需要在 闭区间 时间段 [starti, endi] 内运行 durationi 个整数时间点（但不需要连续）。
 
+    当电脑需要运行任务时，你可以打开电脑，如果空闲时，你可以将电脑关闭。
+
+    请你返回完成所有任务的情况下，电脑最少需要运行多少秒。*/
+    public static int findMinimumTime(int[][] tasks) {
+        int n = tasks.length;
+        Arrays.sort(tasks,(a,b)-> a[1] - b[1]);
+        int[] runTime = new int[tasks[n-1][1] + 1];
+        int res = 0;
+        for (int i = 0; i < n; i++){
+            int start = tasks[i][0];
+            int end = tasks[i][1];
+            int duration = tasks[i][2];
+            for (int j = start; j <= end; j++){
+                duration -= runTime[j];
+            }
+            res += Math.max(duration,0);
+            for (int j = end; j >=0 && duration > 0; j--){
+                if (runTime[j] == 0){
+                    runTime[j] = 1;
+                    duration--;
+                }
+            }
+        }
+        return  res;
+    }
 
 /*    2244. 完成所有任务需要的最少轮数
     给你一个下标从 0 开始的整数数组 tasks ，其中 tasks[i] 表示任务的难度级别。在每一轮中，你可以完成 2 个或者 3 个 相同难度级别 的任务。
