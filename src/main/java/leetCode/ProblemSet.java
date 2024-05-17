@@ -1,6 +1,7 @@
 package leetCode;
 
 
+import javafx.util.Pair;
 import jdk.management.resource.internal.inst.FileOutputStreamRMHooks;
 import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.security.core.parameters.P;
@@ -201,6 +202,44 @@ public class ProblemSet {
         public Node prev;
         public Node next;
         public Node child;
+    }
+
+
+/*    826. 安排工作以达到最大收益
+    你有 n 个工作和 m 个工人。给定三个数组： difficulty, profit 和 worker ，其中:
+
+    difficulty[i] 表示第 i 个工作的难度，profit[i] 表示第 i 个工作的收益。
+    worker[i] 是第 i 个工人的能力，即该工人只能完成难度小于等于 worker[i] 的工作。
+    每个工人 最多 只能安排 一个 工作，但是一个工作可以 完成多次 。*/
+    public int maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
+//        int res = 0;
+//        int diff = difficulty.length;
+//        int count = worker.length;
+//        for (int i = 0; i < count; i++){
+//            int pro = 0;
+//            for (int j  = 0; j < diff;  j++){
+//                int tmp = (worker[i] >= difficulty[j]) ? profit[j] : 0;
+//                pro = Math.max(pro, tmp);
+//            }
+//            res += pro;
+//        }
+//        return res;
+
+        List<Pair<Integer, Integer>> jobs = new ArrayList<>();
+        int N = profit.length, res = 0, i = 0, best = 0;
+        for (int j = 0; j < N; ++j) {
+            jobs.add(new Pair<Integer, Integer>(difficulty[j], profit[j]));
+        }
+        Collections.sort(jobs, Comparator.comparing(Pair::getKey));
+        Arrays.sort(worker);
+        for (int w : worker) {
+            while (i < N && w >= jobs.get(i).getKey()) {
+                best = Math.max(best, jobs.get(i).getValue());
+                i++;
+            }
+            res += best;
+        }
+        return res;
     }
 
 //    1953. 你可以工作的最大周数
