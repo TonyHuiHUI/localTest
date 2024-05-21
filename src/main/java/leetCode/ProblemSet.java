@@ -173,8 +173,20 @@ public class ProblemSet {
 //        int[] a = {69,65,62,64,70,68,69,67,60,65,69,62,65,65,61,66,68,61,65,63,60,66,68,66,67,65,63,65,70,69,70,62,68,70,60,68,65,61,64,65,63,62,62,62,67,62,62,61,66,69};
 //        System.out.println(minimumRounds(a));
 
-        int[][] a = {{2,3,1},{4,5,1},{1,5,2}};
-        System.out.println(findMinimumTime(a));
+//        int[][] a = {{2,3,1},{4,5,1},{1,5,2}};
+//        System.out.println(findMinimumTime(a));
+
+        MinStack minStack = new MinStack();
+        minStack.push(512);
+        minStack.push(-1024);
+        minStack.push(-1024);
+        minStack.push(512);
+        minStack.pop();
+        System.out.println(minStack.getMin());
+        minStack.pop();
+        System.out.println(minStack.getMin());
+        minStack.pop();
+        System.out.println( minStack.getMin());
     }
 
 
@@ -203,6 +215,10 @@ public class ProblemSet {
         public Node next;
         public Node child;
     }
+
+
+
+
 
 
 /*    826. 安排工作以达到最大收益
