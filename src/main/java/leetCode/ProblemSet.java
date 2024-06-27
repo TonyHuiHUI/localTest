@@ -176,17 +176,18 @@ public class ProblemSet {
 //        int[][] a = {{2,3,1},{4,5,1},{1,5,2}};
 //        System.out.println(findMinimumTime(a));
 
-        MinStack minStack = new MinStack();
-        minStack.push(512);
-        minStack.push(-1024);
-        minStack.push(-1024);
-        minStack.push(512);
-        minStack.pop();
-        System.out.println(minStack.getMin());
-        minStack.pop();
-        System.out.println(minStack.getMin());
-        minStack.pop();
-        System.out.println( minStack.getMin());
+//        MinStack minStack = new MinStack();
+//        minStack.push(512);
+//        minStack.push(-1024);
+//        minStack.push(-1024);
+//        minStack.push(512);
+//        minStack.pop();
+//        System.out.println(minStack.getMin());
+//        minStack.pop();
+//        System.out.println(minStack.getMin());
+//        minStack.pop();
+//        System.out.println( minStack.getMin());
+        System.out.println(generateParenthesis(3));
     }
 
 
@@ -216,10 +217,216 @@ public class ProblemSet {
         public Node child;
     }
 
+    //括号生成
+    //数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
+    public static List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        dfs(res, new java.lang.StringBuilder(), n , n);
+        return res;
+    }
+
+    public static void dfs(List<String> res, java.lang.StringBuilder sb,  int left, int right){
+        if (right == 0){
+            res.add(sb.toString());
+            return;
+        }
+        if (left > 0){
+            sb.append('(');
+            dfs(res, sb, left - 1, right);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        if (right > left){
+            sb.append(')');
+            dfs(res,sb, left, right - 1);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+    }
+
+
+    //分割回文串
+    //给你一个字符串 s，请你将 s 分割成一些子串，使每个子串都是 回文串。返回 s 所有可能的分割方案。
+    static List<List<String>> res1 = new ArrayList<>();
+    static List<String> path = new ArrayList<>();
+    public static String[][] partition(String s) {
+        backtrack(s, 0);
+        String[][] arr = new String[res1.size()][];
+        for(int i = 0; i < res1.size(); i++){
+            arr[i] = res1.get(i).toArray(new String[0]);
+        }
+        return arr;
+    }
+    //递归回溯
+    public static void backtrack(String s, int startIndex){
+        if(startIndex == s.length()){
+            res1.add(new ArrayList<>(path));
+            return;
+        }
+        for(int i = startIndex; i < s.length(); i++){
+            if(isTrue(s, startIndex, i)){
+                path.add(s.substring(startIndex, i + 1));
+            }else{
+                continue;
+            }
+            backtrack(s, i + 1);
+            path.remove(path.size() - 1);
+        }
+    }
+    //判断是否是回文串
+    public static boolean isTrue(String s, int start, int end){
+        while(start < end){
+            if(s.charAt(start) != s.charAt(end)){
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
 
 
 
+//    5. 最长回文子串
+//    给你一个字符串 s，找到 s 中最长的回文子串。
+    public String longestPalindrome(String s) {
+        //暴力
+//        int len = s.length();
+//        if(len < 2){
+//            return s;
+//        }
+//        int maxLen = 1;
+//        int begin = 0;
+//        char[] charArray = s.toCharArray();
+//        for(int i = 0; i < len - 1; i++){
+//            for(int j = i + 1; j < len; j++){
+//                if(j - i + 1 > maxLen && checkPalindrome(charArray, i, j)){
+//                    maxLen = j - i + 1;
+//                    begin = i;
+//                }
+//            }
+//        }
+//        return s.substring(begin, begin + maxLen);
+// 中心扩展
+//        if (s == null || s.length() < 1) {
+//            return "";
+//        }
+//        int start = 0, end = 0;
+//        for (int i = 0; i < s.length(); i++) {
+//            int len1 = expandAroundCenter(s, i, i);
+//            int len2 = expandAroundCenter(s, i, i + 1);
+//            int len = Math.max(len1, len2);
+//            if (len > end - start) {
+//                start = i - (len - 1) / 2;
+//                end = i + len / 2;
+//            }
+//        }
+//        return s.substring(start, end + 1);
+// dp
+        int len = s.length();
+        if (len < 2) {
+            return s;
+        }
 
+        int maxLen = 1;
+        int begin = 0;
+        boolean[][] dp = new boolean[len][len];
+        // 长度为 1 的子串都是回文串
+        for (int i = 0; i < len; i++) {
+            dp[i][i] = true;
+        }
+        char[] charArray = s.toCharArray();
+        for (int L = 2; L <= len; L++) {
+            for (int i = 0; i < len; i++) {
+                int j = L + i - 1;
+                if (j >= len) {
+                    break;
+                }
+                if (charArray[i] != charArray[j]) {
+                    dp[i][j] = false;
+                } else {
+                    if (j - i < 3) {
+                        dp[i][j] = true;
+                    } else {
+                        dp[i][j] = dp[i + 1][j - 1];
+                    }
+                }
+                if (dp[i][j] && j - i + 1 > maxLen) {
+                    maxLen = j - i + 1;
+                    begin = i;
+                }
+            }
+        }
+        return s.substring(begin, begin + maxLen);
+    }
+    public int expandAroundCenter(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            --left;
+            ++right;
+        }
+        return right - left - 1;
+    }
+    public boolean checkPalindrome(char[] charArray, int left, int right){
+        while(left < right){
+            if(charArray[left] != charArray[right]){
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    //最长连续序列
+    //给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。
+    //请你设计并实现时间复杂度为 O(n) 的算法解决此问题。
+    public int longestConsecutive(int[] nums) {
+        if (nums.length == 0)
+            return 0;
+        Arrays.sort(nums);
+        int ans = 1;
+        int tmp = 1;
+        for (int i = 1; i < nums.length; i++){
+            if (nums[i] == nums[i-1] + 1){
+                tmp++;
+                ans = Math.max(ans, tmp);
+            }else if (nums[i] > nums[i-1]){
+                tmp = 1;
+            }
+        }
+        return ans;
+    }
+
+    //三数之和
+    //给你一个整数数组 nums ，判断是否存在三元组 [nums[i], nums[j], nums[k]] 满足 i != j、i != k 且 j != k ，
+    // 同时还满足 nums[i] + nums[j] + nums[k] == 0 。请 你返回所有和为 0 且不重复的三元组
+    public List<List<Integer>> threeSum(int[] nums) {
+        int n = nums.length;
+        Arrays.sort(nums);
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+        // 枚举 num[i]
+        for (int i = 0; i < n - 2; ++i) {
+            // 遇到和上次枚举相同，就跳过
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int l = i + 1, r = n - 1;
+
+            while (l < r) {
+                int sum = nums[i] + nums[l] + nums[r];
+                if (sum == 0) {
+                    ans.add(new ArrayList<Integer>(Arrays.asList(nums[i], nums[l], nums[r])));
+                    while (l < r && nums[l] == nums[l + 1]) l++;//跳过重复元素
+                    while (l < r && nums[r] == nums[r - 1]) r--;//跳过重复元素
+                    l++;
+                    r--;
+                } else if (sum < 0) {
+                    l++;
+                } else {
+                    r--;
+                }
+            }
+        }
+        return ans;
+    }
 
 /*    826. 安排工作以达到最大收益
     你有 n 个工作和 m 个工人。给定三个数组： difficulty, profit 和 worker ，其中:
