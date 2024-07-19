@@ -11,7 +11,9 @@ import scala.io.BytePickle;
 import sun.applet.resources.MsgAppletViewer_zh_CN;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
@@ -215,6 +217,95 @@ public class ProblemSet {
         public Node prev;
         public Node next;
         public Node child;
+    }
+
+//    33. 搜索旋转排序数组
+//    整数数组 nums 按升序排列，数组中的值 互不相同 。
+//
+//    在传递给函数之前，nums 在预先未知的某个下标 k（0 <= k < nums.length）上进行了 旋转，使数组变为 [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]（下标 从 0 开始 计数）。例如， [0,1,2,4,5,6,7] 在下标 3 处经旋转后可能变为 [4,5,6,7,0,1,2] 。
+//
+//    给你 旋转后 的数组 nums 和一个整数 target ，如果 nums 中存在这个目标值 target ，则返回它的下标，否则返回 -1 。
+//
+//    你必须设计一个时间复杂度为 O(log n) 的算法解决此问题。
+    public int search1(int[] nums, int target) {
+        int n = nums.length;
+        if (n == 1){
+            return target == nums[0] ? 0: -1;
+        }
+        int l = 0, r = n - 1;
+        while (l <= r){
+            int mid = (l + r)/2;
+            if (nums[mid] == target){
+                return mid;
+            }
+            if (nums[l] <= nums[mid]){
+                if (target >= nums[l] && target < nums[mid]){
+                    r = mid - 1;
+                }else {
+                    l = mid + 1;
+                }
+            }else {
+                if (target > nums[mid] && target <= nums[r]){
+                    l = mid + 1;
+                }else {
+                    r = mid -1;
+                }
+            }
+        }
+        return -1;
+    }
+
+    //78. 子集
+    //给你一个整数数组 nums ，数组中的元素 互不相同 。返回该数组所有可能的子集（幂集）。
+    //解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
+    public static List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> tmp = new ArrayList<>();
+        dfs(res, tmp, 0, nums);
+        return  res;
+    }
+
+    public static void dfs(List<List<Integer>> res,  List<Integer> tmp, int cur, int[] nums){
+        if (cur == nums.length){
+            res.add(tmp);
+            return;
+        }
+        tmp.add(nums[cur]);
+        dfs(res, tmp, cur + 1, nums);
+        tmp.remove(tmp.size() - 1);
+        dfs(res, tmp, cur + 1, nums);
+    }
+
+    //11. 盛最多水的容器
+//    给定一个长度为 n 的整数数组 height 。有 n 条垂线，第 i 条线的两个端点是 (i, 0) 和 (i, height[i]) 。
+//
+//    找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
+//
+//    返回容器可以储存的最大水量。
+//
+//    说明：你不能倾斜容器。
+    public static int maxArea(int[] height) {
+        //暴力
+//        int n = height.length;
+//        int res = 0;
+//        for (int i = 0; i < n; i++){
+//            for (int j = i + 1; j < n; j++){
+//                res = Math.max(res, (j - i) * Math.min(height[i], height[j]));
+//            }
+//        }
+//        return  res;
+        int n = height.length;
+        int res = 0;
+        int left = 0, right = n - 1;
+        while (left < right){
+            res = Math.max(res, (right - left) * Math.min(height[left], height[right]));
+            if (height[left] <= height[right]){
+                left++;
+            }else {
+                right--;
+            }
+        }
+        return res;
     }
 
     //括号生成
