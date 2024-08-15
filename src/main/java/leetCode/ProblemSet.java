@@ -10,6 +10,9 @@ import scala.collection.mutable.StringBuilder;
 import scala.io.BytePickle;
 import sun.applet.resources.MsgAppletViewer_zh_CN;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
@@ -21,7 +24,7 @@ import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
 
 public class ProblemSet {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //        int[] a = {3, 0, 6, 1, 5};
 //        System.out.println(hIndex(a));
 //        int[][] a = {{2,9,10},{3,7,15},{5,12,12},{15,20,10},{19,24,8}};
@@ -191,9 +194,82 @@ public class ProblemSet {
 //        System.out.println(minStack.getMin());
 //        minStack.pop();
 //        System.out.println( minStack.getMin());
-        System.out.println(generateParenthesis(3));
+//        System.out.println(generateParenthesis(3));
+//
+//        List<List<String>> dataList = new ArrayList<>();
+//        List<String> data = new ArrayList<>();
+//        data.add("");
+//        dataList.add(data);
+//        System.out.println(sizeOf(dataList));
+        int[] a = {0,0,0,1000000000,1000000000,1000000000,1000000000};
+        System.out.println(fourSum(a,1000000000));
     }
 
+
+
+    public static List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        int length = nums.length;
+        if (length < 4){
+            return res;
+        }
+        Arrays.sort(nums);
+        for(int first = 0; first < length - 3; first++){
+            if (first > 0 && nums[first] == nums[first - 1]){
+                continue;
+            }
+            if ((long)nums[first] + nums[first + 1] + nums[first + 2] + nums[first + 3] > target){
+                break;
+            }
+            if ((long)nums[first] + nums[length - 1] + nums[length - 2] + nums[length - 3] < target){
+                continue;
+            }
+            for (int second = first + 1; second < length - 2; second++){
+                if (second > first + 1 && nums[second] == nums[second - 1]){
+                    continue;
+                }
+                if ((long)nums[first] + nums[second] + nums[second + 1] + nums[second + 2] > target){
+                    break;
+                }
+                if ((long)nums[first] + nums[second] + nums[length - 1] + nums[length -2] < target){
+                    continue;
+                }
+                int third = second + 1;
+                int fourth = length - 1;
+                while (third < fourth){
+                    long sum = (long)nums[first] + nums[second] + nums[third] + nums[fourth];
+                    if (sum == target){
+                        res.add(Arrays.asList(nums[first], nums[second], nums[third] ,nums[fourth]));
+                        while (third < fourth && nums[third] == nums[third + 1]){
+                            third++;
+                        }
+                        third++;
+                        while (third < fourth && nums[fourth] == nums[fourth - 1]){
+                            fourth--;
+                        }
+                        fourth--;
+                    }else if (sum < target){
+                        third++;
+                    }else {
+                        fourth--;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+
+    public static long sizeOf(List<?> list) throws IOException {
+        if (list == null) {
+            return 0;
+        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(new ArrayList<>(list)); // 序列化List
+        oos.close();
+        return baos.size(); // 返回字节大小
+    }
 
     public static class TreeNode {
         int val;
